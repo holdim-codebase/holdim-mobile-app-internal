@@ -2,19 +2,34 @@ import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
 const styles = StyleSheet.create({
+  loginContentWrapper: {
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
   loginWrapper: {
+    flexDirection: 'column',
     flex: 1,
     backgroundColor: '#000000',
     paddingHorizontal: normalize(16),
-    paddingVertical: normalize(53),
+    paddingTop: normalize(53),
+    paddingBottom: normalize(123),
   },
+
   loginTitleWrapper: {
-    // paddingBottom: '25%',
+    marginBottom: '25%',
   },
   loginTitle: {
+    maxWidth: 350,
+    marginBottom: 10,
     color: '#8463DF',
-    fontSize: normalize(48),
-    fontWeight: 'bold',
+    fontFamily: 'Ubuntu-Bold',
+    fontSize: normalize(38),
+  },
+  onboardingVerticalLine: {
+    color: '#FFFFFF',
+    fontFamily: 'Ubuntu-Bold',
+    fontSize: normalize(35),
   },
   loginVerticalLine: {
     color: '#FFFFFF',
@@ -22,12 +37,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   loginTextInput: {
-    backgroundColor: '#161616',
+    fontFamily: 'NotoSans-Regular',
+    backgroundColor: '#2C2443',
     borderRadius: 7,
     paddingHorizontal: normalize(16),
     height: normalize(64),
-    marginVertical: normalize(16),
-    color: '#FFFFFF',
+    marginVertical: normalize(10),
+    marginBottom: normalize(5),
+    color: '#8B81A6',
   },
   loginBtnGoWrapper: {
     flex: 1,
@@ -46,19 +63,34 @@ const styles = StyleSheet.create({
     flex: 1,
     height: normalize(64),
     borderRadius: 5,
-    backgroundColor: '#ACACAC80',
+    backgroundColor: '#423170',
+    color: '#808080',
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   loginBtnGoTitle: {
-    fontSize: normalize(20),
-    fontWeight: 'bold',
+    fontFamily: 'Ubuntu-Bold',
+    fontSize: normalize(18),
     color: 'white',
   },
+  loginBtnGoTitleDisabled: {
+    color: '#808080',
+  },
   loginDescriptionTitle: {
+    fontFamily: 'NotoSans-Regular',
     fontSize: normalize(15),
-    color: '#FFFFFF',
-    paddingTop: normalize(28),
+    color: '#F32C2C',
+    marginBottom: normalize(40),
+  },
+  walletTitile: {
+    fontFamily: 'Ubuntu-Bold',
+    fontStyle: 'normal',
+
+    fontSize: normalize(14),
+    lineHeight: normalize(20),
+
+    color: '#A195C2',
   },
   loginDescription: {
     fontSize: normalize(16),

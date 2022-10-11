@@ -100,50 +100,66 @@ const LoginScreen = ({navigation}: any) => {
             <ActivityIndicator size="large" color="#8463DF" />
           </View>
         ) : (
-          <ScrollView>
+          <View style={styles.loginContentWrapper}>
             <View style={styles.loginTitleWrapper}>
               <Text style={styles.loginTitle}>
                 Start your friendly DAO journey
               </Text>
+              <Text style={styles.onboardingVerticalLine}>|</Text>
             </View>
-            <Text
-              style={[
-                styles.loginDescriptionTitle,
-                incorrectWalletAddress &&
-                  styles.loginIncorrectWalletAddressText,
-              ]}>
-              {incorrectWalletAddress &&
-                'Wallet address you entered is not correct'}
-            </Text>
-            <TextInput
-              style={[
-                styles.loginTextInput,
-                incorrectWalletAddress &&
-                  styles.loginIncorrectWalletAddressInput,
-              ]}
-              onChangeText={onChangeWalletAddressInput}
-              value={walletAddressInput}
-              placeholder={'Enter your wallet address'}
-              placeholderTextColor="#FFFFFF"
-            />
-            <View style={styles.loginBtnGoWrapper}>
-              <TouchableOpacity
+
+            <View>
+              <Text style={styles.walletTitile}>
+                WALLET ADDRESS OR ENS NAME
+              </Text>
+              <TextInput
                 style={[
-                  styles.loginBtnGo,
-                  incorrectWalletAddress || walletAddressInput === undefined
-                    ? styles.loginBtnGoDisabled
-                    : null,
+                  styles.loginTextInput,
+                  incorrectWalletAddress &&
+                    styles.loginIncorrectWalletAddressInput,
                 ]}
-                disabled={
-                  incorrectWalletAddress || walletAddressInput === undefined
-                    ? true
-                    : false
-                }
-                onPress={anonymousSignIn}>
-                <Text style={styles.loginBtnGoTitle}>GO</Text>
-              </TouchableOpacity>
+                onChangeText={onChangeWalletAddressInput}
+                value={walletAddressInput}
+                placeholder={'Enter your wallet address'}
+                placeholderTextColor="#8B81A6"
+              />
+              <Text
+                style={[
+                  styles.loginDescriptionTitle,
+                  incorrectWalletAddress &&
+                    styles.loginIncorrectWalletAddressText,
+                ]}>
+                {incorrectWalletAddress &&
+                  'Wallet address or ENS you entered is not correct'}
+              </Text>
+
+              <View style={styles.loginBtnGoWrapper}>
+                <TouchableOpacity
+                  style={[
+                    styles.loginBtnGo,
+                    incorrectWalletAddress || walletAddressInput === undefined
+                      ? styles.loginBtnGoDisabled
+                      : null,
+                  ]}
+                  disabled={
+                    incorrectWalletAddress || walletAddressInput === undefined
+                      ? true
+                      : false
+                  }
+                  onPress={anonymousSignIn}>
+                  <Text
+                    style={[
+                      styles.loginBtnGoTitle,
+                      incorrectWalletAddress || walletAddressInput === undefined
+                        ? styles.loginBtnGoTitleDisabled
+                        : null,
+                    ]}>
+                    GO
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </ScrollView>
+          </View>
         )}
       </View>
     </SafeAreaView>
