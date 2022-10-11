@@ -14,8 +14,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		92E3E4882868C58A00818C48 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92E3E4872868C58A00818C48 /* GoogleService-Info.plist */; };
 		92E3E4892868C58A00818C48 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 92E3E4872868C58A00818C48 /* GoogleService-Info.plist */; };
-		A1597E854125652B04D89F49 /* Pods_holdim_holdimTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79085425EBA10FA331DA1579 /* Pods_holdim_holdimTests.framework */; };
-		DC19FDB8164AAA2863B18DB1 /* Pods_holdim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF3F96AFF652F96CDFB414B5 /* Pods_holdim.framework */; };
+		DD9D40F2B5AE9E9431D745F4 /* Pods_holdim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2355A63E864F54143E5E2DC2 /* Pods_holdim.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +47,7 @@
 		AF3F96AFF652F96CDFB414B5 /* Pods_holdim.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_holdim.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C46F7D880CF22065487D2412 /* Pods-holdim.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-holdim.debug.xcconfig"; path = "Target Support Files/Pods-holdim/Pods-holdim.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F4A2742DA669575F9076333C /* Pods-holdim-holdimTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-holdim-holdimTests.debug.xcconfig"; path = "Target Support Files/Pods-holdim-holdimTests/Pods-holdim-holdimTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +128,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				ECC1218424B34C68AA9DD0C3 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -153,6 +154,21 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
+		};
+		ECC1218424B34C68AA9DD0C3 /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				C235B6A2CC1E45049F0DFF82 /* NotoSans-Light.ttf */,
+				4CD55326195C47A781D9A595 /* NotoSans-Medium.ttf */,
+				CE4566B29463444EA04B7CD6 /* NotoSans-Regular.ttf */,
+				21E9E71A349D453B9BA21EBA /* Ubuntu-Bold.ttf */,
+				C3B2EF1E4DA34A578208B500 /* Ubuntu-Light.ttf */,
+				11722242C68044CAB41307C0 /* Ubuntu-Medium.ttf */,
+				C7A3AC929A6C4E63962BA6EE /* Ubuntu-Regular.ttf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -251,6 +267,13 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				92E3E4882868C58A00818C48 /* GoogleService-Info.plist in Resources */,
+				D65404FC58224CEFAE88749E /* NotoSans-Light.ttf in Resources */,
+				7DC2236FF9384CD583AFC1EC /* NotoSans-Medium.ttf in Resources */,
+				71EA7FCD1CFA4414A74B422B /* NotoSans-Regular.ttf in Resources */,
+				27CF3FD044A34574865EAE80 /* Ubuntu-Bold.ttf in Resources */,
+				03E16270D5834C61BE7EACDE /* Ubuntu-Light.ttf in Resources */,
+				484CAE65466E4C28961A78C0 /* Ubuntu-Medium.ttf in Resources */,
+				18012BB4D73D464293026A73 /* Ubuntu-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
