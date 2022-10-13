@@ -13,7 +13,7 @@ import auth from '@react-native-firebase/auth'
 import {useMutation} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
 
-import {handleHTTPError, REGISTER_USER} from '../../services/api'
+import {client, handleHTTPError, REGISTER_USER} from '../../services/api'
 import styles from './styles'
 
 // to validate wallet address and ens address
@@ -33,23 +33,25 @@ const LoginScreen = ({navigation}: any) => {
     onCompleted: data => {
       data.registerUser.wallets.length !== 0 &&
         AsyncStorage.setItem('wallet-id', data.registerUser.wallets[0].id)
+      AsyncStorage.setItem('userLoggedIn', 'true')
       // navigate to screens depends on already launched
       AsyncStorage.getItem('alreadyLaunched').then(launched => {
         if (launched !== null) {
-          navigation.navigate('MainScreen')
+          navigation.navigate('Feed')
         } else {
           AsyncStorage.setItem('alreadyLaunched', 'true')
           navigation.navigate('WelcomeScreen')
         }
       })
-      AsyncStorage.setItem('userLoggedIn', 'true')
-      setLoadingScreen(true)
+      setLoadingScreen(false)
+      onChangeWalletAddressInput('')
     },
     onError: error => {
       Sentry.captureException(error)
       setLoadingScreen(false)
       handleHTTPError()
       onChangeWalletAddressInput('')
+      console.error(error)
     },
   })
 
@@ -63,6 +65,7 @@ const LoginScreen = ({navigation}: any) => {
       await auth()
         .signInAnonymously()
         .then(r => {
+          client.clearStore()
           register({
             variables: {walletAddress: walletAddressInput.toLowerCase()},
           })
@@ -70,6 +73,7 @@ const LoginScreen = ({navigation}: any) => {
     } catch (error: any) {
       Sentry.captureException(error)
       setLoadingScreen(false)
+      console.error(error)
     }
   }
 

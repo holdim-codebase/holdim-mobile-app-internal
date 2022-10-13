@@ -42,7 +42,7 @@ function FeedScreen({navigation}: any) {
     fetchMore: fetchMoreProposals,
     refetch: refetchGetProposals,
   } = useQuery(GET_PROPOSALS, {
-    fetchPolicy: 'cache-and-network',
+    // fetchPolicy: 'network-only',
     variables: {first: 8, after: '', onlyFollowedDaos: true},
     onCompleted: res => {
       setProposals(res.proposalsV2.edges.map((edge: {node: any}) => edge.node))
@@ -51,8 +51,8 @@ function FeedScreen({navigation}: any) {
       setRefreshing(false)
     },
     onError: error => {
-      // Sentry.captureException(error)
       Sentry.captureException(error)
+      console.error(error)
       handleHTTPError()
     },
   })
@@ -65,8 +65,8 @@ function FeedScreen({navigation}: any) {
       setPolls(res.proposalsV2.edges.map((edge: {node: any}) => edge.node))
     },
     onError: error => {
-      // Sentry.captureException(error)
       Sentry.captureException(error)
+      console.error(error)
       handleHTTPError()
     },
   })

@@ -41,6 +41,7 @@ function SearchScreen({navigation}: any) {
     onError: error => {
       Sentry.captureException(error)
       handleHTTPError()
+      console.error(error)
     },
   })
 
@@ -99,6 +100,7 @@ function SearchScreen({navigation}: any) {
               }
             }
           }}
+          showsVerticalScrollIndicator={false}
           scrollEventThrottle={400}>
           {daoList.length !== 0 ? (
             daoList.map((dao, i) => {

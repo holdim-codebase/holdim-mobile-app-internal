@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {StatusBar} from 'react-native'
+import {StatusBar, TouchableOpacity} from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native'
@@ -8,6 +8,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import auth from '@react-native-firebase/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {ApolloProvider} from '@apollo/client'
+import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import * as Sentry from '@sentry/react-native'
 
 import ProposalScreen from './src/screens/proposal'
@@ -18,6 +19,7 @@ import DAOScreen from './src/screens/dao'
 import FullProposalScreen from './src/screens/fullProposal'
 import OnboardingScreen from './src/screens/onboarding'
 import LoginScreen from './src/screens/login'
+import WelcomeScreen from './src/screens/welcome'
 import {client} from './src/services/api'
 
 // icons svg
@@ -27,7 +29,10 @@ import ProfileIcon from './src/assets/images/svg/Profile.gray.svg'
 import FeedIconFocused from './src/assets/images/svg/Home.purple.svg'
 import SearchIconFocused from './src/assets/images/svg/Search.purple.svg'
 import ProfileIconFocused from './src/assets/images/svg/Profile.purple.svg'
-import WelcomeScreen from './src/screens/welcome'
+import SettingsIcon from './src/assets/images/svg/Settings.svg'
+import WalletManagementScreen from './src/screens/walletManagement'
+import NewWalletScreen from './src/screens/newWalletScreen'
+import StateScreen from './src/screens/stateScreen'
 
 Sentry.init({
   dsn: 'https://e64a26481fc64b0b895da8a145307e31@o1405388.ingest.sentry.io/6739145',
@@ -91,7 +96,20 @@ const ProfileStack = createNativeStackNavigator()
 function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator screenOptions={headerOptions}>
-      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+      <ProfileStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={({navigation}) => ({
+          headerRight: () => {
+            return (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('WalletManagement')}>
+                <SettingsIcon />
+              </TouchableOpacity>
+            )
+          },
+        })}
+      />
       <ProfileStack.Screen name="DAO" component={DAOScreen} />
       <ProfileStack.Screen
         name="Proposal"
@@ -253,38 +271,87 @@ function App() {
 
   return (
     <ApolloProvider client={client}>
-      <SafeAreaProvider>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="rgba(22, 22, 22, 1)"
-        />
-        <NavigationContainer theme={navTheme}>
-          {isFirstLaunch && (
-            <Stack.Navigator
-              screenOptions={{headerShown: false, gestureEnabled: false}}>
-              <Stack.Screen
-                name="OnboardingScreen"
-                component={OnboardingScreen}
-              />
-              <Stack.Screen name="LoginScreen" component={LoginScreen} />
-              <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-              <Stack.Screen name="MainScreen" component={MainScreen} />
-            </Stack.Navigator>
-          )}
-          {!isFirstLaunch && !alreadyLoggedIn && (
-            <Stack.Navigator
-              screenOptions={{headerShown: false, gestureEnabled: false}}>
-              <Stack.Screen name="LoginScreen" component={LoginScreen} />
-              <Stack.Screen name="MainScreen" component={MainScreen} />
-            </Stack.Navigator>
-          )}
-          {!isFirstLaunch && alreadyLoggedIn && (
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-              <Stack.Screen name="MainScreen" component={MainScreen} />
-            </Stack.Navigator>
-          )}
-        </NavigationContainer>
-      </SafeAreaProvider>
+      <GestureHandlerRootView style={{flex: 1}}>
+        <SafeAreaProvider>
+          <StatusBar
+            barStyle="light-content"
+            backgroundColor="rgba(22, 22, 22, 1)"
+          />
+          <NavigationContainer theme={navTheme}>
+            {isFirstLaunch && (
+              <Stack.Navigator
+                screenOptions={{headerShown: false, gestureEnabled: false}}>
+                <Stack.Screen
+                  name="OnboardingScreen"
+                  component={OnboardingScreen}
+                />
+                <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+                <Stack.Screen name="MainScreen" component={MainScreen} />
+                <Stack.Screen
+                  name="WalletManagement"
+                  component={WalletManagementScreen}
+                  options={{
+                    headerTitle: 'Wallet management',
+                  }}
+                />
+                <Stack.Screen
+                  name="NewWallet"
+                  component={NewWalletScreen}
+                  options={{
+                    headerTitle: 'New wallet',
+                  }}
+                />
+                <Stack.Screen name="StateScreen" component={StateScreen} />
+              </Stack.Navigator>
+            )}
+            {!isFirstLaunch && !alreadyLoggedIn && (
+              <Stack.Navigator
+                screenOptions={{headerShown: false, gestureEnabled: false}}>
+                <Stack.Screen name="LoginScreen" component={LoginScreen} />
+                <Stack.Screen name="MainScreen" component={MainScreen} />
+                <Stack.Screen
+                  name="WalletManagement"
+                  component={WalletManagementScreen}
+                  options={{
+                    headerTitle: 'Wallet management',
+                  }}
+                />
+                <Stack.Screen
+                  name="NewWallet"
+                  component={NewWalletScreen}
+                  options={{
+                    headerTitle: 'New wallet',
+                  }}
+                />
+                <Stack.Screen name="StateScreen" component={StateScreen} />
+              </Stack.Navigator>
+            )}
+            {!isFirstLaunch && alreadyLoggedIn && (
+              <Stack.Navigator
+                screenOptions={{headerShown: false, gestureEnabled: false}}>
+                <Stack.Screen name="MainScreen" component={MainScreen} />
+                <Stack.Screen
+                  name="WalletManagement"
+                  component={WalletManagementScreen}
+                  options={{
+                    headerTitle: 'Wallet management',
+                  }}
+                />
+                <Stack.Screen
+                  name="NewWallet"
+                  component={NewWalletScreen}
+                  options={{
+                    headerTitle: 'New wallet',
+                  }}
+                />
+                <Stack.Screen name="StateScreen" component={StateScreen} />
+                <Stack.Screen name="LoginScreen" component={LoginScreen} />
+              </Stack.Navigator>
+            )}
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </GestureHandlerRootView>
     </ApolloProvider>
   )
 }

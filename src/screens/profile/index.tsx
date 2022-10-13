@@ -10,18 +10,28 @@ import {
 import {useQuery} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
 
-import {TUser} from '../../types'
+import {TUser, TWallet} from '../../types'
 import {GET_USER_INFO, handleHTTPError} from '../../services/api'
 import {convertURIForLogo} from '../feed'
 import styles from './styles'
 import {shortenAddress} from '../proposal'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-function ProfileScreen({navigation}: any) {
+export const validateUserTokens = (quantity: number) => {
+  if (quantity >= 0.01 || quantity === 0) {
+    return +Number(quantity).toFixed(2)
+  }
+  return '0'
+}
+
+function ProfileScreen({navigation, route}: any) {
   const [portfolio, setPortfolio] = React.useState<TUser>()
+  const [activeWallet, setActiveWallet] = React.useState<TWallet>()
+  const [activeWalletId, setActiveWalletId] = React.useState<string | null>('')
   const [refreshing, setRefreshing] = React.useState(false)
 
   const {refetch: refetchUserData} = useQuery(GET_USER_INFO, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network-only',
     variables: {tokensOnlyMain2: true},
     onCompleted: res => {
       setPortfolio(res.me)
@@ -30,6 +40,7 @@ function ProfileScreen({navigation}: any) {
     onError: error => {
       Sentry.captureException(error)
       handleHTTPError()
+      console.error(error)
     },
   })
 
@@ -58,6 +69,29 @@ function ProfileScreen({navigation}: any) {
     return '< 0.01'
   }
 
+  React.useEffect(() => {
+    if (portfolio) {
+      const w = portfolio.wallets.find(w => w.id === activeWalletId)
+      setActiveWallet(w)
+    }
+  }, [portfolio, activeWalletId])
+
+  React.useEffect(() => {
+    if (route.params && route.params.refetch === true) {
+      refetchUserData()
+      getActiveWalletId()
+    }
+  }, [route.params])
+
+  const getActiveWalletId = async () => {
+    const walletId = await AsyncStorage.getItem('wallet-id')
+    setActiveWalletId(walletId)
+  }
+
+  React.useEffect(() => {
+    getActiveWalletId()
+  }, [])
+
   return (
     <ScrollView
       style={styles.profileWrapper}
@@ -73,9 +107,11 @@ function ProfileScreen({navigation}: any) {
             />
             <View style={styles.profileInfoTextWrapper}>
               <Text style={styles.profileName}>
-                {portfolio.wallet.ens
-                  ? shortenAddress(portfolio.wallet.ens)
-                  : shortenAddress(portfolio.wallet.address)}
+                {activeWallet && activeWallet.ens
+                  ? shortenAddress(activeWallet.ens)
+                  : activeWallet && activeWallet.address
+                  ? shortenAddress(activeWallet.address)
+                  : null}
               </Text>
               <Text style={styles.profilePortfolioAmount}>
                 You govern: {portfolio.followedDaos.length} DAOs
@@ -101,12 +137,14 @@ function ProfileScreen({navigation}: any) {
                         </Text>
                         <Text style={styles.assetShareText}>
                           <Text style={styles.assetShareAmount}>
-                            {(
-                              (+followedDao.tokens[0].personalizedData
-                                .quantity /
-                                followedDao.tokens[0].totalSupply) *
-                              100
-                            ).toFixed(3)}
+                            {followedDao
+                              ? (
+                                  (+followedDao.tokens[0].personalizedData
+                                    .quantity /
+                                    followedDao.tokens[0].totalSupply) *
+                                  100
+                                ).toFixed(3)
+                              : null}
                             %
                           </Text>{' '}
                           shares
