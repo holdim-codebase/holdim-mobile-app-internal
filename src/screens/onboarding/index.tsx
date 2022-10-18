@@ -69,7 +69,7 @@ const OnboardingScreen = ({navigation}: any) => {
             </View>
           </>
         ) : (
-          <View style={{width: '50%'}} />
+          <View style={{width: '53%'}} />
         )}
         <TouchableOpacity style={styles.btnNext} onPress={onNextSlide}>
           <Text style={styles.btnNextText}>Next</Text>

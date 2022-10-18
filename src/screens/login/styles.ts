@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
     fontSize: normalize(64),
     fontWeight: 'bold',
   },
-  loginTextInput: {
+  loginTextInputWrapper: {
+    flexDirection: 'row',
     fontFamily: 'NotoSans-Regular',
     backgroundColor: '#2C2443',
     borderRadius: 7,
@@ -47,6 +48,25 @@ const styles = StyleSheet.create({
     marginVertical: normalize(10),
     marginBottom: normalize(5),
     color: white,
+    paddingBottom: normalize(16),
+    paddingTop: normalize(10),
+    marginTop: normalize(10),
+  },
+  loginTextInput: {
+    fontSize: normalize(14),
+    lineHeight: normalize(18),
+    fontWeight: '400',
+    color: 'white',
+    width: '90%',
+  },
+  loginTextInputFocused: {
+    borderColor: '#8463DF',
+    borderWidth: 1,
+  },
+  loginTextInputClearBtn: {
+    paddingLeft: normalize(10),
+    paddingTop: normalize(5),
+    backgroundColor: '#2C2443',
   },
   loginBtnGoWrapper: {
     flex: 1,
@@ -55,7 +75,7 @@ const styles = StyleSheet.create({
   },
   loginBtnGo: {
     flex: 1,
-    height: normalize(64),
+    height: normalize(52),
     borderRadius: 5,
     backgroundColor: purple,
     justifyContent: 'center',
@@ -63,14 +83,13 @@ const styles = StyleSheet.create({
   },
   loginBtnGoDisabled: {
     flex: 1,
-    height: normalize(64),
+    height: normalize(52),
     borderRadius: 5,
     backgroundColor: '#423170',
     color: '#808080',
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   loginBtnGoTitle: {
     fontFamily: 'Ubuntu-Bold',
     fontSize: normalize(18),
@@ -81,10 +100,11 @@ const styles = StyleSheet.create({
   },
   loginDescriptionTitle: {
     fontFamily: 'NotoSans-Regular',
-    fontSize: normalize(15),
     color: white,
     paddingTop: normalize(28),
-    marginBottom: normalize(40),
+    fontSize: normalize(14),
+    marginBottom: normalize(50),
+    marginTop: normalize(5),
   },
   walletTitile: {
     fontFamily: 'Ubuntu-Bold',
@@ -102,7 +122,7 @@ const styles = StyleSheet.create({
     color: '#FF004D',
   },
   loginIncorrectWalletAddressInput: {
-    borderColor: '#FF004D',
+    borderColor: '#F32C2C',
     borderWidth: 1,
   },
   loadingWrapper: {
