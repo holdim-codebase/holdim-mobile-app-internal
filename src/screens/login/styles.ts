@@ -15,10 +15,6 @@ const styles = StyleSheet.create({
     paddingTop: normalize(53),
     paddingBottom: normalize(123),
   },
-
-  loginTitleWrapper: {
-    marginBottom: '25%',
-  },
   loginTitle: {
     maxWidth: 350,
     marginBottom: 10,
@@ -36,15 +32,32 @@ const styles = StyleSheet.create({
     fontSize: normalize(64),
     fontWeight: 'bold',
   },
-  loginTextInput: {
+  loginTextInputWrapper: {
+    flexDirection: 'row',
     fontFamily: 'NotoSans-Regular',
     backgroundColor: '#2C2443',
     borderRadius: 7,
     paddingHorizontal: normalize(16),
-    height: normalize(64),
-    marginVertical: normalize(10),
-    marginBottom: normalize(5),
-    color: '#8B81A6',
+    paddingBottom: normalize(16),
+    paddingTop: normalize(10),
+    marginTop: normalize(10),
+    color: '#FFFFFF',
+  },
+  loginTextInput: {
+    fontSize: normalize(14),
+    lineHeight: normalize(18),
+    fontWeight: '400',
+    color: 'white',
+    width: '90%',
+  },
+  loginTextInputFocused: {
+    borderColor: '#8463DF',
+    borderWidth: 1,
+  },
+  loginTextInputClearBtn: {
+    paddingLeft: normalize(10),
+    paddingTop: normalize(5),
+    backgroundColor: '#2C2443',
   },
   loginBtnGoWrapper: {
     flex: 1,
@@ -53,7 +66,7 @@ const styles = StyleSheet.create({
   },
   loginBtnGo: {
     flex: 1,
-    height: normalize(64),
+    height: normalize(52),
     borderRadius: 5,
     backgroundColor: '#8463DF',
     justifyContent: 'center',
@@ -61,14 +74,13 @@ const styles = StyleSheet.create({
   },
   loginBtnGoDisabled: {
     flex: 1,
-    height: normalize(64),
+    height: normalize(52),
     borderRadius: 5,
     backgroundColor: '#423170',
     color: '#808080',
     justifyContent: 'center',
     alignItems: 'center',
   },
-
   loginBtnGoTitle: {
     fontFamily: 'Ubuntu-Bold',
     fontSize: normalize(18),
@@ -79,17 +91,16 @@ const styles = StyleSheet.create({
   },
   loginDescriptionTitle: {
     fontFamily: 'NotoSans-Regular',
-    fontSize: normalize(15),
+    fontSize: normalize(14),
     color: '#F32C2C',
-    marginBottom: normalize(40),
+    marginBottom: normalize(50),
+    marginTop: normalize(5),
   },
   walletTitile: {
     fontFamily: 'Ubuntu-Bold',
     fontStyle: 'normal',
-
     fontSize: normalize(14),
     lineHeight: normalize(20),
-
     color: '#A195C2',
   },
   loginDescription: {
@@ -101,7 +112,7 @@ const styles = StyleSheet.create({
     color: '#FF004D',
   },
   loginIncorrectWalletAddressInput: {
-    borderColor: '#FF004D',
+    borderColor: '#F32C2C',
     borderWidth: 1,
   },
   loadingWrapper: {

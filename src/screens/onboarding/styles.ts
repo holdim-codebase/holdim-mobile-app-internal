@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native'
+import {Platform, StatusBar, StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
 const styles = StyleSheet.create({
@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
     paddingHorizontal: normalize(17),
-    paddingVertical: normalize(92),
+    paddingTop: normalize(66),
+    paddingBottom: normalize(71),
   },
   onboardingTitle: {
     color: '#FFFFFF',

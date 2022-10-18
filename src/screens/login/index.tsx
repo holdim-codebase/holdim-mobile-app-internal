@@ -14,6 +14,7 @@ import {useMutation} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
 
 import {handleHTTPError, REGISTER_USER} from '../../services/api'
+import Close from '../../assets/images/svg/Close.svg'
 import styles from './styles'
 
 // to validate wallet address and ens address
@@ -25,6 +26,8 @@ const LoginScreen = ({navigation}: any) => {
   const [incorrectWalletAddress, setIncorrectWalletAddress] =
     React.useState<boolean>(false)
   const [loadingScreen, setLoadingScreen] = React.useState<boolean>(false)
+  const [isTextInputFocused, setIsTextInputFocused] =
+    React.useState<boolean>(false)
 
   const [register] = useMutation(REGISTER_USER, {
     variables: {
@@ -101,7 +104,7 @@ const LoginScreen = ({navigation}: any) => {
           </View>
         ) : (
           <View style={styles.loginContentWrapper}>
-            <View style={styles.loginTitleWrapper}>
+            <View>
               <Text style={styles.loginTitle}>
                 Start your friendly DAO journey
               </Text>
@@ -112,17 +115,31 @@ const LoginScreen = ({navigation}: any) => {
               <Text style={styles.walletTitile}>
                 WALLET ADDRESS OR ENS NAME
               </Text>
-              <TextInput
+              <View
                 style={[
-                  styles.loginTextInput,
+                  styles.loginTextInputWrapper,
+                  isTextInputFocused && styles.loginTextInputFocused,
                   incorrectWalletAddress &&
                     styles.loginIncorrectWalletAddressInput,
-                ]}
-                onChangeText={onChangeWalletAddressInput}
-                value={walletAddressInput}
-                placeholder={'Enter your wallet address'}
-                placeholderTextColor="#8B81A6"
-              />
+                ]}>
+                <TextInput
+                  style={styles.loginTextInput}
+                  onBlur={() => setIsTextInputFocused(false)}
+                  onFocus={() => setIsTextInputFocused(true)}
+                  multiline={true}
+                  onChangeText={onChangeWalletAddressInput}
+                  value={walletAddressInput}
+                  placeholder={'Enter your wallet address'}
+                  placeholderTextColor="#8B81A6"
+                />
+                {walletAddressInput ? (
+                  <TouchableOpacity
+                    style={styles.loginTextInputClearBtn}
+                    onPress={() => onChangeWalletAddressInput('')}>
+                    <Close />
+                  </TouchableOpacity>
+                ) : null}
+              </View>
               <Text
                 style={[
                   styles.loginDescriptionTitle,
@@ -154,7 +171,7 @@ const LoginScreen = ({navigation}: any) => {
                         ? styles.loginBtnGoTitleDisabled
                         : null,
                     ]}>
-                    GO
+                    Start
                   </Text>
                 </TouchableOpacity>
               </View>
