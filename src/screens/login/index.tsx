@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as Sentry from '@sentry/react-native'
 import {
   ActivityIndicator,
   ScrollView,
@@ -11,8 +12,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import {SafeAreaView} from 'react-native-safe-area-context'
 import auth from '@react-native-firebase/auth'
 import {useMutation} from '@apollo/client'
-import * as Sentry from '@sentry/react-native'
 
+import {UserContext} from '../../../App'
 import {client, handleHTTPError, REGISTER_USER} from '../../services/api'
 import styles from './styles'
 
@@ -26,21 +27,20 @@ const LoginScreen = ({navigation}: any) => {
     React.useState<boolean>(false)
   const [loadingScreen, setLoadingScreen] = React.useState<boolean>(false)
 
+  const {setWalletId} = React.useContext(UserContext)
+
   const [register] = useMutation(REGISTER_USER, {
     variables: {
       walletAddress: walletAddressInput,
     },
     onCompleted: data => {
       data.registerUser.wallets.length !== 0 &&
-        AsyncStorage.setItem('wallet-id', data.registerUser.wallets[0].id)
-      AsyncStorage.setItem('userLoggedIn', 'true')
-      // navigate to screens depends on already launched
+        AsyncStorage.setItem('wallet-id', data.registerUser.wallets[0].id).then(
+          r => setWalletId(data.registerUser.wallets[0].id),
+        )
       AsyncStorage.getItem('alreadyLaunched').then(launched => {
-        if (launched !== null) {
-          navigation.navigate('Feed')
-        } else {
+        if (launched === null) {
           AsyncStorage.setItem('alreadyLaunched', 'true')
-          navigation.navigate('WelcomeScreen')
         }
       })
       setLoadingScreen(false)

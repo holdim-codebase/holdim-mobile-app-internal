@@ -13,15 +13,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
   },
-  itemSeparator: {
-    flex: 1,
-    height: 1,
-  },
   walletManagementWrapper: {
     flex: 1,
     height: STATUSBAR_HEIGHT,
     flexDirection: 'column',
-    justifyContent: 'flex-end',
   },
   walletManagementStatusBar: {
     height: STATUSBAR_HEIGHT,

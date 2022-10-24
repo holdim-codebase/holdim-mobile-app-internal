@@ -11,6 +11,7 @@ import {ApolloProvider} from '@apollo/client'
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import * as Sentry from '@sentry/react-native'
 
+// screens
 import ProposalScreen from './src/screens/proposal'
 import FeedScreen from './src/screens/feed'
 import SearchScreen from './src/screens/search'
@@ -20,6 +21,8 @@ import FullProposalScreen from './src/screens/fullProposal'
 import OnboardingScreen from './src/screens/onboarding'
 import LoginScreen from './src/screens/login'
 import WelcomeScreen from './src/screens/welcome'
+
+import UserProvider, {UserContextProps} from './src/Provider/UserProvider'
 import {client} from './src/services/api'
 
 // icons svg
@@ -57,8 +60,6 @@ const Stack = createNativeStackNavigator()
 
 const Tab = createBottomTabNavigator()
 
-const HomeStack = createNativeStackNavigator()
-
 const headerOptions = {
   headerStyle: {
     backgroundColor: 'rgba(22, 22, 22, 1)',
@@ -67,6 +68,8 @@ const headerOptions = {
   headerTintColor: 'white',
   headerBackTitleVisible: false,
 }
+
+const HomeStack = createNativeStackNavigator()
 
 function HomeStackScreen() {
   return (
@@ -228,18 +231,14 @@ const MainScreen = () => {
   )
 }
 
-function App() {
-  const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean>(false)
-  const [alreadyLoggedIn, setAlreadyLoggedIn] = React.useState<boolean>(false)
+export const UserContext = React.createContext<UserContextProps>(
+  {} as UserContextProps,
+)
 
-  // CLear data to test login
-  // React.useEffect(() => {
-  //   AsyncStorage.clear()
-  //   auth().currentUser &&
-  //     auth()
-  //       .signOut()
-  //       .then(() => console.log('User signed out!'))
-  // }, [])
+const RootStack = () => {
+  const {walletId} = React.useContext(UserContext)
+
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     // check if the application has already been launched
@@ -257,101 +256,93 @@ function App() {
     })
   }, [])
 
-  // check if user was already logged in
-  React.useEffect(() => {
-    AsyncStorage.getItem('userLoggedIn').then(value => {
-      setAlreadyLoggedIn(!!value)
-    })
-  }, [])
+  return walletId && walletId !== '' ? (
+    isFirstLaunch ? (
+      <Stack.Navigator
+        screenOptions={{headerShown: false, gestureEnabled: false}}>
+        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+        <Stack.Screen name="MainScreen" component={MainScreen} />
+        <Stack.Screen
+          name="WalletManagement"
+          component={WalletManagementScreen}
+          options={{
+            headerTitle: 'Wallet management',
+          }}
+        />
+        <Stack.Screen
+          name="NewWallet"
+          component={NewWalletScreen}
+          options={{
+            headerTitle: 'New wallet',
+          }}
+        />
+        <Stack.Screen name="StateScreen" component={StateScreen} />
+      </Stack.Navigator>
+    ) : (
+      <Stack.Navigator
+        screenOptions={{headerShown: false, gestureEnabled: false}}>
+        <Stack.Screen name="MainScreen" component={MainScreen} />
+        <Stack.Screen
+          name="WalletManagement"
+          component={WalletManagementScreen}
+          options={{
+            headerTitle: 'Wallet management',
+          }}
+        />
+        <Stack.Screen
+          name="NewWallet"
+          component={NewWalletScreen}
+          options={{
+            headerTitle: 'New wallet',
+          }}
+        />
+        <Stack.Screen name="StateScreen" component={StateScreen} />
+      </Stack.Navigator>
+    )
+  ) : isFirstLaunch ? (
+    <Stack.Navigator
+      screenOptions={{headerShown: false, gestureEnabled: false}}>
+      <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+    </Stack.Navigator>
+  ) : (
+    <Stack.Navigator
+      screenOptions={{headerShown: false, gestureEnabled: false}}>
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+    </Stack.Navigator>
+  )
+}
 
+function App() {
   // hide splash screen
   React.useEffect(() => {
     SplashScreen.hide()
   }, [])
 
+  // CLear data to test login
+  // React.useEffect(() => {
+  //   AsyncStorage.clear()
+  //   auth().currentUser &&
+  //     auth()
+  //       .signOut()
+  //       .then(() => console.log('User signed out!'))
+  // }, [])
+
   return (
     <ApolloProvider client={client}>
-      <GestureHandlerRootView style={{flex: 1}}>
-        <SafeAreaProvider>
-          <StatusBar
-            barStyle="light-content"
-            backgroundColor="rgba(22, 22, 22, 1)"
-          />
-          <NavigationContainer theme={navTheme}>
-            {isFirstLaunch && (
-              <Stack.Navigator
-                screenOptions={{headerShown: false, gestureEnabled: false}}>
-                <Stack.Screen
-                  name="OnboardingScreen"
-                  component={OnboardingScreen}
-                />
-                <Stack.Screen name="LoginScreen" component={LoginScreen} />
-                <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-                <Stack.Screen name="MainScreen" component={MainScreen} />
-                <Stack.Screen
-                  name="WalletManagement"
-                  component={WalletManagementScreen}
-                  options={{
-                    headerTitle: 'Wallet management',
-                  }}
-                />
-                <Stack.Screen
-                  name="NewWallet"
-                  component={NewWalletScreen}
-                  options={{
-                    headerTitle: 'New wallet',
-                  }}
-                />
-                <Stack.Screen name="StateScreen" component={StateScreen} />
-              </Stack.Navigator>
-            )}
-            {!isFirstLaunch && !alreadyLoggedIn && (
-              <Stack.Navigator
-                screenOptions={{headerShown: false, gestureEnabled: false}}>
-                <Stack.Screen name="LoginScreen" component={LoginScreen} />
-                <Stack.Screen name="MainScreen" component={MainScreen} />
-                <Stack.Screen
-                  name="WalletManagement"
-                  component={WalletManagementScreen}
-                  options={{
-                    headerTitle: 'Wallet management',
-                  }}
-                />
-                <Stack.Screen
-                  name="NewWallet"
-                  component={NewWalletScreen}
-                  options={{
-                    headerTitle: 'New wallet',
-                  }}
-                />
-                <Stack.Screen name="StateScreen" component={StateScreen} />
-              </Stack.Navigator>
-            )}
-            {!isFirstLaunch && alreadyLoggedIn && (
-              <Stack.Navigator
-                screenOptions={{headerShown: false, gestureEnabled: false}}>
-                <Stack.Screen name="MainScreen" component={MainScreen} />
-                <Stack.Screen
-                  name="WalletManagement"
-                  component={WalletManagementScreen}
-                  options={{
-                    headerTitle: 'Wallet management',
-                  }}
-                />
-                <Stack.Screen
-                  name="NewWallet"
-                  component={NewWalletScreen}
-                  options={{
-                    headerTitle: 'New wallet',
-                  }}
-                />
-                <Stack.Screen name="StateScreen" component={StateScreen} />
-                <Stack.Screen name="LoginScreen" component={LoginScreen} />
-              </Stack.Navigator>
-            )}
-          </NavigationContainer>
-        </SafeAreaProvider>
-      </GestureHandlerRootView>
+      <UserProvider>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <SafeAreaProvider>
+            <StatusBar
+              barStyle="light-content"
+              backgroundColor="rgba(22, 22, 22, 1)"
+            />
+            <NavigationContainer theme={navTheme}>
+              <RootStack />
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </UserProvider>
     </ApolloProvider>
   )
 }

@@ -22,7 +22,8 @@ import {
 } from '../../services/api'
 import CustomModal from '../../components/CustomModal'
 import {shortenAddress} from '../proposal'
-import {validateUserTokens} from '../profile'
+import AddWalletModal from '../../components/AddWalletModal'
+import {UserContext} from '../../../App'
 
 import DeleteSvg from '../../assets/images/svg/Delete.svg'
 import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
@@ -38,19 +39,25 @@ function WalletManagementScreen({navigation}: any) {
   const [modalVisible, setModalVisible] = React.useState<boolean>(false)
   const [lastWalletDeleteModalVisible, setLastWalletDeleteModalVisible] =
     React.useState<boolean>(false)
+  const [addWalletModal, setAddWalletModal] = React.useState<boolean>(false)
   const [isLastWallet, setIsLastWallet] = React.useState<boolean>(false)
 
-  const {loading: laodingWallets} = useQuery(GET_USER_WALLETS, {
-    onCompleted: res => {
-      setUserWallets(res.me.wallets)
-      setUserAvatar(res.me.avatarUrl)
+  const {setWalletId} = React.useContext(UserContext)
+
+  const {loading: laodingWallets, refetch: refetchUserWallets} = useQuery(
+    GET_USER_WALLETS,
+    {
+      onCompleted: res => {
+        setUserWallets(res.me.wallets)
+        setUserAvatar(res.me.avatarUrl)
+      },
+      onError: error => {
+        Sentry.captureException(error)
+        console.error(error)
+        handleHTTPError()
+      },
     },
-    onError: error => {
-      Sentry.captureException(error)
-      console.error(error)
-      handleHTTPError()
-    },
-  })
+  )
 
   const [deleteWallet] = useMutation(DELETE_WALLET, {
     onCompleted: data => {
@@ -63,6 +70,7 @@ function WalletManagementScreen({navigation}: any) {
       } else {
         activeWalletId && AsyncStorage.setItem('wallet-id', activeWalletId)
       }
+      refetchUserWallets()
       navigation.navigate('StateScreen', {
         svg: 'done',
         title: 'Wallet was deleted',
@@ -76,7 +84,6 @@ function WalletManagementScreen({navigation}: any) {
       console.error(error)
       handleHTTPError()
     },
-    refetchQueries: [{query: GET_USER_WALLETS, variables: {onlyMain: true}}],
   })
 
   const startDeleteWallet = (walletId: string) => {
@@ -85,9 +92,9 @@ function WalletManagementScreen({navigation}: any) {
         ? setDeletingActiveWallet(true)
         : AsyncStorage.setItem('wallet-id', walletId)
       deleteWallet()
-    } else {
     }
   }
+
   const deleteLastWallet = () => {
     AsyncStorage.removeItem('wallet-id')
     AsyncStorage.removeItem('userLoggedIn')
@@ -98,7 +105,7 @@ function WalletManagementScreen({navigation}: any) {
         .signOut()
         .then(() => {
           console.log('User signed out!')
-          navigation.navigate('LoginScreen')
+          setWalletId('')
         })
         .catch(e => console.log(e))
   }
@@ -117,7 +124,6 @@ function WalletManagementScreen({navigation}: any) {
   }, [userWallets])
 
   const RightSwipeActions = (walletId: string) => {
-    console.log({walletId})
     return (
       <View style={styles.walletSwipeBlockWrapper}>
         {/* <TouchableOpacity
@@ -185,18 +191,10 @@ function WalletManagementScreen({navigation}: any) {
                     />
                     <Text style={styles.walletAddressTitle}>
                       {wallet.ens
-                        ? shortenAddress(wallet.ens)
+                        ? shortenAddress(wallet.ens).toLowerCase()
                         : shortenAddress(wallet.address)}
                     </Text>
                   </View>
-                  {wallet.tokens.length !== 0 ? (
-                    <Text style={styles.walletAmount}>
-                      {validateUserTokens(Number(wallet.tokens[0].price))}{' '}
-                      {wallet.tokens[0].symbol}
-                    </Text>
-                  ) : (
-                    <Text style={styles.walletAmount}>0 ETH</Text>
-                  )}
                 </View>
                 <View style={styles.walletSection}>
                   <Text style={styles.walletPurpleText}>Wallet</Text>
@@ -249,9 +247,14 @@ function WalletManagementScreen({navigation}: any) {
         <View style={styles.addWalletBtnWrapper}>
           <TouchableOpacity
             style={styles.addWalletBtn}
-            onPress={() => navigation.navigate('NewWallet')}>
+            onPress={() => setAddWalletModal(true)}>
             <Text style={styles.addWalletBtnTitle}>Add new wallet</Text>
           </TouchableOpacity>
+          <AddWalletModal
+            modalVisible={addWalletModal}
+            setModalVisible={m => setAddWalletModal(m)}
+            navigation={navigation}
+          />
         </View>
       )}
     </View>

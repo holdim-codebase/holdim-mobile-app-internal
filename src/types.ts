@@ -61,14 +61,7 @@ export type TUser = {
       id: string
       name: string
       logo: string
-      tokens: [
-        {
-          personalizedData: {quantity: string}
-          totalSupply: number
-          price: number
-          symbol: string
-        },
-      ]
+      tokens: TToken[]
     },
   ]
 }
