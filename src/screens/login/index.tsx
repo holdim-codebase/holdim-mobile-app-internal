@@ -82,7 +82,10 @@ const LoginScreen = ({navigation}: any) => {
 
   // validate wallet address when user write it
   React.useEffect(() => {
-    if (!walletAddressInput) return
+    if (!walletAddressInput) {
+      setIncorrectWalletAddress(false)
+      return
+    }
     const correctWalletAddress =
       walletAddressInput.length < 255 &&
       walletAddressInput.startsWith('0x') &&
@@ -137,7 +140,10 @@ const LoginScreen = ({navigation}: any) => {
                 {walletAddressInput ? (
                   <TouchableOpacity
                     style={styles.loginTextInputClearBtn}
-                    onPress={() => onChangeWalletAddressInput('')}>
+                    onPress={() => {
+                      onChangeWalletAddressInput('')
+                      setIncorrectWalletAddress(false)
+                    }}>
                     <Close />
                   </TouchableOpacity>
                 ) : null}
