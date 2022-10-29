@@ -4,8 +4,8 @@ import {
   View,
   ScrollView,
   Image,
-  TouchableOpacity,
   RefreshControl,
+  TouchableWithoutFeedback,
 } from 'react-native'
 import {useQuery} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
@@ -86,7 +86,7 @@ function ProfileScreen({navigation}: any) {
             <Text style={styles.portfolioTitle}>Followed</Text>
             <View style={styles.portfolioDaoListWrapper}>
               {portfolio.followedDaos.map(followedDao => (
-                <TouchableOpacity
+                <TouchableWithoutFeedback
                   key={followedDao.id}
                   onPress={() => openDAODescription(followedDao.id)}>
                   <View style={styles.portfolioDaoWrapper}>
@@ -135,7 +135,7 @@ function ProfileScreen({navigation}: any) {
                       </Text>
                     </View>
                   </View>
-                </TouchableOpacity>
+                </TouchableWithoutFeedback>
               ))}
             </View>
           </ScrollView>
