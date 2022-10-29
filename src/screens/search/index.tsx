@@ -19,21 +19,25 @@ import styles from './styles'
 import Follow from '../../components/Follow'
 
 function SearchScreen({navigation}: any) {
-  const [daoListAll, setDaoListAll] = React.useState<TDAO[]>([])
   const [daoList, setDaoList] = React.useState<TDAO[]>([])
+  const [textInSearchBar, setTextInSearchBar] = React.useState<string>('')
 
   // states for pagination
   const [endCursor, setEndCursor] = React.useState<string>('')
   const [hasNextPage, setHasNextPage] = React.useState<boolean>(false)
 
-  const {loading: loadingDaoList, fetchMore} = useQuery(GET_DAO_LIST, {
+  const {
+    loading: loadingDaoList,
+    fetchMore,
+    refetch,
+  } = useQuery(GET_DAO_LIST, {
     variables: {
       first: 15,
       after: '',
       onlyMain: true,
+      search: '',
     },
     onCompleted: res => {
-      setDaoListAll(res.daosV2.edges.map((edge: {node: any}) => edge.node))
       setDaoList(res.daosV2.edges.map((edge: {node: any}) => edge.node))
       setEndCursor(res.daosV2.pageInfo.endCursor)
       setHasNextPage(res.daosV2.pageInfo.hasNextPage)
@@ -43,17 +47,6 @@ function SearchScreen({navigation}: any) {
       handleHTTPError()
     },
   })
-
-  const getSearchedDaoList = (text?: string) => {
-    if (text) {
-      const filteredDaoList = daoListAll.filter(dao =>
-        dao.name.toLowerCase().includes(text.toLowerCase()),
-      )
-      setDaoList(filteredDaoList)
-    } else {
-      setDaoList(daoListAll)
-    }
-  }
 
   const openDAODescription = (daoId: string) => {
     navigation.navigate('DAO', {daoId})
@@ -71,6 +64,14 @@ function SearchScreen({navigation}: any) {
     )
   }
 
+  React.useEffect(() => {
+    const getData = setTimeout(() => {
+      refetch({first: 12, after: '', onlyMain: true, search: textInSearchBar})
+    }, 500)
+
+    return () => clearTimeout(getData)
+  }, [textInSearchBar])
+
   return (
     <View style={styles.searchWrapper}>
       <SearchBar
@@ -80,8 +81,8 @@ function SearchScreen({navigation}: any) {
         clearIconImageStyle={{tintColor: 'white'}}
         placeholderTextColor="white"
         placeholder="Search for DAO"
-        onChangeText={(text: string) => getSearchedDaoList(text)}
-        onClearPress={() => setDaoList(daoListAll)}
+        onChangeText={(text: string) => setTextInSearchBar(text)}
+        onClearPress={() => setTextInSearchBar('')}
       />
       {loadingDaoList ? (
         <View style={styles.loadingWrapperFullScreen}>
@@ -94,7 +95,12 @@ function SearchScreen({navigation}: any) {
             if (isCloseToBottom(nativeEvent)) {
               if (hasNextPage) {
                 fetchMore({
-                  variables: {first: 20, after: endCursor, onlyMain: true},
+                  variables: {
+                    first: 20,
+                    after: endCursor,
+                    onlyMain: true,
+                    search: '',
+                  },
                 })
               }
             }
