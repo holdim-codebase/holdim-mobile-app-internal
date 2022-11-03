@@ -174,7 +174,6 @@ function ProfileScreen({navigation, route}: any) {
                                 followedDao.tokens[0].personalizedData.quantity,
                               ),
                             )}
-
                           </Text>{' '}
                           {followedDao.tokens[0].symbol}
                         </Text>

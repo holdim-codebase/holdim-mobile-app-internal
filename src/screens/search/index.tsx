@@ -107,6 +107,7 @@ function SearchScreen({navigation}: any) {
             }
           }}
           showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
           scrollEventThrottle={400}>
           {daoList.length !== 0 ? (
             daoList.map((dao, i) => {
