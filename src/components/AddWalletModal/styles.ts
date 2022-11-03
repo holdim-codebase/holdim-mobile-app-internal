@@ -4,8 +4,8 @@ import normalize from 'react-native-normalize'
 const OS_IOS = Platform.OS === 'ios'
 
 const styles = StyleSheet.create({
+  addWalletModalWrapperIOS: {flex: 1},
   addWalletModalWrapper: {
-    flex: 1,
     justifyContent: 'center',
     paddingHorizontal: OS_IOS ? normalize(16) : 0,
     marginHorizontal: OS_IOS ? 0 : normalize(16),

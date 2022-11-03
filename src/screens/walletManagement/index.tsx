@@ -25,6 +25,7 @@ import CustomModal from '../../components/CustomModal'
 import {shortenAddress} from '../proposal'
 import AddWalletModal from '../../components/AddWalletModal'
 import {UserContext} from '../../../App'
+import {done, wasteBasket} from '../../constants/emojis'
 
 import DeleteSvg from '../../assets/images/svg/Delete.svg'
 import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
@@ -74,7 +75,7 @@ function WalletManagementScreen({navigation}: any) {
       }
       refetchUserWallets()
       navigation.navigate('StateScreen', {
-        svg: 'done',
+        emoji: done,
         title: 'Wallet was deleted',
         description:
           'Wallet deletion was successful. However, you can always return it to the application by simply registering it as new.',
@@ -221,7 +222,7 @@ function WalletManagementScreen({navigation}: any) {
         Would you like to continue?`}
                   btnCancelText={'Later'}
                   btnActionText={'Yes, continue'}
-                  unicodeTitle={'delete'}
+                  emoji={wasteBasket}
                   modalVisible={modalVisible}
                   setModalVisible={m => setModalVisible(m)}
                   doAction={() => {
@@ -235,7 +236,7 @@ function WalletManagementScreen({navigation}: any) {
                   description={`You are deleting your last wallet. If you delete it, you will need to register again. Personal settings will not be saved. Do you want to delete?`}
                   btnCancelText={'Later'}
                   btnActionText={'Yes, delete'}
-                  unicodeTitle={'lastWalletDelete'}
+                  emoji={wasteBasket}
                   modalVisible={lastWalletDeleteModalVisible}
                   setModalVisible={m => setLastWalletDeleteModalVisible(m)}
                   doAction={() => deleteLastWallet()}

@@ -7,12 +7,7 @@ function StateScreen({navigation, route}: any) {
   return (
     <View style={styles.stateScreenWrapper}>
       <View style={styles.stateScreenContent}>
-        {route.params.svg === 'fire' ? (
-          <Text style={styles.emoji}>&#128293;</Text>
-        ) : null}
-        {route.params.svg === 'done' ? (
-          <Text style={styles.emoji}>&#9989;</Text>
-        ) : null}
+        <Text style={styles.emoji}>{route.params.emoji}</Text>
         <Text style={styles.stateScreenTitle}>{route.params.title}</Text>
         <Text style={styles.stateScreenDescription}>
           {route.params.description}

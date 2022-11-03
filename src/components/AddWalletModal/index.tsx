@@ -1,7 +1,14 @@
 import React from 'react'
 import * as Sentry from '@sentry/react-native'
 import {BlurView} from '@react-native-community/blur'
-import {Modal, Text, TextInput, TouchableOpacity, View} from 'react-native'
+import {
+  Modal,
+  Platform,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native'
 import {useMutation} from '@apollo/client'
 import {NavigationProp} from '@react-navigation/native'
 
@@ -10,12 +17,14 @@ import {ADD_WALLET, GET_USER_WALLETS, handleHTTPError} from '../../services/api'
 // svg
 import Close from '../../assets/images/svg/Close.svg'
 
+import {useKeyboardVisible} from '../../customHooks/useKeyboardVisible'
+import {fire, key} from '../../constants/emojis'
+
 // styles
 import styles from './styles'
 
 // to validate wallet address and ens address
 import namehash from '@ensdomains/eth-ens-namehash'
-import {useKeyboardVisible} from '../../customHooks/useKeyboardVisible'
 
 type AddWalletModal = {
   modalVisible: boolean
@@ -39,7 +48,7 @@ const AddWalletModal = ({
     },
     onCompleted: data => {
       navigation.navigate('StateScreen', {
-        svg: 'fire',
+        emoji: fire,
         title: 'Congrats!',
         description:
           'You have successfully added a new wallet! Now voting will be even easier!',
@@ -89,11 +98,12 @@ const AddWalletModal = ({
         style={[
           styles.addWalletModalWrapper,
           useKeyboardVisible() && styles.addWalletModalWrapperKeyboardVisible,
+          Platform.OS === 'ios' && styles.addWalletModalWrapperIOS,
         ]}
         overlayColor={'rgba(44, 36, 67, 0.6)'}>
         <View style={styles.addWalletModal}>
           <View style={styles.addWalletModalCentered}>
-            <Text style={styles.keyEmoji}>&#128273;</Text>
+            <Text style={styles.keyEmoji}>{key}</Text>
             <Text style={styles.addWalletModalTitle}>New wallet</Text>
             <Text style={styles.addWalletModalDescription}>
               Add new wallet in a couple of clicks.

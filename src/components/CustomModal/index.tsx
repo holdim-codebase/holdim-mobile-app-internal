@@ -1,13 +1,13 @@
 import React from 'react'
 import {BlurView} from '@react-native-community/blur'
-import {Modal, Text, TouchableOpacity, View} from 'react-native'
+import {Modal, Platform, Text, TouchableOpacity, View} from 'react-native'
 
 import styles from './styles'
 
 type CustomModalProps = {
   title: string
   description: string
-  unicodeTitle: string
+  emoji: string
   modalVisible: boolean
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
   btnCancelText?: string
@@ -19,7 +19,7 @@ type CustomModalProps = {
 const CustomModal = ({
   title,
   description,
-  unicodeTitle,
+  emoji,
   modalVisible,
   setModalVisible,
   btnCancelText,
@@ -37,15 +37,13 @@ const CustomModal = ({
           setModalVisible(!modalVisible)
         }}>
         <BlurView
-          style={styles.customModalWrapper}
+          style={[
+            styles.customModalWrapper,
+            Platform.OS === 'ios' && styles.customModalWrapperIOS,
+          ]}
           overlayColor={'rgba(44, 36, 67, 0.6)'}>
           <View style={styles.customModal}>
-            {unicodeTitle === 'delete' ? (
-              <Text style={styles.emoji}>&#128465;</Text>
-            ) : null}
-            {unicodeTitle === 'lastWalletDelete' ? (
-              <Text style={styles.emoji}>&#128465;</Text>
-            ) : null}
+            <Text style={styles.emoji}>{emoji}</Text>
             <Text style={styles.customModalTitle}>{title}</Text>
             <Text style={styles.customModalDescription}>{description}</Text>
             {btnOkText ? (
@@ -75,8 +73,7 @@ const CustomModal = ({
                   style={[
                     styles.customModalButton,
                     styles.customModalButtonOk,
-                    unicodeTitle === 'lastWalletDelete' &&
-                      styles.customModalButtonDanger,
+                    title === 'Last wallet' && styles.customModalButtonDanger,
                   ]}
                   onPress={() => {
                     setModalVisible(!modalVisible)

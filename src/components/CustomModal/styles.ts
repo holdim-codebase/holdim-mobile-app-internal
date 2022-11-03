@@ -4,8 +4,10 @@ import normalize from 'react-native-normalize'
 const OS_IOS = Platform.OS === 'ios'
 
 const styles = StyleSheet.create({
-  customModalWrapper: {
+  customModalWrapperIOS: {
     flex: 1,
+  },
+  customModalWrapper: {
     justifyContent: 'center',
     paddingHorizontal: OS_IOS ? normalize(16) : 0,
     marginHorizontal: OS_IOS ? 0 : normalize(16),
