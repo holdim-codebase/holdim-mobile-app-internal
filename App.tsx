@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {StatusBar} from 'react-native'
+import {StatusBar, TouchableOpacity} from 'react-native'
 import SplashScreen from 'react-native-splash-screen'
 import {SafeAreaProvider} from 'react-native-safe-area-context'
 import {NavigationContainer, DefaultTheme} from '@react-navigation/native'
@@ -8,8 +8,10 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack'
 import auth from '@react-native-firebase/auth'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {ApolloProvider} from '@apollo/client'
+import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import * as Sentry from '@sentry/react-native'
 
+// screens
 import ProposalScreen from './src/screens/proposal'
 import FeedScreen from './src/screens/feed'
 import SearchScreen from './src/screens/search'
@@ -18,6 +20,9 @@ import DAOScreen from './src/screens/dao'
 import FullProposalScreen from './src/screens/fullProposal'
 import OnboardingScreen from './src/screens/onboarding'
 import LoginScreen from './src/screens/login'
+import WelcomeScreen from './src/screens/welcome'
+
+import UserProvider, {UserContextProps} from './src/Provider/UserProvider'
 import {client} from './src/services/api'
 
 // icons svg
@@ -27,7 +32,9 @@ import ProfileIcon from './src/assets/images/svg/Profile.gray.svg'
 import FeedIconFocused from './src/assets/images/svg/Home.purple.svg'
 import SearchIconFocused from './src/assets/images/svg/Search.purple.svg'
 import ProfileIconFocused from './src/assets/images/svg/Profile.purple.svg'
-import WelcomeScreen from './src/screens/welcome'
+import SettingsIcon from './src/assets/images/svg/Settings.svg'
+import WalletManagementScreen from './src/screens/walletManagement'
+import StateScreen from './src/screens/stateScreen'
 
 Sentry.init({
   dsn: 'https://e64a26481fc64b0b895da8a145307e31@o1405388.ingest.sentry.io/6739145',
@@ -52,8 +59,6 @@ const Stack = createNativeStackNavigator()
 
 const Tab = createBottomTabNavigator()
 
-const HomeStack = createNativeStackNavigator()
-
 const headerOptions = {
   headerStyle: {
     backgroundColor: 'rgba(22, 22, 22, 1)',
@@ -62,6 +67,8 @@ const headerOptions = {
   headerTintColor: 'white',
   headerBackTitleVisible: false,
 }
+
+const HomeStack = createNativeStackNavigator()
 
 function HomeStackScreen() {
   return (
@@ -91,7 +98,20 @@ const ProfileStack = createNativeStackNavigator()
 function ProfileStackScreen() {
   return (
     <ProfileStack.Navigator screenOptions={headerOptions}>
-      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
+      <ProfileStack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={({navigation}) => ({
+          headerRight: () => {
+            return (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('WalletManagement')}>
+                <SettingsIcon />
+              </TouchableOpacity>
+            )
+          },
+        })}
+      />
       <ProfileStack.Screen name="DAO" component={DAOScreen} />
       <ProfileStack.Screen
         name="Proposal"
@@ -210,9 +230,61 @@ const MainScreen = () => {
   )
 }
 
+export const UserContext = React.createContext<UserContextProps>(
+  {} as UserContextProps,
+)
+
+const RootStack = (RootStackProps: {isFirstLaunch: boolean}) => {
+  const {walletId} = React.useContext(UserContext)
+
+  return walletId && walletId !== '' ? (
+    RootStackProps.isFirstLaunch ? (
+      <Stack.Navigator
+        screenOptions={{headerShown: false, gestureEnabled: false}}>
+        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
+        <Stack.Screen name="MainScreen" component={MainScreen} />
+        <Stack.Screen
+          name="WalletManagement"
+          component={WalletManagementScreen}
+          options={{
+            headerTitle: 'Wallet management',
+          }}
+        />
+        <Stack.Screen name="StateScreen" component={StateScreen} />
+      </Stack.Navigator>
+    ) : (
+      <Stack.Navigator
+        screenOptions={{headerShown: false, gestureEnabled: false}}>
+        <Stack.Screen name="MainScreen" component={MainScreen} />
+        <Stack.Screen
+          name="WalletManagement"
+          component={WalletManagementScreen}
+          options={{
+            headerTitle: 'Wallet management',
+          }}
+        />
+        <Stack.Screen name="StateScreen" component={StateScreen} />
+      </Stack.Navigator>
+    )
+  ) : RootStackProps.isFirstLaunch ? (
+    <Stack.Navigator
+      screenOptions={{headerShown: false, gestureEnabled: false}}>
+      <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+    </Stack.Navigator>
+  ) : (
+    <Stack.Navigator
+      screenOptions={{headerShown: false, gestureEnabled: false}}>
+      <Stack.Screen name="LoginScreen" component={LoginScreen} />
+    </Stack.Navigator>
+  )
+}
+
 function App() {
-  const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean>(false)
-  const [alreadyLoggedIn, setAlreadyLoggedIn] = React.useState<boolean>(false)
+  // hide splash screen
+  React.useEffect(() => {
+    SplashScreen.hide()
+  }, [])
 
   // CLear data to test login
   // React.useEffect(() => {
@@ -222,13 +294,16 @@ function App() {
   //       .signOut()
   //       .then(() => console.log('User signed out!'))
   // }, [])
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     // check if the application has already been launched
     AsyncStorage.getItem('alreadyLaunched').then(value => {
+      console.log({value})
       if (value === null) {
         // check if user exists when app is not launched yet
         // sign out old user
+
         if (auth().currentUser) {
           auth().signOut()
         }
@@ -239,52 +314,21 @@ function App() {
     })
   }, [])
 
-  // check if user was already logged in
-  React.useEffect(() => {
-    AsyncStorage.getItem('userLoggedIn').then(value => {
-      setAlreadyLoggedIn(!!value)
-    })
-  }, [])
-
-  // hide splash screen
-  React.useEffect(() => {
-    SplashScreen.hide()
-  }, [])
-
   return (
     <ApolloProvider client={client}>
-      <SafeAreaProvider>
-        <StatusBar
-          barStyle="light-content"
-          backgroundColor="rgba(22, 22, 22, 1)"
-        />
-        <NavigationContainer theme={navTheme}>
-          {isFirstLaunch && (
-            <Stack.Navigator
-              screenOptions={{headerShown: false, gestureEnabled: false}}>
-              <Stack.Screen
-                name="OnboardingScreen"
-                component={OnboardingScreen}
-              />
-              <Stack.Screen name="LoginScreen" component={LoginScreen} />
-              <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-              <Stack.Screen name="MainScreen" component={MainScreen} />
-            </Stack.Navigator>
-          )}
-          {!isFirstLaunch && !alreadyLoggedIn && (
-            <Stack.Navigator
-              screenOptions={{headerShown: false, gestureEnabled: false}}>
-              <Stack.Screen name="LoginScreen" component={LoginScreen} />
-              <Stack.Screen name="MainScreen" component={MainScreen} />
-            </Stack.Navigator>
-          )}
-          {!isFirstLaunch && alreadyLoggedIn && (
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-              <Stack.Screen name="MainScreen" component={MainScreen} />
-            </Stack.Navigator>
-          )}
-        </NavigationContainer>
-      </SafeAreaProvider>
+      <UserProvider>
+        <GestureHandlerRootView style={{flex: 1}}>
+          <SafeAreaProvider>
+            <StatusBar
+              barStyle="light-content"
+              backgroundColor="rgba(22, 22, 22, 1)"
+            />
+            <NavigationContainer theme={navTheme}>
+              <RootStack isFirstLaunch={isFirstLaunch} />
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </GestureHandlerRootView>
+      </UserProvider>
     </ApolloProvider>
   )
 }

@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native'
+import {Platform, StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
 const styles = StyleSheet.create({
@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
     paddingHorizontal: normalize(17),
-    paddingVertical: normalize(92),
+    paddingVertical: Platform.OS === 'ios' ? normalize(92) : normalize(66),
   },
   onboardingTitle: {
     color: '#FFFFFF',

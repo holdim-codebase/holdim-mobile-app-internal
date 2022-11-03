@@ -45,6 +45,7 @@ function SearchScreen({navigation}: any) {
     onError: error => {
       Sentry.captureException(error)
       handleHTTPError()
+      console.error(error)
     },
   })
 

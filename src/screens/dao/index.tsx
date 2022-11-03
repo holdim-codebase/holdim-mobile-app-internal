@@ -60,6 +60,7 @@ function DAOScreen({route, navigation}: any) {
     },
     onError: error => {
       Sentry.captureException(error)
+      console.error(error)
       handleHTTPError()
     },
   })
@@ -75,6 +76,7 @@ function DAOScreen({route, navigation}: any) {
     },
     onError: error => {
       Sentry.captureException(error)
+      console.error(error)
       handleHTTPError()
     },
   })

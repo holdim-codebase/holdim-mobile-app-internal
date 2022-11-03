@@ -97,6 +97,36 @@ export const UNFOLLOW_DAO = gql`
   }
 `
 
+export const ADD_WALLET = gql`
+  mutation AddWallet($walletAddress: ID!) {
+    addWallet(walletAddress: $walletAddress) {
+      id
+      address
+      ens
+      tokens {
+        id
+        name
+        main
+        personalizedData {
+          quantity
+        }
+        totalSupply
+        price
+        symbol
+      }
+    }
+  }
+`
+
+export const DELETE_WALLET = gql`
+  mutation DeleteWallet {
+    deleteWallet {
+      id
+      address
+    }
+  }
+`
+
 // Queries
 export const GET_PROPOSALS = gql`
   query GetProposals(
@@ -249,20 +279,41 @@ export const GET_USER_INFO = gql`
     me {
       id
       avatarUrl
-      wallet {
+      wallets {
+        id
         address
         ens
-        tokens {
-          personalizedData {
-            quantity
-          }
-        }
       }
       followedDaos {
         id
         name
         logo
         tokens(onlyMain: $tokensOnlyMain2) {
+          personalizedData {
+            quantity
+          }
+          totalSupply
+          price
+          symbol
+        }
+      }
+    }
+  }
+`
+
+export const GET_USER_WALLETS = gql`
+  query GET_USER_INFO {
+    me {
+      id
+      avatarUrl
+      wallets {
+        id
+        address
+        ens
+        tokens {
+          name
+          id
+          main
           personalizedData {
             quantity
           }
