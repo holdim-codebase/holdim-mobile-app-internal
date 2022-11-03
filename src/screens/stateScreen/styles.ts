@@ -1,19 +1,22 @@
 import {Platform, StatusBar, StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-export const STATUSBAR_HEIGHT =
-  Platform.OS === 'ios' ? normalize(44) : StatusBar.currentHeight
+const OS_IOS = Platform.OS === 'ios'
 
 const styles = StyleSheet.create({
   stateScreenWrapper: {
     flex: 1,
-    height: STATUSBAR_HEIGHT,
+    height: OS_IOS ? normalize(44) : StatusBar.currentHeight,
     paddingTop: normalize(194),
     paddingHorizontal: normalize(16.5),
     flexDirection: 'column',
     justifyContent: 'space-between',
   },
   stateScreenContent: {alignItems: 'center'},
+  emoji: {
+    fontSize: normalize(55),
+    color: 'white',
+  },
   stateScreenTitle: {
     color: '#BEAAF5',
     lineHeight: normalize(20),
@@ -32,7 +35,7 @@ const styles = StyleSheet.create({
   },
   stateScreenCloseBtnWrapper: {
     flexDirection: 'row',
-    paddingBottom: normalize(84),
+    paddingBottom: OS_IOS ? normalize(84) : normalize(50),
   },
   stateScreenCloseBtn: {
     flex: 1,

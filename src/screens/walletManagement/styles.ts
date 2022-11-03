@@ -1,8 +1,7 @@
-import {Platform, StatusBar, StyleSheet} from 'react-native'
+import {Platform, StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-export const STATUSBAR_HEIGHT =
-  Platform.OS === 'ios' ? normalize(44) : StatusBar.currentHeight
+const OS_IOS = Platform.OS === 'ios'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -15,11 +14,11 @@ const styles = StyleSheet.create({
   },
   walletManagementWrapper: {
     flex: 1,
-    height: STATUSBAR_HEIGHT,
+    height: OS_IOS ? normalize(44) : 0,
     flexDirection: 'column',
   },
   walletManagementStatusBar: {
-    height: STATUSBAR_HEIGHT,
+    height: OS_IOS ? normalize(44) : 0,
   },
   walletManagementStatusBarWrapper: {
     height: normalize(52),
@@ -38,22 +37,20 @@ const styles = StyleSheet.create({
     lineHeight: normalize(52),
   },
   walletManagementContentWrapper: {
-    paddingHorizontal: normalize(16),
-    // paddingBottom: normalize(84),
+    paddingRight: normalize(16),
     flexDirection: 'column',
     height: '72%',
   },
   walletWrapper: {
-    width: '100%',
     borderWidth: 1,
     borderRadius: normalize(10),
     borderColor: '#BEAAF5',
     padding: normalize(10),
     marginBottom: normalize(10),
     backgroundColor: 'black',
+    marginLeft: normalize(16),
   },
   activeWalletWrapper: {
-    width: '100%',
     borderWidth: 3,
     borderRadius: normalize(10),
     borderColor: '#8463DF',
@@ -130,8 +127,7 @@ const styles = StyleSheet.create({
   addWalletBtnWrapper: {
     flex: 1,
     flexDirection: 'row',
-
-    paddingBottom: normalize(85),
+    paddingBottom: OS_IOS ? normalize(85) : normalize(50),
     paddingTop: normalize(10),
     paddingHorizontal: normalize(16),
   },

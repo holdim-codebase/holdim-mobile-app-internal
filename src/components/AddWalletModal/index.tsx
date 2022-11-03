@@ -8,7 +8,6 @@ import {NavigationProp} from '@react-navigation/native'
 import {ADD_WALLET, GET_USER_WALLETS, handleHTTPError} from '../../services/api'
 
 // svg
-import NewWalletSvg from '../../assets/images/svg/Key.svg'
 import Close from '../../assets/images/svg/Close.svg'
 
 // styles
@@ -16,6 +15,7 @@ import styles from './styles'
 
 // to validate wallet address and ens address
 import namehash from '@ensdomains/eth-ens-namehash'
+import {useKeyboardVisible} from '../../customHooks/useKeyboardVisible'
 
 type AddWalletModal = {
   modalVisible: boolean
@@ -59,7 +59,10 @@ const AddWalletModal = ({
 
   // validate wallet address when user write it
   React.useEffect(() => {
-    if (!walletAddressInput) return
+    if (!walletAddressInput) {
+      setIncorrectWalletAddress(false)
+      return
+    }
     const correctWalletAddress =
       walletAddressInput.length < 255 &&
       walletAddressInput.startsWith('0x') &&
@@ -74,109 +77,111 @@ const AddWalletModal = ({
       setIncorrectWalletAddress(true)
     }
   }, [walletAddressInput])
-
   return (
-    <View>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible)
-        }}>
-        <BlurView style={styles.addWalletModalWrapper} overlayColor={'red'}>
-          <View style={styles.addWalletModal}>
-            <View style={styles.addWalletModalCentered}>
-              <NewWalletSvg />
-              <Text style={styles.addWalletModalTitle}>New wallet</Text>
-              <Text style={styles.addWalletModalDescription}>
-                Add new wallet in a couple of clicks.
-              </Text>
-            </View>
-            <View>
-              <Text style={styles.addWalletModalTextInputTitle}>
-                WALLET ADDRESS OR ENS NAME
-              </Text>
-              <View
-                style={[
-                  styles.addWalletModalTextInputWrapper,
-                  incorrectWalletAddress &&
-                    styles.addWalletModalIncorrectWalletAddressInput,
-                ]}>
-                <TextInput
-                  style={styles.addWalletModalTextInput}
-                  multiline={true}
-                  onChangeText={onChangeWalletAddressInput}
-                  value={walletAddressInput}
-                  placeholder={'Enter your wallet address or ENS'}
-                  placeholderTextColor="#8B81A6"
-                />
-                {walletAddressInput ? (
-                  <TouchableOpacity
-                    style={styles.addWalletModalClearBtn}
-                    onPress={() => onChangeWalletAddressInput('')}>
-                    <Close />
-                  </TouchableOpacity>
-                ) : null}
-              </View>
-              {incorrectWalletAddress && (
-                <Text
-                  style={[
-                    incorrectWalletAddress &&
-                      styles.addWalletModalIncorrectWalletAddressText,
-                  ]}>
-                  Wallet address or ENS you entered is not correct
-                </Text>
-              )}
-            </View>
-            <View style={styles.addWalletModalButtonsWrapper}>
-              <TouchableOpacity
-                style={[
-                  styles.addWalletModalButton,
-                  styles.addWalletModalButtonCancel,
-                ]}
-                onPress={() => {
-                  setModalVisible(!modalVisible)
-                  onChangeWalletAddressInput('')
-                }}>
-                <Text style={styles.addWalletModalButtonText}>Later</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[
-                  styles.addWalletModalButton,
-                  styles.addWalletModalButtonOk,
-                  incorrectWalletAddress || walletAddressInput === undefined
-                    ? styles.addWalletModalButtonDisabled
-                    : null,
-                ]}
-                onPress={() =>
-                  addWallet({
-                    variables: {
-                      walletAddress:
-                        walletAddressInput && walletAddressInput.toLowerCase(),
-                    },
-                  })
-                }
-                disabled={
-                  incorrectWalletAddress || walletAddressInput === undefined
-                    ? true
-                    : false
-                }>
-                <Text
-                  style={[
-                    styles.addWalletModalButtonText,
-                    incorrectWalletAddress || walletAddressInput === undefined
-                      ? styles.addWalletModalButtonTitleDisabled
-                      : null,
-                  ]}>
-                  Continue
-                </Text>
-              </TouchableOpacity>
-            </View>
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={modalVisible}
+      onRequestClose={() => {
+        setModalVisible(!modalVisible)
+      }}>
+      <BlurView
+        style={[
+          styles.addWalletModalWrapper,
+          useKeyboardVisible() && styles.addWalletModalWrapperKeyboardVisible,
+        ]}
+        overlayColor={'rgba(44, 36, 67, 0.6)'}>
+        <View style={styles.addWalletModal}>
+          <View style={styles.addWalletModalCentered}>
+            <Text style={styles.keyEmoji}>&#128273;</Text>
+            <Text style={styles.addWalletModalTitle}>New wallet</Text>
+            <Text style={styles.addWalletModalDescription}>
+              Add new wallet in a couple of clicks.
+            </Text>
           </View>
-        </BlurView>
-      </Modal>
-    </View>
+          <View>
+            <Text style={styles.addWalletModalTextInputTitle}>
+              WALLET ADDRESS OR ENS NAME
+            </Text>
+            <View
+              style={[
+                styles.addWalletModalTextInputWrapper,
+                incorrectWalletAddress &&
+                  styles.addWalletModalIncorrectWalletAddressInput,
+              ]}>
+              <TextInput
+                style={styles.addWalletModalTextInput}
+                multiline={true}
+                onChangeText={onChangeWalletAddressInput}
+                value={walletAddressInput}
+                placeholder={'Enter your wallet address or ENS'}
+                placeholderTextColor="#8B81A6"
+              />
+              {walletAddressInput ? (
+                <TouchableOpacity
+                  style={styles.addWalletModalClearBtn}
+                  onPress={() => onChangeWalletAddressInput('')}>
+                  <Close />
+                </TouchableOpacity>
+              ) : null}
+            </View>
+            {incorrectWalletAddress && (
+              <Text
+                style={[
+                  incorrectWalletAddress &&
+                    styles.addWalletModalIncorrectWalletAddressText,
+                ]}>
+                Wallet address or ENS you entered is not correct
+              </Text>
+            )}
+          </View>
+          <View style={styles.addWalletModalButtonsWrapper}>
+            <TouchableOpacity
+              style={[
+                styles.addWalletModalButton,
+                styles.addWalletModalButtonCancel,
+              ]}
+              onPress={() => {
+                setModalVisible(!modalVisible)
+                onChangeWalletAddressInput('')
+              }}>
+              <Text style={styles.addWalletModalButtonText}>Later</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.addWalletModalButton,
+                styles.addWalletModalButtonOk,
+                incorrectWalletAddress || walletAddressInput === undefined
+                  ? styles.addWalletModalButtonDisabled
+                  : null,
+              ]}
+              onPress={() =>
+                addWallet({
+                  variables: {
+                    walletAddress:
+                      walletAddressInput && walletAddressInput.toLowerCase(),
+                  },
+                })
+              }
+              disabled={
+                incorrectWalletAddress || walletAddressInput === undefined
+                  ? true
+                  : false
+              }>
+              <Text
+                style={[
+                  styles.addWalletModalButtonText,
+                  incorrectWalletAddress || walletAddressInput === undefined
+                    ? styles.addWalletModalButtonTitleDisabled
+                    : null,
+                ]}>
+                Continue
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </BlurView>
+    </Modal>
   )
 }
 

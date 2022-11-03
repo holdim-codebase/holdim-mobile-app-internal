@@ -1,21 +1,35 @@
-import {StyleSheet} from 'react-native'
+import {Platform, StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
+
+const OS_IOS = Platform.OS === 'ios'
 
 const styles = StyleSheet.create({
   addWalletModalWrapper: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: normalize(16),
+    paddingHorizontal: OS_IOS ? normalize(16) : 0,
+    marginHorizontal: OS_IOS ? 0 : normalize(16),
+    marginTop: OS_IOS ? 0 : '35%',
+  },
+  addWalletModalWrapperKeyboardVisible: {
+    marginTop: OS_IOS ? 0 : '10%',
+    justifyContent: OS_IOS ? 'flex-start' : 'center',
+    paddingTop: OS_IOS ? '30%' : 0,
   },
   addWalletModal: {
     opacity: 1,
     backgroundColor: '#3D335A',
     borderRadius: normalize(10),
     paddingHorizontal: normalize(16),
-    paddingVertical: normalize(30),
+    paddingBottom: normalize(30),
+    paddingTop: normalize(20),
   },
   addWalletModalCentered: {
     alignItems: 'center',
+  },
+  keyEmoji: {
+    fontSize: normalize(55),
+    color: 'white',
   },
   addWalletModalTitle: {
     color: 'white',
@@ -46,8 +60,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#2C2443',
     borderRadius: 5,
     paddingHorizontal: normalize(16),
-    paddingBottom: normalize(16),
-    paddingTop: normalize(12),
+    paddingBottom: OS_IOS ? normalize(16) : 0,
+    paddingTop: OS_IOS ? normalize(12) : 0,
     justifyContent: 'space-between',
     width: '100%',
   },
@@ -83,7 +97,9 @@ const styles = StyleSheet.create({
     width: '48%',
   },
   addWalletModalButtonCancel: {
-    backgroundColor: '#5B449A',
+    borderColor: '#8463DF',
+    borderWidth: 2,
+    borderStyle: 'solid',
   },
   addWalletModalButtonOk: {
     backgroundColor: '#8463DF',

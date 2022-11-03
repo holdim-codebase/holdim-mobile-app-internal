@@ -2,14 +2,12 @@ import React from 'react'
 import {BlurView} from '@react-native-community/blur'
 import {Modal, Text, TouchableOpacity, View} from 'react-native'
 
-import DeleteEmojiSvg from '../../assets/images/svg/DeleteEmojiSvg.svg'
-import LastWalletDeleteSvg from '../../assets/images/svg/Bubbles.svg'
 import styles from './styles'
 
 type CustomModalProps = {
   title: string
   description: string
-  svg: string
+  unicodeTitle: string
   modalVisible: boolean
   setModalVisible: React.Dispatch<React.SetStateAction<boolean>>
   btnCancelText?: string
@@ -21,7 +19,7 @@ type CustomModalProps = {
 const CustomModal = ({
   title,
   description,
-  svg,
+  unicodeTitle,
   modalVisible,
   setModalVisible,
   btnCancelText,
@@ -30,7 +28,7 @@ const CustomModal = ({
   btnOkText,
 }: CustomModalProps) => {
   return (
-    <View>
+    <View style={{backgroundColor: 'rgba(44, 36, 67, 0.6)'}}>
       <Modal
         animationType="fade"
         transparent={true}
@@ -40,10 +38,14 @@ const CustomModal = ({
         }}>
         <BlurView
           style={styles.customModalWrapper}
-          overlayColor={'rgba(44, 36, 67, 0.6'}>
+          overlayColor={'rgba(44, 36, 67, 0.6)'}>
           <View style={styles.customModal}>
-            {svg === 'delete' ? <DeleteEmojiSvg /> : null}
-            {svg === 'lastWalletDelete' ? <LastWalletDeleteSvg /> : null}
+            {unicodeTitle === 'delete' ? (
+              <Text style={styles.emoji}>&#128465;</Text>
+            ) : null}
+            {unicodeTitle === 'lastWalletDelete' ? (
+              <Text style={styles.emoji}>&#128465;</Text>
+            ) : null}
             <Text style={styles.customModalTitle}>{title}</Text>
             <Text style={styles.customModalDescription}>{description}</Text>
             {btnOkText ? (
@@ -73,7 +75,7 @@ const CustomModal = ({
                   style={[
                     styles.customModalButton,
                     styles.customModalButtonOk,
-                    svg === 'lastWalletDelete' &&
+                    unicodeTitle === 'lastWalletDelete' &&
                       styles.customModalButtonDanger,
                   ]}
                   onPress={() => {

@@ -34,7 +34,6 @@ import SearchIconFocused from './src/assets/images/svg/Search.purple.svg'
 import ProfileIconFocused from './src/assets/images/svg/Profile.purple.svg'
 import SettingsIcon from './src/assets/images/svg/Settings.svg'
 import WalletManagementScreen from './src/screens/walletManagement'
-import NewWalletScreen from './src/screens/newWalletScreen'
 import StateScreen from './src/screens/stateScreen'
 
 Sentry.init({
@@ -235,29 +234,11 @@ export const UserContext = React.createContext<UserContextProps>(
   {} as UserContextProps,
 )
 
-const RootStack = () => {
+const RootStack = (RootStackProps: {isFirstLaunch: boolean}) => {
   const {walletId} = React.useContext(UserContext)
 
-  const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean>(false)
-
-  React.useEffect(() => {
-    // check if the application has already been launched
-    AsyncStorage.getItem('alreadyLaunched').then(value => {
-      if (value === null) {
-        // check if user exists when app is not launched yet
-        // sign out old user
-        if (auth().currentUser) {
-          auth().signOut()
-        }
-        setIsFirstLaunch(true)
-      } else {
-        setIsFirstLaunch(false)
-      }
-    })
-  }, [])
-
   return walletId && walletId !== '' ? (
-    isFirstLaunch ? (
+    RootStackProps.isFirstLaunch ? (
       <Stack.Navigator
         screenOptions={{headerShown: false, gestureEnabled: false}}>
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
@@ -267,13 +248,6 @@ const RootStack = () => {
           component={WalletManagementScreen}
           options={{
             headerTitle: 'Wallet management',
-          }}
-        />
-        <Stack.Screen
-          name="NewWallet"
-          component={NewWalletScreen}
-          options={{
-            headerTitle: 'New wallet',
           }}
         />
         <Stack.Screen name="StateScreen" component={StateScreen} />
@@ -289,17 +263,10 @@ const RootStack = () => {
             headerTitle: 'Wallet management',
           }}
         />
-        <Stack.Screen
-          name="NewWallet"
-          component={NewWalletScreen}
-          options={{
-            headerTitle: 'New wallet',
-          }}
-        />
         <Stack.Screen name="StateScreen" component={StateScreen} />
       </Stack.Navigator>
     )
-  ) : isFirstLaunch ? (
+  ) : RootStackProps.isFirstLaunch ? (
     <Stack.Navigator
       screenOptions={{headerShown: false, gestureEnabled: false}}>
       <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
@@ -327,6 +294,25 @@ function App() {
   //       .signOut()
   //       .then(() => console.log('User signed out!'))
   // }, [])
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean>(false)
+
+  React.useEffect(() => {
+    // check if the application has already been launched
+    AsyncStorage.getItem('alreadyLaunched').then(value => {
+      console.log({value})
+      if (value === null) {
+        // check if user exists when app is not launched yet
+        // sign out old user
+
+        if (auth().currentUser) {
+          auth().signOut()
+        }
+        setIsFirstLaunch(true)
+      } else {
+        setIsFirstLaunch(false)
+      }
+    })
+  }, [])
 
   return (
     <ApolloProvider client={client}>
@@ -338,7 +324,7 @@ function App() {
               backgroundColor="rgba(22, 22, 22, 1)"
             />
             <NavigationContainer theme={navTheme}>
-              <RootStack />
+              <RootStack isFirstLaunch={isFirstLaunch} />
             </NavigationContainer>
           </SafeAreaProvider>
         </GestureHandlerRootView>

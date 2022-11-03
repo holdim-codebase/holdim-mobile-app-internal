@@ -12,6 +12,7 @@ import {
 } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
+import {ScrollView} from 'react-native-gesture-handler'
 
 import {TWallet} from '../../types'
 import {
@@ -29,6 +30,7 @@ import DeleteSvg from '../../assets/images/svg/Delete.svg'
 import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
 import styles from './styles'
 
+// TODO move to store
 function WalletManagementScreen({navigation}: any) {
   const [userWallets, setUserWallets] = React.useState<TWallet[]>([])
   const [userAvatar, setUserAvatar] = React.useState<string>()
@@ -162,7 +164,7 @@ function WalletManagementScreen({navigation}: any) {
           Wallet management
         </Text>
       </View>
-      <View style={styles.walletManagementContentWrapper}>
+      <ScrollView style={styles.walletManagementContentWrapper}>
         {laodingWallets ? (
           <View style={styles.loadingWrapperFullScreen}>
             <ActivityIndicator size="large" color="#8463DF" />
@@ -219,7 +221,7 @@ function WalletManagementScreen({navigation}: any) {
         Would you like to continue?`}
                   btnCancelText={'Later'}
                   btnActionText={'Yes, continue'}
-                  svg={'delete'}
+                  unicodeTitle={'delete'}
                   modalVisible={modalVisible}
                   setModalVisible={m => setModalVisible(m)}
                   doAction={() => {
@@ -233,7 +235,7 @@ function WalletManagementScreen({navigation}: any) {
                   description={`You are deleting your last wallet. If you delete it, you will need to register again. Personal settings will not be saved. Do you want to delete?`}
                   btnCancelText={'Later'}
                   btnActionText={'Yes, delete'}
-                  svg={'lastWalletDelete'}
+                  unicodeTitle={'lastWalletDelete'}
                   modalVisible={lastWalletDeleteModalVisible}
                   setModalVisible={m => setLastWalletDeleteModalVisible(m)}
                   doAction={() => deleteLastWallet()}
@@ -242,7 +244,7 @@ function WalletManagementScreen({navigation}: any) {
             </Swipeable>
           ))
         ) : null}
-      </View>
+      </ScrollView>
       {laodingWallets ? null : (
         <View style={styles.addWalletBtnWrapper}>
           <TouchableOpacity

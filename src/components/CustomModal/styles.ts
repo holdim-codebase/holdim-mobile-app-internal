@@ -1,11 +1,16 @@
-import {StyleSheet} from 'react-native'
+import {Platform, StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
+
+const OS_IOS = Platform.OS === 'ios'
 
 const styles = StyleSheet.create({
   customModalWrapper: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: normalize(16),
+    paddingHorizontal: OS_IOS ? normalize(16) : 0,
+    marginHorizontal: OS_IOS ? 0 : normalize(16),
+    marginTop: OS_IOS ? 0 : '35%',
+    backgroundColor: 'rgba(44, 36, 67, 0.6)',
   },
   customModal: {
     opacity: 1,
@@ -14,6 +19,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalize(16),
     paddingVertical: normalize(30),
     alignItems: 'center',
+  },
+  emoji: {
+    fontSize: normalize(55),
+    color: 'white',
   },
   customModalTitle: {
     color: 'white',
@@ -46,7 +55,9 @@ const styles = StyleSheet.create({
     width: '48%',
   },
   customModalButtonCancel: {
-    backgroundColor: '#5B449A',
+    borderColor: '#8463DF',
+    borderWidth: 2,
+    borderStyle: 'solid',
   },
   customModalButtonOk: {
     backgroundColor: '#8463DF',
