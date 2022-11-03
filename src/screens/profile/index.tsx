@@ -5,7 +5,7 @@ import {
   View,
   ScrollView,
   Image,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   RefreshControl,
   ActivityIndicator,
 } from 'react-native'
@@ -137,7 +137,7 @@ function ProfileScreen({navigation, route}: any) {
               <Text style={styles.portfolioTitle}>Followed</Text>
               <View style={styles.portfolioDaoListWrapper}>
                 {portfolio.followedDaos.map(followedDao => (
-                  <TouchableOpacity
+                  <TouchableWithoutFeedback
                     key={followedDao.id}
                     onPress={() => openDAODescription(followedDao.id)}>
                     <View style={styles.portfolioDaoWrapper}>
@@ -188,7 +188,7 @@ function ProfileScreen({navigation, route}: any) {
                         </Text>
                       </View>
                     </View>
-                  </TouchableOpacity>
+                  </TouchableWithoutFeedback>
                 ))}
               </View>
             </ScrollView>
