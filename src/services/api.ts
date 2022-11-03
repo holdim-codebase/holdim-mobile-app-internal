@@ -237,8 +237,13 @@ export const GET_DAO_DETAIL = gql`
 `
 
 export const GET_DAO_LIST = gql`
-  query GetDAOs($first: Int, $after: String, $onlyMain: Boolean) {
-    daosV2(first: $first, after: $after) {
+  query GetDAOs(
+    $first: Int
+    $after: String
+    $onlyMain: Boolean
+    $search: String
+  ) {
+    daosV2(first: $first, after: $after, search: $search) {
       pageInfo {
         endCursor
         hasNextPage

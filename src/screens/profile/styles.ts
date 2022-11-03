@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
   portfolioWrapper: {
     width: '100%',
     flexDirection: 'column',
-    height: '100%',
     marginTop: normalize(29),
+    marginBottom: normalize(40),
   },
   portfolioTitle: {
     fontSize: normalize(20),

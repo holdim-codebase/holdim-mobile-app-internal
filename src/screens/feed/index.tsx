@@ -14,11 +14,12 @@ import moment from 'moment'
 import {useQuery} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
 import messaging from '@react-native-firebase/messaging'
+import {useScrollToTop} from '@react-navigation/native'
 
 import {TProposal, TPoll} from '../../types'
 import {GET_POLL, GET_PROPOSALS, handleHTTPError} from '../../services/api'
-import styles from './styles'
 import {requestUserNotificationPermission} from '../../services/firebase'
+import styles from './styles'
 
 export const convertURIForLogo = (logoURI: string) => {
   return logoURI.startsWith('ipfs://')
@@ -26,7 +27,7 @@ export const convertURIForLogo = (logoURI: string) => {
     : logoURI
 }
 
-function FeedScreen({navigation}: any) {
+function FeedScreen({navigation, route}: any) {
   const [refreshing, setRefreshing] = React.useState(false)
   const [proposals, setProposals] = React.useState<TProposal[]>([])
   const [polls, setPolls] = React.useState<TPoll[]>([])
@@ -34,6 +35,8 @@ function FeedScreen({navigation}: any) {
   // states for pagination
   const [endCursor, setEndCursor] = React.useState<string>('')
   const [hasNextPage, setHasNextPage] = React.useState<boolean>(false)
+
+  const scrollRef = React.useRef(null)
 
   const dateNow = new Date()
 
@@ -104,6 +107,8 @@ function FeedScreen({navigation}: any) {
       : null
   }, [])
 
+  useScrollToTop(scrollRef)
+
   return (
     <ScrollView
       style={styles.feedWrapper}
@@ -117,6 +122,7 @@ function FeedScreen({navigation}: any) {
           progressBackgroundColor={'white'}
         />
       }
+      ref={scrollRef}
       onScroll={({nativeEvent}) => {
         if (isCloseToBottom(nativeEvent)) {
           if (hasNextPage) {
