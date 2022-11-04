@@ -27,11 +27,23 @@ const styles = StyleSheet.create({
   proposalWrapper: {
     paddingHorizontal: normalize(16),
     paddingVertical: normalize(24),
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     width: '100%',
     borderBottomColor: 'rgba(193, 193, 193, 0.5)',
     borderBottomWidth: 0.5,
+  },
+  proposalWrapperTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  proposalWrapperBottom: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: normalize(16),
+  },
+  proposalActionsWrapper: {
+    flexDirection: 'row'
   },
   proposalImageWrapper: {
     marginRight: normalize(8),
@@ -115,6 +127,19 @@ const styles = StyleSheet.create({
     zIndex: 2,
     backgroundColor: 'red',
   },
+  emojiReactionContentWrapper: {
+    flexDirection: 'row'
+  },
+  emojiReactionItem: {
+    marginHorizontal: normalize(4), 
+    fontSize: normalize(24)
+  },
+  chosenEmojiReaction: {
+    height: normalize(23), 
+    width: normalize(23), 
+    alignItems: 'center', 
+    justifyContent: 'center'
+  }
 })
 
 export default styles

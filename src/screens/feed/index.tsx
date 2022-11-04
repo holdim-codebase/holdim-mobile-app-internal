@@ -8,6 +8,7 @@ import {
   RefreshControl,
   TouchableWithoutFeedback,
   NativeScrollEvent,
+  Alert
 } from 'react-native'
 import numeral from 'numeral'
 import moment from 'moment'
@@ -19,6 +20,13 @@ import {TProposal, TPoll} from '../../types'
 import {GET_POLL, GET_PROPOSALS, handleHTTPError} from '../../services/api'
 import styles from './styles'
 import {requestUserNotificationPermission} from '../../services/firebase'
+
+import ActionIcon from '../../components/ActionIcon'
+import EmojiTooltip from '../../components/EmojiTooltip'
+
+import Share from '../../assets/icons/share.svg'
+import Snapshot from '../../assets/icons/snapshot.svg'
+import Favorite from '../../assets/icons/favorite_border.svg'
 
 export const convertURIForLogo = (logoURI: string) => {
   return logoURI.startsWith('ipfs://')
@@ -140,6 +148,7 @@ function FeedScreen({navigation}: any) {
                 key={i}
                 onPress={() => openProposal(item, poll)}>
                 <View style={styles.proposalWrapper}>
+                <View style={styles.proposalWrapperTop}>
                   <View style={styles.proposalImageWrapper}>
                     <TouchableWithoutFeedback
                       onPress={() => openDAODescription(item.dao.id)}>
@@ -235,6 +244,35 @@ function FeedScreen({navigation}: any) {
                           </Text>
                         </View>
                       )}
+                    </View>
+                  </View>
+                </View>
+                  <View style={styles.proposalWrapperBottom}>
+                    <View style={styles.proposalActionsWrapper}>
+                      <ActionIcon icon={<Share width={20}/>} onPress={() => Alert.alert('pizda')} size={20}/>
+                      <ActionIcon icon={<Snapshot width={20}/>} onPress={() => Alert.alert('pizda')} size={20}/>
+                    </View>
+                    <View>
+                      <EmojiTooltip content={
+                        <View style={styles.emojiReactionContentWrapper}>
+                          <TouchableWithoutFeedback>
+                            <Text style={styles.emojiReactionItem}>&#128077;</Text>
+                          </TouchableWithoutFeedback>
+                          <TouchableWithoutFeedback>
+                            <Text style={styles.emojiReactionItem}>&#128078;</Text>
+                          </TouchableWithoutFeedback>
+                          <TouchableWithoutFeedback>
+                            <Text style={styles.emojiReactionItem}>&#127881;</Text>
+                          </TouchableWithoutFeedback>
+                          <TouchableWithoutFeedback>
+                            <Text style={styles.emojiReactionItem}>&#128169;</Text>
+                          </TouchableWithoutFeedback>
+                        </View>
+                      }>
+                        <View style={styles.chosenEmojiReaction}>
+                          <Favorite width={20} />
+                        </View>
+                      </EmojiTooltip>
                     </View>
                   </View>
                 </View>
