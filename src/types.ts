@@ -41,7 +41,6 @@ export type TDAO = {
     {
       id: string
       name: string
-      marketCap: number
       totalSupply: number
       price: number
       personalizedData: {
@@ -56,32 +55,36 @@ export type TDAO = {
 export type TUser = {
   id: string
   avatarUrl: string
-  wallet: {
-    address: string
-    ens: string
-    tokens: [
-      {
-        personalizedData: {
-          quantity: string
-        }
-      },
-    ]
-  }
+  wallets: TWallet[]
   followedDaos: [
     {
       id: string
       name: string
       logo: string
-      tokens: [
-        {
-          personalizedData: {quantity: string}
-          totalSupply: number
-          price: number
-          symbol: string
-        },
-      ]
+      tokens: TToken[]
     },
   ]
+}
+
+export type TTokenPersonalizedData = {
+  quantity: string
+}
+
+export type TToken = {
+  id: string
+  name: string
+  main: boolean
+  personalizedData: TTokenPersonalizedData
+  totalSupply: number
+  price: number
+  symbol: string
+}
+
+export type TWallet = {
+  id: string
+  address: string
+  ens: string
+  tokens: TToken[]
 }
 
 export type TSlide = {

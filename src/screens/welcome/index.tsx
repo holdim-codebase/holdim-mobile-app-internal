@@ -47,6 +47,7 @@ const WelcomeScreen = ({navigation}: any) => {
     },
     onError: error => {
       Sentry.captureException(error)
+      console.error(error)
       handleHTTPError()
     },
   })

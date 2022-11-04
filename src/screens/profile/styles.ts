@@ -5,8 +5,10 @@ const styles = StyleSheet.create({
   loadingWrapper: {
     width: '100%',
     height: '100%',
+    paddingTop: '50%',
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
   },
   profileWrapper: {
     flex: 1,

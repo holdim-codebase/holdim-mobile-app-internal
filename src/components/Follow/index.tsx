@@ -29,6 +29,7 @@ const Follow = ({daoId, userFollowed, color}: FollowProps) => {
     },
     onError: error => {
       Sentry.captureException(error)
+      console.error(error)
       handleHTTPError()
     },
     refetchQueries: [
@@ -51,6 +52,7 @@ const Follow = ({daoId, userFollowed, color}: FollowProps) => {
     },
     onError: error => {
       Sentry.captureException(error)
+      console.error(error)
       handleHTTPError()
     },
     refetchQueries: [
