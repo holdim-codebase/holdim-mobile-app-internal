@@ -47,6 +47,10 @@ function WalletManagementScreen({navigation}: any) {
 
   const {setWalletId} = React.useContext(UserContext)
 
+  let swipeableRefs: Array<any> = []
+  let prevOpenedSwipeableRow: any
+  let openedSwipeableRow: any
+
   const {loading: laodingWallets, refetch: refetchUserWallets} = useQuery(
     GET_USER_WALLETS,
     {
@@ -126,6 +130,15 @@ function WalletManagementScreen({navigation}: any) {
     userWallets.length === 1 ? setIsLastWallet(true) : setIsLastWallet(false)
   }, [userWallets])
 
+  const closePrevOpenedSwipeable = () => {
+    if (
+      prevOpenedSwipeableRow &&
+      prevOpenedSwipeableRow.current !== openedSwipeableRow
+    ) {
+      prevOpenedSwipeableRow.close()
+    }
+  }
+
   const RightSwipeActions = (walletId: string) => {
     return (
       <View style={styles.walletSwipeBlockWrapper}>
@@ -165,7 +178,9 @@ function WalletManagementScreen({navigation}: any) {
           Wallet management
         </Text>
       </View>
-      <ScrollView style={styles.walletManagementContentWrapper}>
+      <ScrollView
+        style={styles.walletManagementContentWrapper}
+        onTouchEnd={() => closePrevOpenedSwipeable()}>
         {laodingWallets ? (
           <View style={styles.loadingWrapperFullScreen}>
             <ActivityIndicator size="large" color="#8463DF" />
@@ -174,7 +189,21 @@ function WalletManagementScreen({navigation}: any) {
           userWallets.map((wallet, i) => (
             <Swipeable
               renderRightActions={() => RightSwipeActions(wallet.id)}
-              key={i}>
+              key={i}
+              ref={ref => (swipeableRefs[i] = ref)}
+              onSwipeableWillOpen={() => {
+                openedSwipeableRow = swipeableRefs[i]
+                closePrevOpenedSwipeable()
+                prevOpenedSwipeableRow = swipeableRefs[i]
+              }}
+              onSwipeableClose={() => {
+                if (
+                  prevOpenedSwipeableRow &&
+                  prevOpenedSwipeableRow === swipeableRefs[i]
+                ) {
+                  prevOpenedSwipeableRow = undefined
+                }
+              }}>
               <Pressable
                 style={[
                   styles.walletWrapper,
@@ -250,7 +279,10 @@ function WalletManagementScreen({navigation}: any) {
         <View style={styles.addWalletBtnWrapper}>
           <TouchableOpacity
             style={styles.addWalletBtn}
-            onPress={() => setAddWalletModal(true)}>
+            onPress={() => {
+              setAddWalletModal(true)
+              closePrevOpenedSwipeable()
+            }}>
             <Text style={styles.addWalletBtnTitle}>Add new wallet</Text>
           </TouchableOpacity>
           <AddWalletModal
