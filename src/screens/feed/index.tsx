@@ -28,6 +28,7 @@ import EmojiTooltip from '../../components/EmojiTooltip'
 import Share from '../../assets/icons/share.svg'
 import Snapshot from '../../assets/icons/snapshot.svg'
 import Favorite from '../../assets/icons/favorite_border.svg'
+import {thumbsDown, thumbsUp, shit, partyPopper} from '../../constants/emojis'
 
 export const convertURIForLogo = (logoURI: string) => {
   return logoURI.startsWith('ipfs://')
@@ -262,16 +263,16 @@ function FeedScreen({navigation, route}: any) {
                       <EmojiTooltip content={
                         <View style={styles.emojiReactionContentWrapper}>
                           <TouchableWithoutFeedback>
-                            <Text style={styles.emojiReactionItem}>&#128077;</Text>
+                            <Text style={styles.emojiReactionItem}>{thumbsUp}</Text>
                           </TouchableWithoutFeedback>
                           <TouchableWithoutFeedback>
-                            <Text style={styles.emojiReactionItem}>&#128078;</Text>
+                            <Text style={styles.emojiReactionItem}>{thumbsDown}</Text>
                           </TouchableWithoutFeedback>
                           <TouchableWithoutFeedback>
-                            <Text style={styles.emojiReactionItem}>&#127881;</Text>
+                            <Text style={styles.emojiReactionItem}>{partyPopper}</Text>
                           </TouchableWithoutFeedback>
                           <TouchableWithoutFeedback>
-                            <Text style={styles.emojiReactionItem}>&#128169;</Text>
+                            <Text style={styles.emojiReactionItem}>{shit}</Text>
                           </TouchableWithoutFeedback>
                         </View>
                       }>
