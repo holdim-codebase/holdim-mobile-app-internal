@@ -13,6 +13,7 @@ import auth from '@react-native-firebase/auth'
 import {useMutation} from '@apollo/client'
 
 import {UserContext} from '../../../App'
+import {useKeyboardVisible} from '../../customHooks/useKeyboardVisible'
 import {client, handleHTTPError, REGISTER_USER} from '../../services/api'
 import Close from '../../assets/images/svg/Close.svg'
 import styles from './styles'
@@ -46,6 +47,7 @@ const LoginScreen = ({navigation}: any) => {
           AsyncStorage.setItem('alreadyLaunched', 'true')
         }
       })
+      AsyncStorage.setItem('userLoggedIn', 'true')
       setLoadingScreen(false)
       onChangeWalletAddressInput('')
     },
@@ -88,6 +90,7 @@ const LoginScreen = ({navigation}: any) => {
     }
     const correctWalletAddress =
       walletAddressInput.length < 255 &&
+      walletAddressInput.length > 20 &&
       walletAddressInput.startsWith('0x') &&
       !walletAddressInput.includes('.')
     const correctENS = walletAddressInput.endsWith('.eth')
@@ -116,7 +119,11 @@ const LoginScreen = ({navigation}: any) => {
                 Start your friendly DAO journey
               </Text>
             </View>
-            <View>
+            <View
+              style={[
+                useKeyboardVisible() &&
+                  styles.inputTextAndButtonWrapperKeyboardVisible,
+              ]}>
               <Text style={styles.walletTitile}>
                 WALLET ADDRESS OR ENS NAME
               </Text>
@@ -162,12 +169,16 @@ const LoginScreen = ({navigation}: any) => {
                 <TouchableOpacity
                   style={[
                     styles.loginBtnGo,
-                    incorrectWalletAddress || walletAddressInput === undefined
+                    incorrectWalletAddress ||
+                    walletAddressInput === undefined ||
+                    walletAddressInput === ''
                       ? styles.loginBtnGoDisabled
                       : null,
                   ]}
                   disabled={
-                    incorrectWalletAddress || walletAddressInput === undefined
+                    incorrectWalletAddress ||
+                    walletAddressInput === undefined ||
+                    walletAddressInput === ''
                       ? true
                       : false
                   }
@@ -175,7 +186,9 @@ const LoginScreen = ({navigation}: any) => {
                   <Text
                     style={[
                       styles.loginBtnGoTitle,
-                      incorrectWalletAddress || walletAddressInput === undefined
+                      incorrectWalletAddress ||
+                      walletAddressInput === undefined ||
+                      walletAddressInput === ''
                         ? styles.loginBtnGoTitleDisabled
                         : null,
                     ]}>

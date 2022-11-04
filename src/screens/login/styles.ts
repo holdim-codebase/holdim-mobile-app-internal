@@ -1,7 +1,8 @@
-import {StyleSheet} from 'react-native'
+import {Platform, StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
 import {black, purple, white} from '../../constants/css'
+const OS_IOS = Platform.OS === 'ios'
 
 const styles = StyleSheet.create({
   loginContentWrapper: {
@@ -15,7 +16,7 @@ const styles = StyleSheet.create({
     backgroundColor: black,
     paddingHorizontal: normalize(16),
     paddingTop: normalize(53),
-    paddingBottom: normalize(123),
+    paddingBottom: OS_IOS ? normalize(123) : normalize(84),
   },
   loginTitleWrapper: {
     marginBottom: '25%',
@@ -38,23 +39,27 @@ const styles = StyleSheet.create({
     fontSize: normalize(64),
     fontWeight: 'bold',
   },
+  inputTextAndButtonWrapperKeyboardVisible: {
+    marginBottom: OS_IOS ? normalize(230) : 0,
+  },
   loginTextInputWrapper: {
     flexDirection: 'row',
     fontFamily: 'NotoSans-Regular',
     backgroundColor: '#2C2443',
     borderRadius: 7,
-    paddingHorizontal: normalize(16),
     height: normalize(64),
     marginVertical: normalize(10),
     marginBottom: normalize(5),
     color: white,
-    paddingBottom: normalize(16),
-    paddingTop: normalize(10),
+    paddingHorizontal: OS_IOS ? normalize(16) : normalize(13),
+    paddingBottom: OS_IOS ? normalize(16) : 0,
+    paddingTop: OS_IOS ? normalize(10) : 0,
     marginTop: normalize(10),
   },
   loginTextInput: {
     fontSize: normalize(14),
     lineHeight: normalize(18),
+    fontFamily: 'NotoSans-Regular',
     fontWeight: '400',
     color: 'white',
     width: '90%',
@@ -65,7 +70,7 @@ const styles = StyleSheet.create({
   },
   loginTextInputClearBtn: {
     paddingLeft: normalize(10),
-    paddingTop: normalize(5),
+    paddingTop: OS_IOS ? normalize(5) : normalize(14),
     backgroundColor: '#2C2443',
   },
   loginBtnGoWrapper: {
@@ -103,7 +108,7 @@ const styles = StyleSheet.create({
     color: white,
     paddingTop: normalize(28),
     fontSize: normalize(14),
-    marginBottom: normalize(50),
+    marginBottom: normalize(30),
     marginTop: normalize(5),
   },
   walletTitile: {
