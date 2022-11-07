@@ -38,8 +38,12 @@ const WelcomeScreen = ({navigation}: any) => {
     setNotFollowedDaoList(notFollowedDaos)
   }
 
+  // TODO change logic to get followed/unfollowed daos
+  // if we have more than 30 daos, it will not work
   const {loading: loadingDaoList} = useQuery(GET_DAO_LIST, {
     variables: {
+      first: 30,
+      after: '',
       onlyMain: true,
     },
     onCompleted: res => {
