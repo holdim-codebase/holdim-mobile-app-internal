@@ -19,6 +19,7 @@ import {useScrollToTop} from '@react-navigation/native'
 import {TProposal, TPoll} from '../../types'
 import {GET_POLL, GET_PROPOSALS, handleHTTPError} from '../../services/api'
 import {requestUserNotificationPermission} from '../../services/firebase'
+import LoadingSpinner from '../../components/LoadingSpinner'
 import styles from './styles'
 
 export const convertURIForLogo = (logoURI: string) => {
@@ -35,30 +36,32 @@ function FeedScreen({navigation, route}: any) {
   // states for pagination
   const [endCursor, setEndCursor] = React.useState<string>('')
   const [hasNextPage, setHasNextPage] = React.useState<boolean>(false)
+  const [fetchMoreLoading, setFetchMoreLoading] = React.useState<boolean>(false)
 
   const scrollRef = React.useRef(null)
 
   const dateNow = new Date()
 
-  const {
-    loading: loadingProposals,
-    fetchMore: fetchMoreProposals,
-    refetch: refetchGetProposals,
-  } = useQuery(GET_PROPOSALS, {
-    // fetchPolicy: 'network-only',
-    variables: {first: 8, after: '', onlyFollowedDaos: true},
-    onCompleted: res => {
-      setProposals(res.proposalsV2.edges.map((edge: {node: any}) => edge.node))
-      setEndCursor(res.proposalsV2.pageInfo.endCursor)
-      setHasNextPage(res.proposalsV2.pageInfo.hasNextPage)
-      setRefreshing(false)
+  const {loading: loadingProposals, fetchMore: fetchMoreProposals} = useQuery(
+    GET_PROPOSALS,
+    {
+      variables: {first: 8, after: '', onlyFollowedDaos: true},
+      onCompleted: res => {
+        setProposals(
+          res.proposalsV2.edges.map((edge: {node: any}) => edge.node),
+        )
+        setEndCursor(res.proposalsV2.pageInfo.endCursor)
+        setHasNextPage(res.proposalsV2.pageInfo.hasNextPage)
+        setRefreshing(false)
+        setFetchMoreLoading(false)
+      },
+      onError: error => {
+        Sentry.captureException(error)
+        console.error(error)
+        handleHTTPError()
+      },
     },
-    onError: error => {
-      Sentry.captureException(error)
-      console.error(error)
-      handleHTTPError()
-    },
-  })
+  )
 
   // fetch poll separately from proposals
   // because can get more time due to getting data from another server
@@ -66,6 +69,8 @@ function FeedScreen({navigation, route}: any) {
     variables: {first: 8, after: '', onlyFollowedDaos: true},
     onCompleted: res => {
       setPolls(res.proposalsV2.edges.map((edge: {node: any}) => edge.node))
+      setFetchMoreLoading(false)
+      setRefreshing(false)
     },
     onError: error => {
       Sentry.captureException(error)
@@ -80,7 +85,18 @@ function FeedScreen({navigation, route}: any) {
 
   const onRefresh = () => {
     setRefreshing(true)
-    refetchGetProposals({first: 8, after: '', onlyFollowedDaos: true})
+    setFetchMoreLoading(false)
+
+    // TODO change to refetch, but there are
+    // bug in apollo client library: refetch is not update cache,
+    // and no data is returning
+    // problem with fetch - returning data depends on endCursor
+    fetchMoreProposals({
+      variables: {first: 8, after: endCursor, onlyFollowedDaos: true},
+    })
+    fetchMorePoll({
+      variables: {first: 8, after: endCursor, onlyFollowedDaos: true},
+    })
   }
 
   const openDAODescription = (daoId: string) => {
@@ -92,11 +108,10 @@ function FeedScreen({navigation, route}: any) {
     contentOffset,
     contentSize,
   }: NativeScrollEvent) => {
-    const paddingToBottom = 900
-    return (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-    )
+    let paddingToBottom = 30
+    paddingToBottom += layoutMeasurement.height
+
+    return contentOffset.y >= contentSize.height - paddingToBottom
   }
 
   // IOS
@@ -114,7 +129,7 @@ function FeedScreen({navigation, route}: any) {
       style={styles.feedWrapper}
       refreshControl={
         <RefreshControl
-          refreshing={refreshing || loadingProposals}
+          refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={'white'}
           titleColor={'#8463DF'}
@@ -123,9 +138,11 @@ function FeedScreen({navigation, route}: any) {
         />
       }
       ref={scrollRef}
+      indicatorStyle="white"
       onScroll={({nativeEvent}) => {
-        if (isCloseToBottom(nativeEvent)) {
+        if (isCloseToBottom(nativeEvent) && !refreshing) {
           if (hasNextPage) {
+            setFetchMoreLoading(true)
             fetchMoreProposals({
               variables: {first: 8, after: endCursor, onlyFollowedDaos: true},
             })
@@ -136,117 +153,127 @@ function FeedScreen({navigation, route}: any) {
         }
       }}
       scrollEventThrottle={400}>
-      {loadingProposals || refreshing
-        ? null
-        : proposals &&
-          proposals.map((item: TProposal, i: number) => {
-            const poll = polls[i]
-            return (
-              <TouchableWithoutFeedback
-                key={i}
-                onPress={() => openProposal(item, poll)}>
-                <View style={styles.proposalWrapper}>
-                  <View style={styles.proposalImageWrapper}>
-                    <TouchableWithoutFeedback
-                      onPress={() => openDAODescription(item.dao.id)}>
-                      <Image
-                        source={{
-                          uri: convertURIForLogo(item.dao.logo),
-                        }}
-                        style={styles.proposalImage}
-                      />
-                    </TouchableWithoutFeedback>
-                  </View>
-                  <View style={styles.proposalContentWrapper}>
-                    <TouchableWithoutFeedback
-                      onPress={() => openDAODescription(item.dao.id)}>
-                      <Text style={styles.proposalTitle}>{item.dao.name}</Text>
-                    </TouchableWithoutFeedback>
-                    <Text style={styles.proposalDescription}>
-                      {item.juniorDescription}
-                    </Text>
-                    <Text style={styles.proposalEndTime}>
-                      {dateNow > new Date(item.endAt)
-                        ? 'Ends:'
-                        : 'Voting ended on'}{' '}
-                      {moment(new Date(item.endAt)).format(
-                        'MMM DD, YYYY, HH:MM A',
-                      )}
-                    </Text>
-                    <View style={styles.proposalVotingWrapper}>
-                      {loadingPoll ? (
-                        <View style={styles.loadingWrapper}>
-                          <ActivityIndicator size="large" color="#8463DF" />
-                        </View>
-                      ) : poll &&
-                        poll.poll.choices &&
-                        poll.poll.choices.length !== 0 ? (
-                        poll.poll.choices.map(
-                          (choiceTitle: string, i: number) => {
-                            return (
+      {loadingProposals && !refreshing ? (
+        <LoadingSpinner
+          style={styles.loadingWrapperFullScreen}
+          size="large"
+          color="rgba(132, 99, 223, 1)"
+        />
+      ) : (
+        proposals &&
+        proposals.map((item: TProposal, i: number) => {
+          const poll = polls[i]
+          return (
+            <TouchableWithoutFeedback
+              key={i}
+              onPress={() => openProposal(item, poll)}>
+              <View style={styles.proposalWrapper}>
+                <View style={styles.proposalImageWrapper}>
+                  <TouchableWithoutFeedback
+                    onPress={() => openDAODescription(item.dao.id)}>
+                    <Image
+                      source={{
+                        uri: convertURIForLogo(item.dao.logo),
+                      }}
+                      style={styles.proposalImage}
+                    />
+                  </TouchableWithoutFeedback>
+                </View>
+                <View style={styles.proposalContentWrapper}>
+                  <TouchableWithoutFeedback
+                    onPress={() => openDAODescription(item.dao.id)}>
+                    <Text style={styles.proposalTitle}>{item.dao.name}</Text>
+                  </TouchableWithoutFeedback>
+                  <Text style={styles.proposalDescription}>
+                    {item.juniorDescription}
+                  </Text>
+                  <Text style={styles.proposalEndTime}>
+                    {dateNow > new Date(item.endAt)
+                      ? 'Ends:'
+                      : 'Voting ended on'}{' '}
+                    {moment(new Date(item.endAt)).format(
+                      'MMM DD, YYYY, HH:MM A',
+                    )}
+                  </Text>
+                  <View style={styles.proposalVotingWrapper}>
+                    {loadingPoll ? (
+                      <View style={styles.loadingWrapper}>
+                        <ActivityIndicator size="large" color="#8463DF" />
+                      </View>
+                    ) : poll &&
+                      poll.poll.choices &&
+                      poll.poll.choices.length !== 0 ? (
+                      poll.poll.choices.map(
+                        (choiceTitle: string, i: number) => {
+                          return (
+                            <View
+                              key={i}
+                              style={styles.proposalVotingItemWrapper}>
                               <View
-                                key={i}
-                                style={styles.proposalVotingItemWrapper}>
-                                <View
-                                  style={styles.proposalVotingItemTextWrapper}>
-                                  <Text style={styles.proposalVotingItemText}>
-                                    {choiceTitle}
-                                  </Text>
-                                  <Text style={styles.proposalVotingItemText}>
-                                    {numeral(poll.poll.scores[i]).format(
-                                      '0[.]0a',
-                                    )}{' '}
-                                    {poll.poll.symbol}
-                                    {'  '}
-                                    {
-                                      +(
-                                        (poll.poll.scores[i] * 100) /
-                                        poll.poll.scores_total
-                                      ).toFixed()
-                                    }
-                                    %
-                                  </Text>
-                                </View>
-                                <View
-                                  style={
-                                    styles.proposalVotingItemBackgroundLine
-                                  }>
-                                  <View
-                                    style={{
-                                      ...styles.proposalVotingItemInnerLine,
-                                      backgroundColor: '#8463DF',
-                                      width: `${
-                                        (poll.poll.scores[i] * 100) /
-                                        poll.poll.scores_total
-                                      }%`,
-                                    }}
-                                  />
-                                </View>
+                                style={styles.proposalVotingItemTextWrapper}>
+                                <Text style={styles.proposalVotingItemText}>
+                                  {choiceTitle}
+                                </Text>
+                                <Text style={styles.proposalVotingItemText}>
+                                  {numeral(poll.poll.scores[i]).format(
+                                    '0[.]0a',
+                                  )}{' '}
+                                  {poll.poll.symbol}
+                                  {'  '}
+                                  {
+                                    +(
+                                      (poll.poll.scores[i] * 100) /
+                                      poll.poll.scores_total
+                                    ).toFixed()
+                                  }
+                                  %
+                                </Text>
                               </View>
-                            )
-                          },
-                        )
-                      ) : null}
-                      {!loadingPoll && poll && poll.poll.quorum !== 0 && (
-                        <View style={styles.proposalVotingItemTextWrapper}>
-                          <Text style={styles.proposalVotingItemText}>
-                            Quorum
-                          </Text>
-                          <Text style={styles.proposalVotingItemText}>
-                            {numeral(poll && poll.poll.scores_total).format(
-                              '0[.]0a',
-                            )}
-                            /
-                            {numeral(poll && poll.poll.quorum).format('0[.]0a')}
-                          </Text>
-                        </View>
-                      )}
-                    </View>
+                              <View
+                                style={styles.proposalVotingItemBackgroundLine}>
+                                <View
+                                  style={{
+                                    ...styles.proposalVotingItemInnerLine,
+                                    backgroundColor: '#8463DF',
+                                    width: `${
+                                      (poll.poll.scores[i] * 100) /
+                                      poll.poll.scores_total
+                                    }%`,
+                                  }}
+                                />
+                              </View>
+                            </View>
+                          )
+                        },
+                      )
+                    ) : null}
+                    {!loadingPoll && poll && poll.poll.quorum !== 0 && (
+                      <View style={styles.proposalVotingItemTextWrapper}>
+                        <Text style={styles.proposalVotingItemText}>
+                          Quorum
+                        </Text>
+                        <Text style={styles.proposalVotingItemText}>
+                          {numeral(poll && poll.poll.scores_total).format(
+                            '0[.]0a',
+                          )}
+                          /{numeral(poll && poll.poll.quorum).format('0[.]0a')}
+                        </Text>
+                      </View>
+                    )}
                   </View>
                 </View>
-              </TouchableWithoutFeedback>
-            )
-          })}
+              </View>
+            </TouchableWithoutFeedback>
+          )
+        })
+      )}
+      {fetchMoreLoading && (
+        <LoadingSpinner
+          style={styles.loadingSpinner}
+          size="small"
+          color="rgba(132, 99, 223, 1)"
+        />
+      )}
     </ScrollView>
   )
 }

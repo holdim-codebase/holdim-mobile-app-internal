@@ -21,11 +21,14 @@ import {
   GET_USER_WALLETS,
   handleHTTPError,
 } from '../../services/api'
-import CustomModal from '../../components/CustomModal'
 import {shortenAddress} from '../proposal'
-import AddWalletModal from '../../components/AddWalletModal'
 import {UserContext} from '../../../App'
 import {done, wasteBasket} from '../../constants/emojis'
+
+// components
+import CustomModal from '../../components/CustomModal'
+import AddWalletModal from '../../components/AddWalletModal'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 import DeleteSvg from '../../assets/images/svg/Delete.svg'
 import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
@@ -182,9 +185,11 @@ function WalletManagementScreen({navigation}: any) {
         style={styles.walletManagementContentWrapper}
         onTouchEnd={() => closePrevOpenedSwipeable()}>
         {laodingWallets ? (
-          <View style={styles.loadingWrapperFullScreen}>
-            <ActivityIndicator size="large" color="#8463DF" />
-          </View>
+          <LoadingSpinner
+            style={styles.loadingWrapperFullScreen}
+            size="large"
+            color="#8463DF"
+          />
         ) : userWallets.length !== 0 ? (
           userWallets.map((wallet, i) => (
             <Swipeable
