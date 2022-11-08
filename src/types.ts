@@ -16,6 +16,12 @@ export type TProposal = {
   author: string
   snapshotLink: string
   discussionLink: string
+  personalizedData: {
+    pickedEmojiId: string
+  }
+  statisticData: {
+    emojiCount: [{emojiId: string, count: number}]
+  }
 }
 
 export type TPoll = {
@@ -91,4 +97,9 @@ export type TSlide = {
   id: string
   title: string
   subtitle: string
+}
+
+export type TEmojiReactions = {
+  id: string,
+  url: string
 }

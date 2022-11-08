@@ -18,8 +18,9 @@ import messaging from '@react-native-firebase/messaging'
 import {useScrollToTop} from '@react-navigation/native'
 
 import {TProposal, TPoll} from '../../types'
-import {GET_POLL, GET_PROPOSALS, handleHTTPError} from '../../services/api'
+import {GET_POLL, GET_PROPOSALS, handleHTTPError, GET_EMOJIS} from '../../services/api'
 import {requestUserNotificationPermission} from '../../services/firebase'
+import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import styles from './styles'
 
 import ActionIcon from '../../components/ActionIcon'
@@ -61,6 +62,23 @@ function FeedScreen({navigation, route}: any) {
       setEndCursor(res.proposalsV2.pageInfo.endCursor)
       setHasNextPage(res.proposalsV2.pageInfo.hasNextPage)
       setRefreshing(false)
+    },
+    onError: error => {
+      Sentry.captureException(error)
+      console.error(error)
+      handleHTTPError()
+    },
+  })
+
+  const {
+    loading: loadingEmojis,
+    fetchMore: fetchMoreEmojis,
+    refetch: refetchGetEmojis,
+  } = useQuery(GET_EMOJIS, {
+    // fetchPolicy: 'network-only',
+    // variables: {first: 2, after: ''},
+    onCompleted: res => {
+      EmojiReactionsStore.setEmojis(res.emojis)
     },
     onError: error => {
       Sentry.captureException(error)
@@ -262,18 +280,13 @@ function FeedScreen({navigation, route}: any) {
                     <View>
                       <EmojiTooltip content={
                         <View style={styles.emojiReactionContentWrapper}>
-                          <TouchableWithoutFeedback>
-                            <Text style={styles.emojiReactionItem}>{thumbsUp}</Text>
-                          </TouchableWithoutFeedback>
-                          <TouchableWithoutFeedback>
-                            <Text style={styles.emojiReactionItem}>{thumbsDown}</Text>
-                          </TouchableWithoutFeedback>
-                          <TouchableWithoutFeedback>
-                            <Text style={styles.emojiReactionItem}>{partyPopper}</Text>
-                          </TouchableWithoutFeedback>
-                          <TouchableWithoutFeedback>
-                            <Text style={styles.emojiReactionItem}>{shit}</Text>
-                          </TouchableWithoutFeedback>
+                          {EmojiReactionsStore.mappedEmojis.map(emoji => {
+                            return (
+                              <TouchableWithoutFeedback onPress={() => EmojiReactionsStore.pickEmoji(emoji.id)}>
+                                <Text style={styles.emojiReactionItem}>{emoji.unicode}</Text>
+                              </TouchableWithoutFeedback>
+                            )
+                          })}
                         </View>
                       }>
                         <View style={styles.chosenEmojiReaction}>

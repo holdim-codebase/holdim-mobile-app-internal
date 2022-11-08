@@ -167,6 +167,12 @@ export const GET_PROPOSALS = gql`
           author
           snapshotLink
           discussionLink
+          personalizedData {
+            pickedEmojiId
+          }
+          statisticData {
+            emojiCount { emojiId, count}
+          }
         }
         cursor
       }
@@ -322,6 +328,14 @@ export const GET_USER_WALLETS = gql`
           symbol
         }
       }
+    }
+  }
+`
+export const GET_EMOJIS = gql`
+  query GET_EMOJIS {
+    emojis {
+      id
+      url
     }
   }
 `
