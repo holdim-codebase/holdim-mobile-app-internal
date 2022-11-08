@@ -11,6 +11,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
+    paddingTop: '80%',
   },
   walletManagementWrapper: {
     flex: 1,

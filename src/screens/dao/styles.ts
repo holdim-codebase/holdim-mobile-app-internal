@@ -11,6 +11,10 @@ const styles = StyleSheet.create({
     paddingTop: '30%',
     backgroundColor: 'black',
   },
+  loadingSpinner: {
+    paddingBottom: normalize(25),
+    paddingTop: normalize(8),
+  },
   daoWrapper: {
     flex: 1,
     paddingHorizontal: normalize(16),
@@ -88,12 +92,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: normalize(14),
     fontWeight: '300',
-  },
-  daoOverviewWrapper: {
-    marginBottom: normalize(22),
-  },
-  daoTokenWrapper: {
-    marginBottom: normalize(22),
   },
   daoProposalsWrapper: {
     borderBottomColor: 'rgba(193, 193, 193, 0.5)',

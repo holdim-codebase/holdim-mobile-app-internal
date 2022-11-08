@@ -23,6 +23,7 @@ import {
 import {convertURIForLogo} from '../feed'
 import styles from './styles'
 import {shortenAddress} from '../proposal'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 export const validateUserTokens = (quantity: number) => {
   if (quantity >= 0.01 || quantity === 0) {
@@ -79,7 +80,7 @@ function ProfileScreen({navigation, route}: any) {
   }
 
   React.useEffect(() => {
-    if (portfolio) {
+    if (portfolio && portfolio.wallets.length !== 0) {
       const w = portfolio.wallets.find(w => w.id === activeWalletId)
       setActiveWallet(w)
     }
@@ -109,9 +110,11 @@ function ProfileScreen({navigation, route}: any) {
         <RefreshControl refreshing={false} onRefresh={onRefresh} />
       }>
       {loading || networkStatus === NetworkStatus.refetch ? (
-        <View style={styles.loadingWrapper}>
-          <ActivityIndicator size="large" color="#8463DF" />
-        </View>
+        <LoadingSpinner
+          style={styles.loadingWrapper}
+          size="large"
+          color="#8463DF"
+        />
       ) : (
         portfolio && (
           <View>
