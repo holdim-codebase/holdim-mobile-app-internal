@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: '50%',
+    paddingTop: '80%',
     backgroundColor: 'black',
   },
   loadingWrapper: {
@@ -18,6 +18,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
+  },
+  loadingSpinner: {
+    paddingVertical: normalize(20),
   },
   feedWrapper: {
     flex: 1,

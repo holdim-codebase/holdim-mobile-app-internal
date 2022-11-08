@@ -22,6 +22,7 @@ import {convertURIForLogo} from '../feed'
 //components
 import MarkdownText from '../../components/MarkdownText'
 import Follow from '../../components/Follow'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 //styles
 import styles from './styles'
@@ -38,6 +39,7 @@ function DAOScreen({route, navigation}: any) {
   // states for pagination
   const [endCursor, setEndCursor] = React.useState<string>('')
   const [hasNextPage, setHasNextPage] = React.useState<boolean>(false)
+  const [fetchMoreLoading, setFetchMoreLoading] = React.useState<boolean>(false)
 
   // filter proposals to show active first
   const filterProposals = (allProposals: TProposal[]) => {
@@ -73,6 +75,7 @@ function DAOScreen({route, navigation}: any) {
       )
       setEndCursor(res.proposalsV2.pageInfo.endCursor)
       setHasNextPage(res.proposalsV2.pageInfo.hasNextPage)
+      setFetchMoreLoading(false)
     },
     onError: error => {
       Sentry.captureException(error)
@@ -90,11 +93,10 @@ function DAOScreen({route, navigation}: any) {
     contentOffset,
     contentSize,
   }: NativeScrollEvent) => {
-    const paddingToBottom = 20
-    return (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-    )
+    let paddingToBottom = 30
+    paddingToBottom += layoutMeasurement.height
+
+    return contentOffset.y >= contentSize.height - paddingToBottom
   }
 
   // when dao is ready get dao proposals
@@ -166,12 +168,12 @@ function DAOScreen({route, navigation}: any) {
       </View>
 
       {activeTab === overviewTab ? (
-        <ScrollView style={styles.daoOverviewWrapper}>
+        <ScrollView>
           <MarkdownText text={dao.overview} />
         </ScrollView>
       ) : null}
       {activeTab === tokenTab ? (
-        <ScrollView style={styles.daoTokenWrapper}>
+        <ScrollView>
           <MarkdownText text={dao.tokenOverview} />
         </ScrollView>
       ) : null}
@@ -180,6 +182,7 @@ function DAOScreen({route, navigation}: any) {
           onScroll={({nativeEvent}) => {
             if (isCloseToBottom(nativeEvent)) {
               if (hasNextPage) {
+                setFetchMoreLoading(true)
                 fetchMore({
                   variables: {first: 10, after: endCursor, daoIds: [dao.id]},
                 })
@@ -229,6 +232,13 @@ function DAOScreen({route, navigation}: any) {
               )
             })}
           </View>
+          {fetchMoreLoading && (
+            <LoadingSpinner
+              style={styles.loadingSpinner}
+              size="small"
+              color="rgba(132, 99, 223, 1)"
+            />
+          )}
         </ScrollView>
       ) : null}
     </View>

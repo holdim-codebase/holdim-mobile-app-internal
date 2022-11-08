@@ -8,8 +8,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: '30%',
+    paddingTop: '20%',
     backgroundColor: 'black',
+  },
+  loadingSpinner: {
+    paddingVertical: normalize(20),
   },
   searchWrapper: {
     flex: 1,
@@ -33,16 +36,14 @@ const styles = StyleSheet.create({
   searchListWrapper: {
     width: '100%',
     marginTop: normalize(16),
-    borderTopColor: '#2F2F2F',
-    borderTopWidth: 1,
   },
   searchDaoWrapper: {
     paddingVertical: normalize(14),
     alignContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomColor: '#2F2F2F',
-    borderBottomWidth: 1,
+    borderTopColor: '#2F2F2F',
+    borderTopWidth: 1,
   },
   searchDaoLogoTextWrapper: {
     alignContent: 'center',

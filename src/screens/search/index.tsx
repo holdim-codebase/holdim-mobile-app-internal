@@ -15,8 +15,13 @@ import * as Sentry from '@sentry/react-native'
 import {TDAO} from '../../types'
 import {GET_DAO_LIST, handleHTTPError} from '../../services/api'
 import {convertURIForLogo} from '../feed'
-import styles from './styles'
+
+// components
 import Follow from '../../components/Follow'
+import LoadingSpinner from '../../components/LoadingSpinner'
+
+// styles
+import styles from './styles'
 
 function SearchScreen({navigation}: any) {
   const [daoList, setDaoList] = React.useState<TDAO[]>([])
@@ -25,6 +30,7 @@ function SearchScreen({navigation}: any) {
   // states for pagination
   const [endCursor, setEndCursor] = React.useState<string>('')
   const [hasNextPage, setHasNextPage] = React.useState<boolean>(false)
+  const [fetchMoreLoading, setFetchMoreLoading] = React.useState<boolean>(false)
 
   const {
     loading: loadingDaoList,
@@ -32,7 +38,7 @@ function SearchScreen({navigation}: any) {
     refetch,
   } = useQuery(GET_DAO_LIST, {
     variables: {
-      first: 15,
+      first: 10,
       after: '',
       onlyMain: true,
       search: '',
@@ -41,6 +47,7 @@ function SearchScreen({navigation}: any) {
       setDaoList(res.daosV2.edges.map((edge: {node: any}) => edge.node))
       setEndCursor(res.daosV2.pageInfo.endCursor)
       setHasNextPage(res.daosV2.pageInfo.hasNextPage)
+      setFetchMoreLoading(false)
     },
     onError: error => {
       Sentry.captureException(error)
@@ -58,11 +65,10 @@ function SearchScreen({navigation}: any) {
     contentOffset,
     contentSize,
   }: NativeScrollEvent) => {
-    const paddingToBottom = 15
-    return (
-      layoutMeasurement.height + contentOffset.y >=
-      contentSize.height - paddingToBottom
-    )
+    let paddingToBottom = 30
+    paddingToBottom += layoutMeasurement.height
+
+    return contentOffset.y >= contentSize.height - paddingToBottom
   }
 
   React.useEffect(() => {
@@ -86,18 +92,21 @@ function SearchScreen({navigation}: any) {
         onClearPress={() => setTextInSearchBar('')}
       />
       {loadingDaoList ? (
-        <View style={styles.loadingWrapperFullScreen}>
-          <ActivityIndicator size="large" color="#8463DF" />
-        </View>
+        <LoadingSpinner
+          style={styles.loadingWrapperFullScreen}
+          size="large"
+          color="#8463DF"
+        />
       ) : (
         <ScrollView
           style={styles.searchListWrapper}
           onScroll={({nativeEvent}) => {
             if (isCloseToBottom(nativeEvent)) {
               if (hasNextPage) {
+                setFetchMoreLoading(true)
                 fetchMore({
                   variables: {
-                    first: 20,
+                    first: 10,
                     after: endCursor,
                     onlyMain: true,
                     search: '',
@@ -151,6 +160,13 @@ function SearchScreen({navigation}: any) {
             </View>
           )}
         </ScrollView>
+      )}
+      {fetchMoreLoading && (
+        <LoadingSpinner
+          style={styles.loadingSpinner}
+          size="small"
+          color="rgba(132, 99, 223, 1)"
+        />
       )}
     </View>
   )
