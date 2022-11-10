@@ -5,11 +5,13 @@ import { TouchableWithoutFeedback } from 'react-native'
 type TooltipProps = {
   children: JSX.Element
   content: JSX.Element
+  setTooltipIsOpen: Function
+  tooltipIsOpen: boolean
 }
 
-const EmojiTooltip = ({children, content}: TooltipProps) => {
+const EmojiTooltip = ({children, content, setTooltipIsOpen, tooltipIsOpen}: TooltipProps) => {
 
-  const [tooltipIsOpen, setTooltipIsOpen] = React.useState<boolean>(false)
+
 
   return (
     <Tooltip

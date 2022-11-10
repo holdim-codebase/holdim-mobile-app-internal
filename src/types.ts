@@ -101,5 +101,5 @@ export type TSlide = {
 
 export type TEmojiReactions = {
   id: string,
-  url: string
+  unicode: string
 }

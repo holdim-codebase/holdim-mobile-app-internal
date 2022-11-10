@@ -335,7 +335,15 @@ export const GET_EMOJIS = gql`
   query GET_EMOJIS {
     emojis {
       id
-      url
+      unicode
+    }
+  }
+`
+
+export const CHANGE_PROPOSAL_EMOJI = gql`
+  mutation ChangeProposalEmoji($proposalId: ID!, $emojiId: ID!) {
+    changeProposalEmoji(proposalId: $proposalId, emojiId: $emojiId) {
+      id
     }
   }
 `
