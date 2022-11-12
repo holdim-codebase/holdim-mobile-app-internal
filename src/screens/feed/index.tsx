@@ -15,7 +15,7 @@ import {GET_POLL, GET_PROPOSALS, handleHTTPError, GET_EMOJIS} from '../../servic
 import {requestUserNotificationPermission} from '../../services/firebase'
 import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import LoadingSpinner from '../../components/LoadingSpinner'
-import Proposal from './proposal'
+import Proposal from './feedProposal'
 import styles from './styles'
 
 export const convertURIForLogo = (logoURI: string) => {

@@ -5,7 +5,8 @@ import {
   Image,
   ActivityIndicator,
   TouchableWithoutFeedback,
-  Alert
+  Alert,
+  Share
 } from 'react-native'
 import * as Sentry from '@sentry/react-native'
 import moment from 'moment'
@@ -21,9 +22,10 @@ import { CHANGE_PROPOSAL_EMOJI, handleHTTPError } from '../../services/api'
 import ActionIcon from '../../components/ActionIcon'
 import EmojiTooltip from '../../components/EmojiTooltip'
 
-import Share from '../../assets/icons/share.svg'
-import Snapshot from '../../assets/icons/snapshot.svg'
-import Favorite from '../../assets/icons/favorite_border.svg'
+import ShareIcon from '../../assets/icons/share.svg'
+import SnapshotIcon from '../../assets/icons/snapshot.svg'
+import FavoriteIcon from '../../assets/icons/favorite_border.svg'
+import {openLinkInAppBrowser} from '../../components/MarkdownText'
 
 import styles from './styles'
 
@@ -62,6 +64,13 @@ const Proposal = (props: TProps) => {
     })
     setPickedEmojiId(pickedEmojiId === emojiId ? null : emojiId)
     setTooltipIsOpen(false)
+  }
+
+  const handleShare = () => {
+    Share.share({
+      message: proposal.juniorDescription,
+      title: proposal.title
+    })
   }
 
   return (
@@ -165,8 +174,8 @@ const Proposal = (props: TProps) => {
       </View>
       <View style={styles.proposalWrapperBottom}>
             <View style={styles.proposalActionsWrapper}>
-              <ActionIcon icon={<Share width={normalize(20)}/>} onPress={() => Alert.alert('pizda')} size={normalize(20)}/>
-              <ActionIcon icon={<Snapshot width={normalize(20)}/>} onPress={() => Alert.alert('pizda')} size={normalize(20)}/>
+              <ActionIcon icon={<ShareIcon width={normalize(20)}/>} onPress={handleShare} size={normalize(20)}/>
+              {proposal.snapshotLink && <ActionIcon icon={<SnapshotIcon width={normalize(20)}/>} onPress={() => openLinkInAppBrowser(proposal.snapshotLink)} size={normalize(20)}/>}
             </View>
             <View>
               <EmojiTooltip 
@@ -184,7 +193,7 @@ const Proposal = (props: TProps) => {
                   </View>
                 }>
                 <View style={styles.chosenEmojiReaction}>
-                  {pickedEmojiId ? <Text style={{fontSize: normalize(20)}}>{EmojiReactionsStore.getEmojiById(pickedEmojiId)?.unicode ||  <Favorite width={normalize(20)} />}</Text> : <Favorite width={normalize(20)} />}
+                  {pickedEmojiId ? <Text style={{fontSize: normalize(20)}}>{EmojiReactionsStore.getEmojiById(pickedEmojiId)?.unicode ||  <FavoriteIcon width={normalize(20)} />}</Text> : <FavoriteIcon width={normalize(20)} />}
                 </View>
               </EmojiTooltip>
             </View>
