@@ -68,8 +68,7 @@ const Proposal = (props: TProps) => {
 
   const handleShare = () => {
     Share.share({
-      message: proposal.juniorDescription,
-      title: proposal.title
+      message: `${proposal.title}\n\n${proposal.juniorDescription}\n\nTL;DR made by Holdim AI\n${proposal.snapshotLink}`,
     })
   }
 

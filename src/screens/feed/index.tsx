@@ -181,7 +181,9 @@ function FeedScreen({navigation, route}: any) {
             loadingPoll={loadingPoll} 
             openProposal={openProposal} 
             openDAODescription={openDAODescription} 
-            convertURIForLogo={convertURIForLogo}/>
+            convertURIForLogo={convertURIForLogo}
+            key={item.id}
+            />
         })
       )}
       {fetchMoreLoading && (

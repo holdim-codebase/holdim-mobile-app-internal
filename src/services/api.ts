@@ -28,12 +28,12 @@ const authLink = setContext(async (_, {headers}) => {
   const user: FirebaseAuthTypes.User | null = auth().currentUser
 
   const walletId = await AsyncStorage.getItem('wallet-id')
-  console.log(walletId)
+  console.log({walletId})
 
   if (user) {
     const idTokenResult: FirebaseAuthTypes.IdTokenResult =
       await user.getIdTokenResult(true)
-    console.log(idTokenResult.token)
+    console.log({token: idTokenResult.token})
 
     return {
       headers: {
