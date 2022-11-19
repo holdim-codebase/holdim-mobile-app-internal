@@ -109,7 +109,7 @@ function WalletManagementScreen({navigation}: any) {
     AsyncStorage.removeItem('wallet-id')
     AsyncStorage.removeItem('userLoggedIn')
     client.clearStore()
-    console.log(auth().currentUser)
+    console.log({currentUser: auth().currentUser})
     auth().currentUser &&
       auth()
         .signOut()
