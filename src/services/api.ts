@@ -28,12 +28,12 @@ const authLink = setContext(async (_, {headers}) => {
   const user: FirebaseAuthTypes.User | null = auth().currentUser
 
   const walletId = await AsyncStorage.getItem('wallet-id')
-  console.log(walletId)
+  console.log({walletId})
 
   if (user) {
     const idTokenResult: FirebaseAuthTypes.IdTokenResult =
       await user.getIdTokenResult(true)
-    console.log(idTokenResult.token)
+    console.log({token: idTokenResult.token})
 
     return {
       headers: {
@@ -167,6 +167,12 @@ export const GET_PROPOSALS = gql`
           author
           snapshotLink
           discussionLink
+          personalizedData {
+            pickedEmojiId
+          }
+          statisticData {
+            emojiCount { emojiId, count}
+          }
         }
         cursor
       }
@@ -322,6 +328,22 @@ export const GET_USER_WALLETS = gql`
           symbol
         }
       }
+    }
+  }
+`
+export const GET_EMOJIS = gql`
+  query GET_EMOJIS {
+    emojis {
+      id
+      unicode
+    }
+  }
+`
+
+export const CHANGE_PROPOSAL_EMOJI = gql`
+  mutation ChangeProposalEmoji($proposalId: ID!, $emojiId: ID!) {
+    changeProposalEmoji(proposalId: $proposalId, emojiId: $emojiId) {
+      id
     }
   }
 `
