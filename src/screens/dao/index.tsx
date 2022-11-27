@@ -52,7 +52,7 @@ function DAOScreen({route, navigation}: any) {
     setProposals(active.concat(passed))
   }
 
-  useQuery(GET_DAO_DETAIL, {
+  const {loading} = useQuery(GET_DAO_DETAIL, {
     variables: {
       ids: [route.params.daoId],
       onlyMain: true,
@@ -105,7 +105,13 @@ function DAOScreen({route, navigation}: any) {
       getDaoProposals({variables: {first: 10, after: '', daoIds: [dao.id]}})
   }, [dao])
 
-  return dao ? (
+  return loading ? (
+    <LoadingSpinner
+      style={styles.loadingWrapperFullScreen}
+      size="large"
+      color="rgba(132, 99, 223, 1)"
+    />
+  ) : dao ? (
     <View style={styles.daoWrapper}>
       <View style={styles.daoInfoWrapper}>
         <Image

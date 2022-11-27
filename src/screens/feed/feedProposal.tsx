@@ -129,12 +129,11 @@ const Proposal = (props: TProps) => {
                           {numeral(poll.poll.scores[i]).format('0[.]0a')}{' '}
                           {poll.poll.symbol}
                           {'  '}
-                          {
+                          {poll.poll.scores_total &&
                             +(
                               (poll.poll.scores[i] * 100) /
                               poll.poll.scores_total
-                            ).toFixed()
-                          }
+                            ).toFixed()}
                           %
                         </Text>
                       </View>
@@ -144,7 +143,8 @@ const Proposal = (props: TProps) => {
                             ...styles.proposalVotingItemInnerLine,
                             backgroundColor: '#8463DF',
                             width: `${
-                              (poll.poll.scores[i] * 100) /
+                              (poll.poll.scores_total &&
+                                poll.poll.scores[i] * 100) /
                               poll.poll.scores_total
                             }%`,
                           }}
