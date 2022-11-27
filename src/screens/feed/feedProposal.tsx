@@ -94,10 +94,15 @@ const Proposal = (props: TProps) => {
             </TouchableWithoutFeedback>
           </View>
           <View style={styles.proposalContentWrapper}>
-            <TouchableWithoutFeedback
-              onPress={() => openDAODescription(proposal.dao.id)}>
-              <Text style={styles.proposalTitle}>{proposal.dao.name}</Text>
-            </TouchableWithoutFeedback>
+            <View style={styles.proposalTopPart}>
+              <TouchableWithoutFeedback
+                onPress={() => openDAODescription(proposal.dao.id)}>
+                <Text style={styles.proposalTitle}>{proposal.dao.name}</Text>
+              </TouchableWithoutFeedback>
+              {dateNow < new Date(proposal.endAt) && (
+                <Text style={styles.proposalActiveTitle}>ACTIVE</Text>
+              )}
+            </View>
             <Text style={styles.proposalDescription}>
               {proposal.juniorDescription}
             </Text>

@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     paddingTop: normalize(16),
   },
   proposalActionsWrapper: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   proposalImageWrapper: {
     marginRight: normalize(8),
@@ -62,6 +62,12 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '83%',
   },
+  proposalTopPart: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    alignContent: 'center',
+  },
   proposalTitle: {
     color: 'white',
     fontSize: normalize(20),
@@ -69,6 +75,21 @@ const styles = StyleSheet.create({
     lineHeight: normalize(24),
     marginBottom: normalize(12),
     fontFamily: 'System',
+    paddingTop: normalize(8),
+  },
+  proposalActiveTitle: {
+    color: '#A8D102',
+    fontSize: normalize(12),
+    fontWeight: '700',
+    lineHeight: normalize(20),
+    marginBottom: normalize(12),
+    paddingHorizontal: normalize(9),
+    paddingVertical: normalize(5),
+    fontFamily: 'System',
+    borderRadius: 8,
+    backgroundColor: 'rgba(168, 209, 2, 0.08)',
+    width: normalize(62),
+    overflow: 'hidden',
   },
   proposalDescription: {
     color: '#E2DFDF',
@@ -131,18 +152,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   emojiReactionContentWrapper: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   emojiReactionItem: {
-    marginHorizontal: normalize(4), 
-    fontSize: normalize(24)
+    marginHorizontal: normalize(4),
+    fontSize: normalize(24),
   },
   chosenEmojiReaction: {
-    height: normalize(23), 
-    width: normalize(23), 
-    alignItems: 'center', 
-    justifyContent: 'center'
-  }
+    height: normalize(23),
+    width: normalize(23),
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 })
 
 export default styles
