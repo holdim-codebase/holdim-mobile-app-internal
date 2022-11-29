@@ -22,7 +22,6 @@ const settings = [
   {title: 'Privacy policy', icon: <File />, screenName: 'Privacy policy'},
 ]
 
-// TODO move to store
 function SettingsScreen({navigation}: any) {
   return (
     <View style={styles.settingsWrapper}>
@@ -39,7 +38,7 @@ function SettingsScreen({navigation}: any) {
       </View>
       <View>
         {settings.map((s, i: number) => (
-          <TouchableWithoutFeedback
+          <TouchableOpacity
             key={i}
             style={styles.settingWrapper}
             onPress={() => {
@@ -51,7 +50,7 @@ function SettingsScreen({navigation}: any) {
                 <Text style={styles.settingText}>{s.title}</Text>
               </View>
             </View>
-          </TouchableWithoutFeedback>
+          </TouchableOpacity>
         ))}
       </View>
     </View>
