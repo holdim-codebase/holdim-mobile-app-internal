@@ -33,8 +33,11 @@ import FeedIconFocused from './src/assets/images/svg/Home.purple.svg'
 import SearchIconFocused from './src/assets/images/svg/Search.purple.svg'
 import ProfileIconFocused from './src/assets/images/svg/Profile.purple.svg'
 import SettingsIcon from './src/assets/images/svg/Settings.svg'
+
 import WalletManagementScreen from './src/screens/walletManagement'
 import StateScreen from './src/screens/stateScreen'
+import SettingsScreen from './src/screens/settings'
+import PrivacyPolicyScreen from './src/screens/privacyPolicy'
 
 Sentry.init({
   dsn: 'https://e64a26481fc64b0b895da8a145307e31@o1405388.ingest.sentry.io/6739145',
@@ -104,8 +107,7 @@ function ProfileStackScreen() {
         options={({navigation}) => ({
           headerRight: () => {
             return (
-              <TouchableOpacity
-                onPress={() => navigation.navigate('WalletManagement')}>
+              <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
                 <SettingsIcon />
               </TouchableOpacity>
             )
@@ -244,10 +246,24 @@ const RootStack = (RootStackProps: {isFirstLaunch: boolean}) => {
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="MainScreen" component={MainScreen} />
         <Stack.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            headerTitle: 'Settings',
+          }}
+        />
+        <Stack.Screen
           name="WalletManagement"
           component={WalletManagementScreen}
           options={{
             headerTitle: 'Wallet management',
+          }}
+        />
+        <Stack.Screen
+          name="Privacy policy"
+          component={PrivacyPolicyScreen}
+          options={{
+            headerTitle: 'Privacy policy',
           }}
         />
         <Stack.Screen name="StateScreen" component={StateScreen} />
@@ -257,10 +273,24 @@ const RootStack = (RootStackProps: {isFirstLaunch: boolean}) => {
         screenOptions={{headerShown: false, gestureEnabled: false}}>
         <Stack.Screen name="MainScreen" component={MainScreen} />
         <Stack.Screen
-          name="WalletManagement"
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            headerTitle: 'Settings',
+          }}
+        />
+        <Stack.Screen
+          name="Wallet management"
           component={WalletManagementScreen}
           options={{
             headerTitle: 'Wallet management',
+          }}
+        />
+        <Stack.Screen
+          name="Privacy policy"
+          component={PrivacyPolicyScreen}
+          options={{
+            headerTitle: 'Privacy policy',
           }}
         />
         <Stack.Screen name="StateScreen" component={StateScreen} />
