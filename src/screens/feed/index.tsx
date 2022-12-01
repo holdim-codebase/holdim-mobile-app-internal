@@ -1,17 +1,17 @@
 import * as React from 'react'
-import {
-  ScrollView,
-  RefreshControl,
-  NativeScrollEvent,
-  Alert
-} from 'react-native'
+import {ScrollView, RefreshControl, NativeScrollEvent} from 'react-native'
 import {useQuery} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
 import messaging from '@react-native-firebase/messaging'
 import {useScrollToTop} from '@react-navigation/native'
 
 import {TProposal, TPoll} from '../../types'
-import {GET_POLL, GET_PROPOSALS, handleHTTPError, GET_EMOJIS} from '../../services/api'
+import {
+  GET_POLL,
+  GET_PROPOSALS,
+  handleHTTPError,
+  GET_EMOJIS,
+} from '../../services/api'
 import {requestUserNotificationPermission} from '../../services/firebase'
 import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import LoadingSpinner from '../../components/LoadingSpinner'
@@ -35,7 +35,6 @@ function FeedScreen({navigation, route}: any) {
   const [fetchMoreLoading, setFetchMoreLoading] = React.useState<boolean>(false)
 
   const scrollRef = React.useRef(null)
-
 
   const {loading: loadingProposals, fetchMore: fetchMoreProposals} = useQuery(
     GET_PROPOSALS,
@@ -175,15 +174,17 @@ function FeedScreen({navigation, route}: any) {
         proposals &&
         proposals.map((item: TProposal, i: number) => {
           const poll = polls[i]
-          return <Proposal 
-            poll={poll} 
-            proposal={item} 
-            loadingPoll={loadingPoll} 
-            openProposal={openProposal} 
-            openDAODescription={openDAODescription} 
-            convertURIForLogo={convertURIForLogo}
-            key={item.id}
+          return (
+            <Proposal
+              poll={poll}
+              proposal={item}
+              loadingPoll={loadingPoll}
+              openProposal={openProposal}
+              openDAODescription={openDAODescription}
+              convertURIForLogo={convertURIForLogo}
+              key={item.id}
             />
+          )
         })
       )}
       {fetchMoreLoading && (
