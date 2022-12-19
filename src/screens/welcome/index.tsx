@@ -1,21 +1,19 @@
 import * as React from 'react'
-import {
-  ActivityIndicator,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native'
-import {useQuery} from '@apollo/client'
+import {Image, ScrollView, Text, TouchableOpacity, View} from 'react-native'
+import {useLazyQuery, useQuery} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
 
-import {GET_DAO_LIST, handleHTTPError} from '../../services/api'
+import {
+  GET_DAO_LIST,
+  GET_TOTAL_COUNT_OF_DAOS,
+  handleHTTPError,
+} from '../../services/api'
 import {TDAO} from '../../types'
 import {convertURIForLogo} from '../feed'
 
 // components
 import Follow from '../../components/Follow'
+import LoadingSpinner from '../../components/LoadingSpinner'
 
 // styles
 import styles from './styles'
@@ -23,6 +21,9 @@ import styles from './styles'
 const WelcomeScreen = ({navigation}: any) => {
   const [followedDaoList, setFollowedDaoList] = React.useState<TDAO[]>([])
   const [notFollowedDaoList, setNotFollowedDaoList] = React.useState<TDAO[]>([])
+
+  const [totalCountOfDaos, setTotalCountOfDaos] = React.useState<number>()
+  const [firstLoading, setFirstLoading] = React.useState<boolean>(false)
 
   const filterAllDaos = (daos: TDAO[]) => {
     const followedDaos: TDAO[] = []
@@ -36,16 +37,11 @@ const WelcomeScreen = ({navigation}: any) => {
 
     setFollowedDaoList(followedDaos)
     setNotFollowedDaoList(notFollowedDaos)
+    setFirstLoading(false)
   }
 
-  // TODO change logic to get followed/unfollowed daos
-  // if we have more than 30 daos, it will not work
-  const {loading: loadingDaoList} = useQuery(GET_DAO_LIST, {
-    variables: {
-      first: 30,
-      after: '',
-      onlyMain: true,
-    },
+  const [getDaoList, {loading: refetchLoading}] = useLazyQuery(GET_DAO_LIST, {
+    fetchPolicy: 'network-only',
     onCompleted: res => {
       filterAllDaos(res.daosV2.edges.map((edge: {node: any}) => edge.node))
     },
@@ -55,6 +51,32 @@ const WelcomeScreen = ({navigation}: any) => {
       handleHTTPError()
     },
   })
+
+  useQuery(GET_TOTAL_COUNT_OF_DAOS, {
+    variables: {
+      onlyFollowed: false,
+    },
+    onCompleted: res => {
+      setFirstLoading(true)
+      setTotalCountOfDaos(res.daosV2.totalCount)
+    },
+    onError: error => {
+      Sentry.captureException(error)
+      console.error(error)
+      handleHTTPError()
+    },
+  })
+
+  React.useEffect(() => {
+    totalCountOfDaos &&
+      getDaoList({
+        variables: {
+          first: totalCountOfDaos,
+          after: '',
+          onlyFollowed: false,
+        },
+      })
+  }, [totalCountOfDaos])
 
   return (
     <View style={styles.welcomeWrapper}>
@@ -74,16 +96,24 @@ const WelcomeScreen = ({navigation}: any) => {
             {'But if don’t want, you can always stop following them'}
           </Text>
         </View>
-        {followedDaoList.length !== 0 ? (
+        {firstLoading ? (
+          <LoadingSpinner
+            style={styles.loadingWrapperFullScreen}
+            size="large"
+            color="rgba(132, 99, 223, 1)"
+          />
+        ) : followedDaoList.length !== 0 ? (
           <View>
             <Text style={styles.welcomeProjectsListTitle}>
               Projects you are following
             </Text>
             <View style={styles.welcomeProjectsListWrapper}>
-              {loadingDaoList ? (
-                <View style={styles.loadingWrapperFullScreen}>
-                  <ActivityIndicator size="large" color="#8463DF" />
-                </View>
+              {refetchLoading ? (
+                <LoadingSpinner
+                  style={styles.loadingWrapperFullScreen}
+                  size="small"
+                  color="rgba(132, 99, 223, 1)"
+                />
               ) : (
                 followedDaoList.map((followedDao, index) => {
                   return (
@@ -131,10 +161,12 @@ const WelcomeScreen = ({navigation}: any) => {
               Maybe interesting for you to follow
             </Text>
             <View style={styles.welcomeProjectsListWrapper}>
-              {loadingDaoList ? (
-                <View style={styles.loadingWrapperFullScreen}>
-                  <ActivityIndicator size="large" color="#8463DF" />
-                </View>
+              {refetchLoading ? (
+                <LoadingSpinner
+                  style={styles.loadingWrapperFullScreen}
+                  size="small"
+                  color="rgba(132, 99, 223, 1)"
+                />
               ) : (
                 notFollowedDaoList.map((notFollowedDao, index) => {
                   return (
