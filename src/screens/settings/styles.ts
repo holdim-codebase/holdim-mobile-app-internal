@@ -1,7 +1,7 @@
-import {Platform, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-const OS_IOS = Platform.OS === 'ios'
+import {statusBarHeight} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -15,11 +15,10 @@ const styles = StyleSheet.create({
   },
   settingsWrapper: {
     flex: 1,
-    height: OS_IOS ? normalize(44) : 0,
     flexDirection: 'column',
   },
   settingsStatusBar: {
-    height: OS_IOS ? normalize(44) : 0,
+    height: statusBarHeight,
   },
   settingsStatusBarWrapper: {
     height: normalize(52),

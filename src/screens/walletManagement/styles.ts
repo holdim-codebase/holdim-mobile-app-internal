@@ -1,7 +1,7 @@
-import {Platform, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-const OS_IOS = Platform.OS === 'ios'
+import {OS_IOS, purple, purpleLight, statusBarHeight} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -15,14 +15,13 @@ const styles = StyleSheet.create({
   },
   walletManagementWrapper: {
     flex: 1,
-    height: OS_IOS ? normalize(44) : 0,
     flexDirection: 'column',
   },
   walletManagementStatusBar: {
-    height: OS_IOS ? normalize(44) : 0,
+    height: statusBarHeight,
   },
   walletManagementStatusBarWrapper: {
-    height: normalize(52),
+    height: normalize(56),
     alignContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
   walletWrapper: {
     borderWidth: 1,
     borderRadius: normalize(10),
-    borderColor: '#BEAAF5',
+    borderColor: purpleLight,
     padding: normalize(10),
     marginBottom: normalize(10),
     backgroundColor: 'black',
@@ -54,7 +53,7 @@ const styles = StyleSheet.create({
   activeWalletWrapper: {
     borderWidth: 3,
     borderRadius: normalize(10),
-    borderColor: '#8463DF',
+    borderColor: purple,
     padding: normalize(10),
     marginBottom: normalize(10),
   },
@@ -83,7 +82,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: normalize(16),
     lineHeight: normalize(20),
-    color: '#8463DF',
+    color: purple,
   },
   walletSection: {
     paddingTop: normalize(8),
@@ -136,7 +135,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: normalize(52),
     borderRadius: 5,
-    backgroundColor: '#8463DF',
+    backgroundColor: purple,
     justifyContent: 'center',
     alignItems: 'center',
   },

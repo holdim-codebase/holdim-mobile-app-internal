@@ -1,8 +1,7 @@
-import {Platform, StatusBar, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-const STATUSBAR_HEIGHT =
-  Platform.OS === 'ios' ? normalize(44) : StatusBar.currentHeight
+import {purple, statusBarHeight} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -16,10 +15,10 @@ const styles = StyleSheet.create({
   },
   welcomeWrapper: {
     flex: 1,
-    height: STATUSBAR_HEIGHT,
+    height: statusBarHeight,
   },
   welcomeStatusBar: {
-    height: STATUSBAR_HEIGHT,
+    height: statusBarHeight,
     backgroundColor: 'rgba(22, 22, 22, 1)',
   },
   welcomeFeedWrapper: {
@@ -130,7 +129,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: normalize(64),
     borderRadius: 5,
-    backgroundColor: '#8463DF',
+    backgroundColor: purple,
     justifyContent: 'center',
     alignItems: 'center',
   },

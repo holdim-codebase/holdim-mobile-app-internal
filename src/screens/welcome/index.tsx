@@ -19,6 +19,7 @@ import Follow from '../../components/Follow'
 
 // styles
 import styles from './styles'
+import {purple} from '../../constants/css'
 
 const WelcomeScreen = ({navigation}: any) => {
   const [followedDaoList, setFollowedDaoList] = React.useState<TDAO[]>([])
@@ -82,7 +83,7 @@ const WelcomeScreen = ({navigation}: any) => {
             <View style={styles.welcomeProjectsListWrapper}>
               {loadingDaoList ? (
                 <View style={styles.loadingWrapperFullScreen}>
-                  <ActivityIndicator size="large" color="#8463DF" />
+                  <ActivityIndicator size="large" color={purple} />
                 </View>
               ) : (
                 followedDaoList.map((followedDao, index) => {
@@ -115,7 +116,7 @@ const WelcomeScreen = ({navigation}: any) => {
                         <Follow
                           daoId={followedDao.id}
                           userFollowed={true}
-                          color={'#8463DF'}
+                          color={purple}
                         />
                       </View>
                     </View>
@@ -133,7 +134,7 @@ const WelcomeScreen = ({navigation}: any) => {
             <View style={styles.welcomeProjectsListWrapper}>
               {loadingDaoList ? (
                 <View style={styles.loadingWrapperFullScreen}>
-                  <ActivityIndicator size="large" color="#8463DF" />
+                  <ActivityIndicator size="large" color={purple} />
                 </View>
               ) : (
                 notFollowedDaoList.map((notFollowedDao, index) => {

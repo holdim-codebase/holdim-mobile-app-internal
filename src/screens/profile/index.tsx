@@ -21,9 +21,10 @@ import {
   handleHTTPError,
 } from '../../services/api'
 import {convertURIForLogo} from '../feed'
-import styles from './styles'
 import {shortenAddress} from '../proposal'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import styles from './styles'
+import {purple} from '../../constants/css'
 
 export const validateUserTokens = (quantity: number) => {
   if (quantity >= 0.01 || quantity === 0) {
@@ -113,7 +114,7 @@ function ProfileScreen({navigation, route}: any) {
         <LoadingSpinner
           style={styles.loadingWrapper}
           size="large"
-          color="#8463DF"
+          color={purple}
         />
       ) : (
         portfolio && (
@@ -132,7 +133,7 @@ function ProfileScreen({navigation, route}: any) {
                     : null}
                 </Text>
                 <Text style={styles.profilePortfolioAmount}>
-                  You govern: {portfolio.followedDaos.length} DAOs
+                  You follow: {portfolio.followedDaos.length} DAOs
                 </Text>
               </View>
             </View>

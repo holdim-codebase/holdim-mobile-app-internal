@@ -1,7 +1,7 @@
-import {Platform, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-const OS_IOS = Platform.OS === 'ios'
+import {OS_IOS, purpleLight, statusBarHeight} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -15,11 +15,10 @@ const styles = StyleSheet.create({
   },
   privacyPolicyWrapper: {
     flex: 1,
-    height: OS_IOS ? normalize(44) : 0,
     flexDirection: 'column',
   },
   privacyPolicyStatusBar: {
-    height: OS_IOS ? normalize(44) : 0,
+    height: statusBarHeight,
   },
   privacyPolicyStatusBarWrapper: {
     height: normalize(52),
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
     paddingVertical: normalize(16),
   },
   privacyPolicyDateText: {
-    color: '#BEAAF5',
+    color: purpleLight,
     fontSize: normalize(12),
     lineHeight: normalize(20),
     backgroundColor: '#47337D',

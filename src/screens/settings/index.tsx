@@ -17,9 +17,9 @@ const settings = [
   {
     title: 'Wallet management',
     icon: <Wallet />,
-    screenName: 'Wallet management',
+    screenName: 'WalletManagement',
   },
-  {title: 'Privacy policy', icon: <File />, screenName: 'Privacy policy'},
+  {title: 'Privacy policy', icon: <File />, screenName: 'PrivacyPolicy'},
 ]
 
 function SettingsScreen({navigation}: any) {
