@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native'
 
+import {openLinkInAppBrowser} from '../../components/MarkdownText'
 import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
 import Wallet from '../../assets/images/svg/Wallet.svg'
 import File from '../../assets/images/svg/File.svg'
@@ -23,6 +24,17 @@ const settings = [
 ]
 
 function SettingsScreen({navigation}: any) {
+
+  const settings = (navigation: any) => [
+    {
+      title: 'Wallet management',
+      icon: <Wallet />,
+      screenName: 'Wallet management',
+      onPress: () => navigation.navigate('Wallet management')
+    },
+    {title: 'Privacy policy', icon: <File />, screenName: 'Privacy policy', onPress: () => openLinkInAppBrowser('https://holdim.to/privacy-policy')},
+  ]
+
   return (
     <View style={styles.settingsWrapper}>
       <View style={styles.settingsStatusBar} />
@@ -37,13 +49,11 @@ function SettingsScreen({navigation}: any) {
         <Text style={styles.settingsStatusBarText}>Settings</Text>
       </View>
       <View>
-        {settings.map((s, i: number) => (
+        {settings(navigation).map((s, i: number) => (
           <TouchableOpacity
             key={i}
             style={styles.settingWrapper}
-            onPress={() => {
-              navigation.navigate(s.screenName)
-            }}>
+            onPress={s.onPress}>
             <View style={styles.settingWrapper}>
               <View style={styles.settingIcon}>{s.icon}</View>
               <View style={styles.settingTextWrapper}>
