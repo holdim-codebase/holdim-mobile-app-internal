@@ -1,25 +1,27 @@
 import {Platform, StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
+import {black, purple, white} from '../../constants/css'
+
 const styles = StyleSheet.create({
   onboardingWrapper: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: black,
     paddingHorizontal: normalize(17),
     paddingVertical: Platform.OS === 'ios' ? normalize(92) : normalize(66),
   },
   onboardingTitle: {
-    color: '#FFFFFF',
+    color: white,
     fontSize: normalize(48),
     fontWeight: 'bold',
   },
   onboardingSubtitle: {
-    color: '#8463DF',
+    color: purple,
     fontSize: normalize(48),
     fontWeight: 'bold',
   },
   onboardingVerticalLine: {
-    color: '#FFFFFF',
+    color: white,
     fontSize: normalize(64),
     fontWeight: 'bold',
   },
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
     height: normalize(34),
     width: normalize(61),
     borderRadius: 5,
-    backgroundColor: '#8463DF',
+    backgroundColor: purple,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
     width: normalize(34),
     marginRight: normalize(12),
     borderRadius: 5,
-    backgroundColor: '#8463DF',
+    backgroundColor: purple,
     justifyContent: 'center',
     alignItems: 'center',
   },

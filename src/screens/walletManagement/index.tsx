@@ -26,6 +26,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 import DeleteSvg from '../../assets/images/svg/Delete.svg'
 import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
 import styles from './styles'
+import {purple} from '../../constants/css'
 
 // TODO move to store
 function WalletManagementScreen({navigation}: any) {
@@ -181,7 +182,7 @@ function WalletManagementScreen({navigation}: any) {
           <LoadingSpinner
             style={styles.loadingWrapperFullScreen}
             size="large"
-            color="#8463DF"
+            color={purple}
           />
         ) : userWallets.length !== 0 ? (
           userWallets.map((wallet, i) => (
@@ -253,7 +254,6 @@ function WalletManagementScreen({navigation}: any) {
                   modalVisible={modalVisible}
                   setModalVisible={m => setModalVisible(m)}
                   doAction={() => {
-                    console.log({walletIdToDelete})
                     startDeleteWallet(walletIdToDelete)
                   }}
                 />

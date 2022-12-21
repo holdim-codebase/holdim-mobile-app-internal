@@ -1,12 +1,11 @@
-import {Platform, StatusBar, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-const OS_IOS = Platform.OS === 'ios'
+import {OS_IOS, purpleLight, white} from '../../constants/css'
 
 const styles = StyleSheet.create({
   stateScreenWrapper: {
     flex: 1,
-    height: OS_IOS ? normalize(44) : StatusBar.currentHeight,
     paddingTop: normalize(194),
     paddingHorizontal: normalize(16.5),
     flexDirection: 'column',
@@ -15,10 +14,10 @@ const styles = StyleSheet.create({
   stateScreenContent: {alignItems: 'center'},
   emoji: {
     fontSize: normalize(55),
-    color: 'white',
+    color: white,
   },
   stateScreenTitle: {
-    color: '#BEAAF5',
+    color: purpleLight,
     lineHeight: normalize(20),
     fontWeight: '700',
     fontSize: normalize(18),

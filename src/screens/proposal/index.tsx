@@ -19,6 +19,7 @@ import {convertURIForLogo} from '../feed'
 import {openLinkInAppBrowser} from '../../components/MarkdownText'
 import Link from '../../assets/images/svg/Link.svg'
 import styles from './styles'
+import {purple} from '../../constants/css'
 
 export const shortenAddress = (address: string) => {
   if (address.length <= 12) return address
@@ -160,7 +161,7 @@ function ProposalScreen({route, navigation}: any) {
           <View style={styles.proposalVotingWrapper}>
             {loadingpoll ? (
               <View style={styles.loadingWrapper}>
-                <ActivityIndicator size="large" color="#8463DF" />
+                <ActivityIndicator size="large" color={purple} />
               </View>
             ) : poll && poll.poll.choices && poll.poll.choices.length !== 0 ? (
               poll.poll.choices.map((choiceTitle: string, i: number) => (
@@ -186,7 +187,7 @@ function ProposalScreen({route, navigation}: any) {
                     <View
                       style={{
                         ...styles.proposalVotingItemInnerLine,
-                        backgroundColor: '#8463DF',
+                        backgroundColor: purple,
                         width: `${
                           poll.poll.scores_total && poll.poll.scores_total !== 0
                             ? (poll.poll.scores[i] * 100) /

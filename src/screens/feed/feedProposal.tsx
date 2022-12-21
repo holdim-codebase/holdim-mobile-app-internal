@@ -27,6 +27,7 @@ import FavoriteIcon from '../../assets/icons/favorite_border.svg'
 import {openLinkInAppBrowser} from '../../components/MarkdownText'
 
 import styles from './styles'
+import {purple} from '../../constants/css'
 
 type TProps = {
   openProposal: Function
@@ -113,7 +114,7 @@ const Proposal = (props: TProps) => {
             <View style={styles.proposalVotingWrapper}>
               {loadingPoll ? (
                 <View style={styles.loadingWrapper}>
-                  <ActivityIndicator size="large" color="#8463DF" />
+                  <ActivityIndicator size="large" color={purple} />
                 </View>
               ) : poll &&
                 poll.poll.choices &&
@@ -141,7 +142,7 @@ const Proposal = (props: TProps) => {
                         <View
                           style={{
                             ...styles.proposalVotingItemInnerLine,
-                            backgroundColor: '#8463DF',
+                            backgroundColor: purple,
                             width: `${
                               (poll.poll.scores_total &&
                                 poll.poll.scores[i] * 100) /

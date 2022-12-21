@@ -12,6 +12,7 @@ import {
   handleHTTPError,
 } from '../../services/api'
 import Like from '../../assets/images/svg/Like.svg'
+import {purple} from '../../constants/css'
 
 type FollowProps = {
   daoId: string
@@ -92,7 +93,7 @@ const Follow = ({daoId, userFollowed, color}: FollowProps) => {
 
   return (
     <TouchableOpacity onPress={handleClick}>
-      <Like fill={color ? color : followed ? '#8463DF' : 'none'} />
+      <Like fill={color ? color : followed ? purple : 'none'} />
     </TouchableOpacity>
   )
 }

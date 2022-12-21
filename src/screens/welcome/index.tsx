@@ -17,6 +17,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 
 // styles
 import styles from './styles'
+import {purple} from '../../constants/css'
 
 const WelcomeScreen = ({navigation}: any) => {
   const [followedDaoList, setFollowedDaoList] = React.useState<TDAO[]>([])
@@ -145,7 +146,7 @@ const WelcomeScreen = ({navigation}: any) => {
                         <Follow
                           daoId={followedDao.id}
                           userFollowed={true}
-                          color={'#8463DF'}
+                          color={purple}
                         />
                       </View>
                     </View>

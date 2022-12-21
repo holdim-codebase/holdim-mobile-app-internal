@@ -21,6 +21,10 @@ import FullProposalScreen from './src/screens/fullProposal'
 import OnboardingScreen from './src/screens/onboarding'
 import LoginScreen from './src/screens/login'
 import WelcomeScreen from './src/screens/welcome'
+import WalletManagementScreen from './src/screens/walletManagement'
+import StateScreen from './src/screens/stateScreen'
+import SettingsScreen from './src/screens/settings'
+import PrivacyPolicyScreen from './src/screens/privacyPolicy'
 
 import UserProvider, {UserContextProps} from './src/Provider/UserProvider'
 import {client} from './src/services/api'
@@ -34,10 +38,7 @@ import SearchIconFocused from './src/assets/images/svg/Search.purple.svg'
 import ProfileIconFocused from './src/assets/images/svg/Profile.purple.svg'
 import SettingsIcon from './src/assets/images/svg/Settings.svg'
 
-import WalletManagementScreen from './src/screens/walletManagement'
-import StateScreen from './src/screens/stateScreen'
-import SettingsScreen from './src/screens/settings'
-import PrivacyPolicyScreen from './src/screens/privacyPolicy'
+import {black} from './src/constants/css'
 
 Sentry.init({
   dsn: 'https://e64a26481fc64b0b895da8a145307e31@o1405388.ingest.sentry.io/6739145',
@@ -54,7 +55,7 @@ const navTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: '#000000',
+    background: black,
   },
 }
 
@@ -280,14 +281,14 @@ const RootStack = (RootStackProps: {isFirstLaunch: boolean}) => {
           }}
         />
         <Stack.Screen
-          name="Wallet management"
+          name="WalletManagement"
           component={WalletManagementScreen}
           options={{
             headerTitle: 'Wallet management',
           }}
         />
         <Stack.Screen
-          name="Privacy policy"
+          name="PrivacyPolicy"
           component={PrivacyPolicyScreen}
           options={{
             headerTitle: 'Privacy policy',

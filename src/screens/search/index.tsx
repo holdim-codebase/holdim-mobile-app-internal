@@ -22,6 +22,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 
 // styles
 import styles from './styles'
+import {purple} from '../../constants/css'
 
 function SearchScreen({navigation}: any) {
   const [daoList, setDaoList] = React.useState<TDAO[]>([])
@@ -95,7 +96,7 @@ function SearchScreen({navigation}: any) {
         <LoadingSpinner
           style={styles.loadingWrapperFullScreen}
           size="large"
-          color="#8463DF"
+          color={purple}
         />
       ) : (
         <ScrollView
