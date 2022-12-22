@@ -1,6 +1,8 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
+import {purple} from '../../constants/css'
+
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
     width: '100%',
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
   },
   proposalButton: {
     width: '100%',
-    backgroundColor: '#8463DF',
+    backgroundColor: purple,
     height: normalize(34),
     borderRadius: normalize(5),
     alignItems: 'center',

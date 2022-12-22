@@ -1,23 +1,22 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
+import {black, purple, white} from '../../constants/css'
+
 const styles = StyleSheet.create({
   loginWrapper: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: black,
     paddingHorizontal: normalize(16),
     paddingVertical: normalize(53),
   },
-  loginTitleWrapper: {
-    // paddingBottom: '25%',
-  },
   loginTitle: {
-    color: '#8463DF',
+    color: purple,
     fontSize: normalize(48),
     fontWeight: 'bold',
   },
   loginVerticalLine: {
-    color: '#FFFFFF',
+    color: white,
     fontSize: normalize(64),
     fontWeight: 'bold',
   },
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: normalize(16),
     height: normalize(64),
     marginVertical: normalize(16),
-    color: '#FFFFFF',
+    color: white,
   },
   loginBtnGoWrapper: {
     flex: 1,
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: normalize(64),
     borderRadius: 5,
-    backgroundColor: '#8463DF',
+    backgroundColor: purple,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -57,12 +56,12 @@ const styles = StyleSheet.create({
   },
   loginDescriptionTitle: {
     fontSize: normalize(15),
-    color: '#FFFFFF',
+    color: white,
     paddingTop: normalize(28),
   },
   loginDescription: {
     fontSize: normalize(16),
-    color: '#FFFFFF',
+    color: white,
     paddingLeft: normalize(8),
   },
   loginIncorrectWalletAddressText: {

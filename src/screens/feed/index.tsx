@@ -16,7 +16,9 @@ import {requestUserNotificationPermission} from '../../services/firebase'
 import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import Proposal from './feedProposal'
+
 import styles from './styles'
+import {purple} from '../../constants/css'
 
 export const convertURIForLogo = (logoURI: string) => {
   return logoURI.startsWith('ipfs://')
@@ -143,8 +145,8 @@ function FeedScreen({navigation, route}: any) {
           refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={'white'}
-          titleColor={'#8463DF'}
-          colors={['#8463DF']}
+          titleColor={purple}
+          colors={[purple]}
           progressBackgroundColor={'white'}
         />
       }

@@ -1,6 +1,8 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
+import {purple, white} from '../../constants/css'
+
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
     width: '100%',
@@ -43,13 +45,13 @@ const styles = StyleSheet.create({
     paddingBottom: normalize(4),
     fontWeight: '700',
     fontFamily: 'System',
-    color: '#FFFFFF',
+    color: white,
   },
   daoUserDetail: {
     fontSize: normalize(16),
     fontWeight: '300',
     fontFamily: 'System',
-    color: '#FFFFFF',
+    color: white,
   },
   daoUserAmount: {
     fontWeight: '700',
@@ -74,7 +76,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   daoTabButtonActive: {
-    backgroundColor: '#8463DF',
+    backgroundColor: purple,
   },
   daoTabText: {
     color: 'white',
@@ -83,12 +85,12 @@ const styles = StyleSheet.create({
   },
   daoTitleDescription: {
     height: normalize(24),
-    color: '#FFFFFF',
+    color: white,
     fontSize: normalize(20),
     fontWeight: '700',
   },
   daoTextDescription: {
-    color: '#FFFFFF',
+    color: white,
     fontSize: normalize(14),
     fontWeight: '300',
   },
@@ -107,13 +109,13 @@ const styles = StyleSheet.create({
     paddingBottom: normalize(4),
   },
   daoProposalStatus: {
-    color: '#8463DF',
+    color: purple,
     fontSize: normalize(13),
     fontWeight: '500',
     paddingRight: normalize(22),
   },
   daoProposalStatusActive: {
-    color: '#8463DF',
+    color: purple,
   },
   daoProposalStatusPassed: {
     color: 'rgba(128, 128, 128, 1)',

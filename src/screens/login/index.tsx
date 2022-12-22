@@ -16,6 +16,7 @@ import {useMutation} from '@apollo/client'
 import {UserContext} from '../../../App'
 import {client, handleHTTPError, REGISTER_USER} from '../../services/api'
 import styles from './styles'
+import {purple, white} from '../../constants/css'
 
 // to validate wallet address and ens address
 import namehash from '@ensdomains/eth-ens-namehash'
@@ -101,11 +102,11 @@ const LoginScreen = ({navigation}: any) => {
       <View style={styles.loginWrapper}>
         {loadingScreen ? (
           <View style={styles.loadingWrapper}>
-            <ActivityIndicator size="large" color="#8463DF" />
+            <ActivityIndicator size="large" color={purple} />
           </View>
         ) : (
           <ScrollView>
-            <View style={styles.loginTitleWrapper}>
+            <View>
               <Text style={styles.loginTitle}>
                 Start your friendly DAO journey
               </Text>
@@ -128,7 +129,7 @@ const LoginScreen = ({navigation}: any) => {
               onChangeText={onChangeWalletAddressInput}
               value={walletAddressInput}
               placeholder={'Enter your wallet address'}
-              placeholderTextColor="#FFFFFF"
+              placeholderTextColor={white}
             />
             <View style={styles.loginBtnGoWrapper}>
               <TouchableOpacity

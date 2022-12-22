@@ -127,6 +127,14 @@ export const DELETE_WALLET = gql`
   }
 `
 
+export const CHANGE_PROPOSAL_EMOJI = gql`
+  mutation ChangeProposalEmoji($proposalId: ID!, $emojiId: ID!) {
+    changeProposalEmoji(proposalId: $proposalId, emojiId: $emojiId) {
+      id
+    }
+  }
+`
+
 // Queries
 export const GET_PROPOSALS = gql`
   query GetProposals(
@@ -171,7 +179,10 @@ export const GET_PROPOSALS = gql`
             pickedEmojiId
           }
           statisticData {
-            emojiCount { emojiId, count}
+            emojiCount {
+              emojiId
+              count
+            }
           }
         }
         cursor
@@ -340,10 +351,10 @@ export const GET_EMOJIS = gql`
   }
 `
 
-export const CHANGE_PROPOSAL_EMOJI = gql`
-  mutation ChangeProposalEmoji($proposalId: ID!, $emojiId: ID!) {
-    changeProposalEmoji(proposalId: $proposalId, emojiId: $emojiId) {
-      id
+export const GET_TOTAL_COUNT_OF_DAOS = gql`
+  query GET_TOTAL_COUNT_OF_DAOS($onlyFollowed: Boolean) {
+    daosV2(onlyFollowed: $onlyFollowed) {
+      totalCount
     }
   }
 `

@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
     borderRadius: 8,
     backgroundColor: 'rgba(168, 209, 2, 0.08)',
-    width: normalize(62),
     overflow: 'hidden',
   },
   proposalDescription: {

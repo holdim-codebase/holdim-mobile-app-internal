@@ -1,7 +1,7 @@
-import {Platform, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-const OS_IOS = Platform.OS === 'ios'
+import {OS_IOS, purple} from '../../constants/css'
 
 const styles = StyleSheet.create({
   customModalWrapperIOS: {
@@ -57,12 +57,12 @@ const styles = StyleSheet.create({
     width: '48%',
   },
   customModalButtonCancel: {
-    borderColor: '#8463DF',
+    borderColor: purple,
     borderWidth: 2,
     borderStyle: 'solid',
   },
   customModalButtonOk: {
-    backgroundColor: '#8463DF',
+    backgroundColor: purple,
   },
   customModalButtonDanger: {
     backgroundColor: '#F32C2C',

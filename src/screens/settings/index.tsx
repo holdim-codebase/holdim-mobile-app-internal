@@ -14,7 +14,14 @@ import File from '../../assets/images/svg/File.svg'
 
 import styles from './styles'
 
-
+const settings = [
+  {
+    title: 'Wallet management',
+    icon: <Wallet />,
+    screenName: 'WalletManagement',
+  },
+  {title: 'Privacy policy', icon: <File />, screenName: 'PrivacyPolicy'},
+]
 
 function SettingsScreen({navigation}: any) {
 

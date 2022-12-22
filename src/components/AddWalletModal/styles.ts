@@ -1,7 +1,7 @@
-import {Platform, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-const OS_IOS = Platform.OS === 'ios'
+import {OS_IOS, purple, purpleDark} from '../../constants/css'
 
 const styles = StyleSheet.create({
   addWalletModalWrapperIOS: {flex: 1},
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   },
   addWalletModalTextInputWrapper: {
     flexDirection: 'row',
-    backgroundColor: '#2C2443',
+    backgroundColor: purpleDark,
     borderRadius: 5,
     paddingHorizontal: normalize(16),
     paddingBottom: OS_IOS ? normalize(16) : 0,
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   addWalletModalClearBtn: {
     paddingLeft: normalize(10),
     justifyContent: 'center',
-    backgroundColor: '#2C2443',
+    backgroundColor: purpleDark,
   },
   addWalletModalIncorrectWalletAddressText: {
     color: '#F32C2C',
@@ -97,12 +97,12 @@ const styles = StyleSheet.create({
     width: '48%',
   },
   addWalletModalButtonCancel: {
-    borderColor: '#8463DF',
+    borderColor: purple,
     borderWidth: 2,
     borderStyle: 'solid',
   },
   addWalletModalButtonOk: {
-    backgroundColor: '#8463DF',
+    backgroundColor: purple,
   },
   addWalletModalButtonText: {
     color: 'white',
