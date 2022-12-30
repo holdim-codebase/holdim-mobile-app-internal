@@ -77,7 +77,7 @@ const Proposal = (props: TProps) => {
       },
     })
     setPickedEmojiId(pickedEmojiId === emojiId ? null : emojiId)
-    ReactNativeHapticFeedback.trigger("impactHeavy", hapticOptions)
+    ReactNativeHapticFeedback.trigger("rigid", hapticOptions)
     setTooltipIsOpen(false)
   }
 
@@ -220,14 +220,6 @@ const Proposal = (props: TProps) => {
                 )}
               </View>
             </EmojiTooltip>
-            <TouchableWithoutFeedback onPress={() => ReactNativeHapticFeedback.trigger("impactLight", options)}><View style={{padding: 10}}><Text>impactLight</Text></View></TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => ReactNativeHapticFeedback.trigger("impactMedium", options)}><View style={{padding: 10}}><Text>impactMedium</Text></View></TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => ReactNativeHapticFeedback.trigger("impactHeavy", options)}><View style={{padding: 10}}><Text>impactHeavy</Text></View></TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => ReactNativeHapticFeedback.trigger("rigid", options)}><View style={{padding: 10}}><Text>rigid</Text></View></TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => ReactNativeHapticFeedback.trigger("soft", options)}><View style={{padding: 10}}><Text>soft</Text></View></TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => ReactNativeHapticFeedback.trigger("notificationSuccess", options)}><View style={{padding: 10}}><Text>notificationSuccess</Text></View></TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => ReactNativeHapticFeedback.trigger("notificationWarning", options)}><View style={{padding: 10}}><Text>notificationWarning</Text></View></TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={() => ReactNativeHapticFeedback.trigger("notificationError", options)}><View style={{padding: 10}}><Text>notificationError</Text></View></TouchableWithoutFeedback>
           </View>
         </View>
       </View>
