@@ -119,7 +119,7 @@ function ProfileScreen({navigation, route}: any) {
           color={purple}
         />
       ) : (
-        portfolio (
+        portfolio && (
           <View>
             <View style={styles.profileInfoWrapper}>
               <Image

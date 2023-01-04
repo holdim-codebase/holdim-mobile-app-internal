@@ -5,6 +5,7 @@ import * as Sentry from '@sentry/react-native'
 import messaging from '@react-native-firebase/messaging'
 import {useScrollToTop} from '@react-navigation/native'
 import {observer} from 'mobx-react'
+import normalize from 'react-native-normalize'
 
 import {TProposal, TPoll} from '../../types'
 import {
@@ -17,6 +18,7 @@ import {requestUserNotificationPermission} from '../../services/firebase'
 import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import PortfolioStore from '../../services/stores/portfolio.store'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import TextInfo from '../../components/TextInfo'
 import Proposal from './feedProposal'
 
 import styles from './styles'
@@ -169,6 +171,7 @@ function FeedScreen({navigation, route}: any) {
         }
       }}
       scrollEventThrottle={400}>
+      {!userHasFollowedDaos && <TextInfo text='Currently you are not following any DAO. Customise your feed by liking the projects you want to see in your feed.' wrapperStyle={{ marginHorizontal: normalize(17), marginTop: normalize(25) }}/> }
       {loadingProposals && !refreshing ? (
         <LoadingSpinner
           style={styles.loadingWrapperFullScreen}
