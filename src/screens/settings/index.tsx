@@ -1,11 +1,5 @@
 import * as React from 'react'
-import * as Sentry from '@sentry/react-native'
-import {
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native'
+import {Text, TouchableOpacity, View} from 'react-native'
 
 import {openLinkInAppBrowser} from '../../components/MarkdownText'
 import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
@@ -14,25 +8,20 @@ import File from '../../assets/images/svg/File.svg'
 
 import styles from './styles'
 
-const settings = [
-  {
-    title: 'Wallet management',
-    icon: <Wallet />,
-    screenName: 'WalletManagement',
-  },
-  {title: 'Privacy policy', icon: <File />, screenName: 'PrivacyPolicy'},
-]
-
 function SettingsScreen({navigation}: any) {
-
   const settings = (navigation: any) => [
     {
       title: 'Wallet management',
       icon: <Wallet />,
       screenName: 'Wallet management',
-      onPress: () => navigation.navigate('Wallet management')
+      onPress: () => navigation.navigate('WalletManagement'),
     },
-    {title: 'Privacy policy', icon: <File />, screenName: 'Privacy policy', onPress: () => openLinkInAppBrowser('https://holdim.to/privacy-policy')},
+    {
+      title: 'Privacy policy',
+      icon: <File />,
+      screenName: 'Privacy policy',
+      onPress: () => openLinkInAppBrowser('https://holdim.to/privacy-policy'),
+    },
   ]
 
   return (
