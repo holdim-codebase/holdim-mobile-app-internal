@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-import {purple, white} from '../../constants/css'
+import {purple, purpleLight, white} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -129,6 +129,29 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: normalize(16),
     fontWeight: '400',
+  },
+  emptyScreenWrapper: {
+    alignItems: 'center',
+    paddingTop: '20%',
+  },
+  emptyScreenEmoji: {
+    fontSize: normalize(65),
+    fontWeight: '700',
+    paddingBottom: normalize(16),
+  },
+  emptyScreenTitle: {
+    fontSize: normalize(18),
+    lineHeight: normalize(20),
+    fontWeight: '700',
+    color: purpleLight,
+    paddingBottom: normalize(16),
+  },
+  emptyScreenText: {
+    fontSize: normalize(14),
+    lineHeight: normalize(18),
+    fontWeight: '400',
+    color: white,
+    textAlign: 'center',
   },
 })
 
