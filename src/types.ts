@@ -62,14 +62,14 @@ export type TUser = {
   id: string
   avatarUrl: string
   wallets: TWallet[]
-  followedDaos: [
+  followedDaos: 
     {
       id: string
       name: string
       logo: string
       tokens: TToken[]
-    },
-  ]
+    }[],
+  
 }
 
 export type TTokenPersonalizedData = {
