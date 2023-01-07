@@ -33,6 +33,7 @@
     "react-native": "0.68.1",
     "react-native-dynamic-search-bar": "^2.0.2",
     "react-native-gesture-handler": "^2.7.0",
+    "react-native-haptic-feedback": "^1.14.0",
     "react-native-inappbrowser-reborn": "^3.7.0",
     "react-native-markdown-display": "^7.0.0-alpha.2",
     "react-native-normalize": "^1.0.1",

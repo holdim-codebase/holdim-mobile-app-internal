@@ -13,6 +13,7 @@ import numeral from 'numeral'
 import {useMutation} from '@apollo/client'
 import {observer} from 'mobx-react'
 import normalize from 'react-native-normalize'
+import ReactNativeHapticFeedback from "react-native-haptic-feedback"
 
 import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import {TPoll, TProposal} from '../../types'
@@ -28,6 +29,12 @@ import {openLinkInAppBrowser} from '../../components/MarkdownText'
 
 import styles from './styles'
 import {purple} from '../../constants/css'
+
+
+const hapticOptions = {
+  enableVibrateFallback: true,
+  ignoreAndroidSystemSettings: false
+};
 
 type TProps = {
   openProposal: Function
@@ -70,6 +77,7 @@ const Proposal = (props: TProps) => {
       },
     })
     setPickedEmojiId(pickedEmojiId === emojiId ? null : emojiId)
+    ReactNativeHapticFeedback.trigger("rigid", hapticOptions)
     setTooltipIsOpen(false)
   }
 
