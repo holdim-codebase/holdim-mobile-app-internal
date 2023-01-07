@@ -28,6 +28,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: normalize(32),
+    justifyContent: 'space-between',
+  },
+  daoImageInfoTextWrapper: {
+    flexDirection: 'row',
   },
   daoImage: {
     width: normalize(80),
@@ -37,7 +41,6 @@ const styles = StyleSheet.create({
   daoInfoTextWrapper: {
     flexDirection: 'column',
     marginLeft: normalize(12),
-    width: normalize(236),
   },
   daoName: {
     fontSize: normalize(24),

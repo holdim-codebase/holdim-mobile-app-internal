@@ -1,6 +1,6 @@
 import React from 'react'
 import {useMutation} from '@apollo/client'
-import {TouchableOpacity} from 'react-native'
+import {Text, TouchableOpacity, View} from 'react-native'
 import * as Sentry from '@sentry/react-native'
 
 import {
@@ -11,16 +11,16 @@ import {
   UNFOLLOW_DAO,
   handleHTTPError,
 } from '../../services/api'
-import Like from '../../assets/images/svg/Like.svg'
-import {purple} from '../../constants/css'
+import styles from './styles'
+import CheckMarkSvg from './../../assets/images/svg/CheckMark.svg'
 
 type FollowProps = {
   daoId: string
   userFollowed: boolean
-  color?: string
+  welcomeScreen?: boolean
 }
 
-const Follow = ({daoId, userFollowed, color}: FollowProps) => {
+const Follow = ({daoId, userFollowed, welcomeScreen}: FollowProps) => {
   const [followed, setFollowed] = React.useState<boolean>(userFollowed)
 
   // refetch querys that don't return the id of the dao that was changed
@@ -91,9 +91,30 @@ const Follow = ({daoId, userFollowed, color}: FollowProps) => {
     }
   }
 
-  return (
-    <TouchableOpacity onPress={handleClick}>
-      <Like fill={color ? color : followed ? purple : 'none'} />
+  // TODO change it
+  return welcomeScreen ? (
+    <TouchableOpacity
+      onPress={handleClick}
+      style={
+        userFollowed ? styles.followedBackground : styles.followBackground
+      }>
+      {userFollowed && (
+        <View style={styles.svg}>
+          <CheckMarkSvg />
+        </View>
+      )}
+      <Text style={styles.followText}>Follow</Text>
+    </TouchableOpacity>
+  ) : (
+    <TouchableOpacity
+      onPress={handleClick}
+      style={followed ? styles.followedBackground : styles.followBackground}>
+      {followed && (
+        <View style={styles.svg}>
+          <CheckMarkSvg />
+        </View>
+      )}
+      <Text style={styles.followText}>Follow</Text>
     </TouchableOpacity>
   )
 }
