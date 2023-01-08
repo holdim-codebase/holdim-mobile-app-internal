@@ -144,9 +144,9 @@ const WelcomeScreen = ({navigation}: any) => {
                       </View>
                       <View style={styles.welcomeDaoFollowSvg}>
                         <Follow
+                          welcomeScreen={true}
                           daoId={followedDao.id}
                           userFollowed={true}
-                          color={purple}
                         />
                       </View>
                     </View>
@@ -197,9 +197,9 @@ const WelcomeScreen = ({navigation}: any) => {
                       </View>
                       <View style={styles.welcomeDaoFollowSvg}>
                         <Follow
+                          welcomeScreen={true}
                           daoId={notFollowedDao.id}
                           userFollowed={false}
-                          color={'none'}
                         />
                       </View>
                     </View>
