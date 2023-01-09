@@ -12,6 +12,7 @@ import {
 import {NetworkStatus, useQuery} from '@apollo/client'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import {observer} from 'mobx-react'
+import normalize from 'react-native-normalize'
 
 import PortfolioStore from '../../services/stores/portfolio.store'
 import {TUser, TWallet} from '../../types'
@@ -124,7 +125,7 @@ function ProfileScreen({navigation, route}: any) {
             <View style={styles.profileInfoWrapper}>
               <Image
                 style={styles.profileImage}
-                source={{uri: portfolio.avatarUrl}}
+                source={{uri: portfolio.wallets[0] ? `https://cdn.stamp.fyi/avatar/${portfolio.wallets[0]}?s=${normalize(80)}` : portfolio.avatarUrl}}
               />
               <View style={styles.profileInfoTextWrapper}>
                 <Text style={styles.profileName}>
