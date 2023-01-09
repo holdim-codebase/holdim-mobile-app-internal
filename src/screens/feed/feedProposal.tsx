@@ -215,6 +215,7 @@ const Proposal = (props: TProps) => {
               <View style={styles.chosenEmojiReaction}>
                 {pickedEmojiId ? (
                   <View style={styles.pickedEmojiWrapper}>
+                    <View style={styles.pickedEmojiBackground}/>
                     <Text style={styles.pickedEmoji}>
                       {getEmojiById(pickedEmojiId)
                         ?.unicode || <FavoriteIcon width={emojiSize} />}
