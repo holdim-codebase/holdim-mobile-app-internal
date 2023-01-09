@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
+import {purpleLight} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -159,9 +160,25 @@ const styles = StyleSheet.create({
   },
   chosenEmojiReaction: {
     height: normalize(23),
-    width: normalize(23),
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row',
+  },
+  pickedEmojiWrapper: {
+    backgroundColor: purpleLight, 
+    borderRadius: normalize(100), 
+    marginHorizontal: 2
+  },
+  pickedEmoji: {
+    fontSize: normalize(20)
+  },
+  famousEmojis: {
+    fontSize: normalize(20), 
+    marginLeft: normalize(2)
+  },
+  famousEmojisCount: {
+    color: 'white', 
+    marginLeft: normalize(8)
   },
 })
 
