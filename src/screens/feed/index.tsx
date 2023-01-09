@@ -4,6 +4,8 @@ import {useQuery} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
 import messaging from '@react-native-firebase/messaging'
 import {useScrollToTop} from '@react-navigation/native'
+import {observer} from 'mobx-react'
+import normalize from 'react-native-normalize'
 
 import {TProposal, TPoll} from '../../types'
 import {
@@ -14,7 +16,9 @@ import {
 } from '../../services/api'
 import {requestUserNotificationPermission} from '../../services/firebase'
 import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
+import PortfolioStore from '../../services/stores/portfolio.store'
 import LoadingSpinner from '../../components/LoadingSpinner'
+import TextInfo from '../../components/TextInfo'
 import Proposal from './feedProposal'
 
 import styles from './styles'
@@ -35,13 +39,14 @@ function FeedScreen({navigation, route}: any) {
   const [endCursor, setEndCursor] = React.useState<string>('')
   const [hasNextPage, setHasNextPage] = React.useState<boolean>(false)
   const [fetchMoreLoading, setFetchMoreLoading] = React.useState<boolean>(false)
+  const {userHasFollowedDaos} = PortfolioStore
 
   const scrollRef = React.useRef(null)
 
   const {loading: loadingProposals, fetchMore: fetchMoreProposals} = useQuery(
     GET_PROPOSALS,
     {
-      variables: {first: 8, after: '', onlyFollowedDaos: true},
+      variables: {first: 8, after: '', onlyFollowedDaos: userHasFollowedDaos},
       onCompleted: res => {
         setProposals(
           res.proposalsV2.edges.map((edge: {node: any}) => edge.node),
@@ -79,7 +84,7 @@ function FeedScreen({navigation, route}: any) {
   // fetch poll separately from proposals
   // because can get more time due to getting data from another server
   const {loading: loadingPoll, fetchMore: fetchMorePoll} = useQuery(GET_POLL, {
-    variables: {first: 8, after: '', onlyFollowedDaos: true},
+    variables: {first: 8, after: '', onlyFollowedDaos: userHasFollowedDaos},
     onCompleted: res => {
       setPolls(res.proposalsV2.edges.map((edge: {node: any}) => edge.node))
       setFetchMoreLoading(false)
@@ -105,10 +110,10 @@ function FeedScreen({navigation, route}: any) {
     // and no data is returning
     // problem with fetch - returning data depends on endCursor
     fetchMoreProposals({
-      variables: {first: 8, after: endCursor, onlyFollowedDaos: true},
+      variables: {first: 8, after: endCursor, onlyFollowedDaos: userHasFollowedDaos},
     })
     fetchMorePoll({
-      variables: {first: 8, after: endCursor, onlyFollowedDaos: true},
+      variables: {first: 8, after: endCursor, onlyFollowedDaos: userHasFollowedDaos},
     })
   }
 
@@ -157,15 +162,16 @@ function FeedScreen({navigation, route}: any) {
           if (hasNextPage) {
             setFetchMoreLoading(true)
             fetchMoreProposals({
-              variables: {first: 8, after: endCursor, onlyFollowedDaos: true},
+              variables: {first: 8, after: endCursor, onlyFollowedDaos: userHasFollowedDaos},
             })
             fetchMorePoll({
-              variables: {first: 8, after: endCursor, onlyFollowedDaos: true},
+              variables: {first: 8, after: endCursor, onlyFollowedDaos: userHasFollowedDaos},
             })
           }
         }
       }}
       scrollEventThrottle={400}>
+      {!userHasFollowedDaos && <TextInfo text='Currently you are not following any DAO. Customise your feed by liking the projects you want to see in your feed.' wrapperStyle={{ marginHorizontal: normalize(17), marginTop: normalize(25) }}/> }
       {loadingProposals && !refreshing ? (
         <LoadingSpinner
           style={styles.loadingWrapperFullScreen}
@@ -200,4 +206,4 @@ function FeedScreen({navigation, route}: any) {
   )
 }
 
-export default FeedScreen
+export default observer(FeedScreen)
