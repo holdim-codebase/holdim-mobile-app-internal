@@ -1,12 +1,9 @@
 #!/bin/sh
 
-# Install Apple Command Line Tools
-xcode-select -p
-
-echo "Here we go"
-
 # Disable automatic `brew cleanup` 
 export HOMEBREW_NO_INSTALL_CLEANUP=TRUE
+# Install Python
+brew install python@3.10
 # Instal CocoaPods from Homebrew
 brew install cocoapods
 # Instal NodeJS from Homebrew
