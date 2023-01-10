@@ -1,7 +1,9 @@
 #!/bin/sh
 
 # Install Apple Command Line Tools
-xcode-select --install
+xcode-select -p
+
+echo "Here we go"
 
 # Disable automatic `brew cleanup` 
 export HOMEBREW_NO_INSTALL_CLEANUP=TRUE
