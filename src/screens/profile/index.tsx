@@ -7,7 +7,6 @@ import {
   Image,
   TouchableWithoutFeedback,
   RefreshControl,
-  ActivityIndicator,
 } from 'react-native'
 import {NetworkStatus, useQuery} from '@apollo/client'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -125,7 +124,13 @@ function ProfileScreen({navigation, route}: any) {
             <View style={styles.profileInfoWrapper}>
               <Image
                 style={styles.profileImage}
-                source={{uri: portfolio.wallets[0] ? `https://cdn.stamp.fyi/avatar/${portfolio.wallets[0]}?s=${normalize(80)}` : portfolio.avatarUrl}}
+                source={{
+                  uri: activeWallet
+                    ? `https://cdn.stamp.fyi/avatar/${
+                        activeWallet.address
+                      }?s=${normalize(80)}`
+                    : portfolio.avatarUrl,
+                }}
               />
               <View style={styles.profileInfoTextWrapper}>
                 <Text style={styles.profileName}>
