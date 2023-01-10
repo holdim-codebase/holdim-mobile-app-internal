@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Disable automatic `brew cleanup` 
-export HOMEBREW_NO_INSTALL_CLEANUP=TRUE
+export HOMEBREW_NO_INSTALL_CLEANUP=FALSE
 # Instal CocoaPods from Homebrew
 brew install cocoapods
 # Instal NodeJS from Homebrew
