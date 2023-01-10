@@ -10,15 +10,13 @@ type TextInfoProps = {
   wrapperStyle?: ViewStyle
 }
 
-const Follow = ({wrapperStyle, text}: TextInfoProps) => {
+const TextInfo = ({wrapperStyle, text}: TextInfoProps) => {
   return (
     <View style={[wrapperStyle, styles.body]}>
       <InfoIcon />
-      <Text style={styles.text}>
-        {text}
-      </Text>
+      <Text style={styles.text}>{text}</Text>
     </View>
   )
 }
 
-export default Follow
+export default TextInfo

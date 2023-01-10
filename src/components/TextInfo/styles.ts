@@ -7,7 +7,6 @@ export const styles = StyleSheet.create({
     paddingHorizontal: normalize(18),
     paddingVertical: normalize(8),
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: normalize(10),
   },
@@ -18,7 +17,6 @@ export const styles = StyleSheet.create({
     fontFamily: 'System',
     color: 'rgba(190, 170, 245, 1)',
     marginLeft: normalize(10),
-    flexShrink: 1
+    flexShrink: 1,
   },
-
 })
