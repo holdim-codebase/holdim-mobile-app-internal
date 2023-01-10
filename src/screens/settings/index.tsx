@@ -56,7 +56,13 @@ function SettingsScreen({navigation}: any) {
       </View>
       <View style={{height: '60%', justifyContent: 'space-between'}}>
         <View style={styles.poapWrapper}>
-          <TouchableOpacity style={styles.poapButton} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.poapButton}
+            onPress={() => {
+              openLinkInAppBrowser(
+                'https://kiosk.poap.xyz/#/event/SLNNKbl71INAWgtJh9nk',
+              )
+            }}>
             <View style={styles.poapSvg}>
               <Poap />
             </View>
