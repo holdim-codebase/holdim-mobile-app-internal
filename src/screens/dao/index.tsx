@@ -115,37 +115,42 @@ function DAOScreen({route, navigation}: any) {
   ) : dao ? (
     <View style={styles.daoWrapper}>
       <View style={styles.daoInfoWrapper}>
-        <View style={styles.daoImageInfoTextWrapper}>
+        <View>
           <Image
             style={styles.daoImage}
             source={{uri: convertURIForLogo(dao.logo)}}
           />
-          <View style={styles.daoInfoTextWrapper}>
-            <Text style={styles.daoName}>{dao.name} </Text>
-            <Text style={styles.daoUserDetail}>
-              {
-                +(
-                  (dao.tokens[0].personalizedData.quantity /
-                    dao.tokens[0].totalSupply) *
-                  100
-                ).toFixed(3)
-              }
-              % shares
-            </Text>
-            <Text style={styles.daoUserDetail}>
-              In your wallet:
-              <Text style={styles.daoUserAmount}>
-                {' '}
-                {
-                  +Number(dao.tokens[0].personalizedData.quantity).toFixed(2)
-                }{' '}
-                {dao.tokens[0].symbol}
-              </Text>
-            </Text>
-          </View>
         </View>
-        <View style={styles.daoFollowSvg}>
-          <Follow daoId={dao.id} userFollowed={dao.personalizedData.followed} />
+        <View style={styles.daoInfoTextWrapper}>
+          <View style={styles.daoNameFollowButtonWrapper}>
+            <View>
+              <Text style={styles.daoName}>{dao.name}</Text>
+            </View>
+            <View>
+              <Follow
+                daoId={dao.id}
+                userFollowed={dao.personalizedData.followed}
+              />
+            </View>
+          </View>
+          <Text style={styles.daoUserDetail}>
+            {
+              +(
+                (dao.tokens[0].personalizedData.quantity /
+                  dao.tokens[0].totalSupply) *
+                100
+              ).toFixed(3)
+            }
+            % shares
+          </Text>
+          <Text style={styles.daoUserDetail}>
+            In your wallet:
+            <Text style={styles.daoUserAmount}>
+              {' '}
+              {+Number(dao.tokens[0].personalizedData.quantity).toFixed(2)}{' '}
+              {dao.tokens[0].symbol}
+            </Text>
+          </Text>
         </View>
       </View>
       <View style={styles.daoTabsWrapper}>

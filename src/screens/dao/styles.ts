@@ -24,10 +24,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   daoInfoWrapper: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
     paddingBottom: normalize(32),
+    flexDirection: 'row',
     justifyContent: 'space-between',
   },
   daoImageInfoTextWrapper: {
@@ -39,8 +37,12 @@ const styles = StyleSheet.create({
     borderRadius: normalize(50),
   },
   daoInfoTextWrapper: {
-    flexDirection: 'column',
+    width: '74%',
     marginLeft: normalize(12),
+  },
+  daoNameFollowButtonWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   daoName: {
     fontSize: normalize(24),
@@ -49,6 +51,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontFamily: 'System',
     color: white,
+    maxWidth: normalize(175),
   },
   daoUserDetail: {
     fontSize: normalize(16),
