@@ -59,6 +59,39 @@ const styles = StyleSheet.create({
     paddingBottom: normalize(21),
     paddingTop: normalize(25),
   },
+  poapWrapper: {
+    paddingTop: normalize(30),
+    paddingHorizontal: normalize(16),
+    alignItems: 'center',
+  },
+  poapTextImgWrapper: {
+    paddingVertical: normalize(12.5),
+    paddingHorizontal: normalize(40),
+  },
+  poapButton: {
+    backgroundColor: 'rgba(190, 170, 245, 1)',
+    borderRadius: normalize(10),
+    borderWidth: 1,
+    borderColor: 'rgba(253, 234, 239, 1)',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  poapText: {
+    fontSize: normalize(20),
+    lineHeight: normalize(35),
+    fontWeight: '500',
+    color: '#47337D',
+    paddingLeft: normalize(8),
+    paddingVertical: normalize(12.5),
+    paddingRight: normalize(40),
+  },
+  poapSvg: {
+    paddingVertical: normalize(8),
+    paddingLeft: normalize(40),
+  },
+  textInfoWrapper: {
+    marginHorizontal: normalize(16.5),
+  },
 })
 
 export default styles

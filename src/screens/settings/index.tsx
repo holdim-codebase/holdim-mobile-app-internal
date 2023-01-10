@@ -1,38 +1,31 @@
 import * as React from 'react'
 import * as Sentry from '@sentry/react-native'
-import {
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native'
+import {Linking, Text, TouchableOpacity, View} from 'react-native'
 
+import {handleHTTPError} from '../../services/api'
 import {openLinkInAppBrowser} from '../../components/MarkdownText'
+import TextInfo from '../../components/TextInfo'
 import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
 import Wallet from '../../assets/images/svg/Wallet.svg'
 import File from '../../assets/images/svg/File.svg'
+import Poap from '../../assets/images/svg/Poap.svg'
 
 import styles from './styles'
 
-const settings = [
-  {
-    title: 'Wallet management',
-    icon: <Wallet />,
-    screenName: 'WalletManagement',
-  },
-  {title: 'Privacy policy', icon: <File />, screenName: 'PrivacyPolicy'},
-]
-
 function SettingsScreen({navigation}: any) {
-
   const settings = (navigation: any) => [
     {
       title: 'Wallet management',
       icon: <Wallet />,
       screenName: 'Wallet management',
-      onPress: () => navigation.navigate('Wallet management')
+      onPress: () => navigation.navigate('WalletManagement'),
     },
-    {title: 'Privacy policy', icon: <File />, screenName: 'Privacy policy', onPress: () => openLinkInAppBrowser('https://holdim.to/privacy-policy')},
+    {
+      title: 'Privacy policy',
+      icon: <File />,
+      screenName: 'Privacy policy',
+      onPress: () => openLinkInAppBrowser('https://holdim.to/privacy-policy'),
+    },
   ]
 
   return (
@@ -62,6 +55,30 @@ function SettingsScreen({navigation}: any) {
             </View>
           </TouchableOpacity>
         ))}
+      </View>
+      <View style={{height: '60%', justifyContent: 'space-between'}}>
+        <View style={styles.poapWrapper}>
+          <TouchableOpacity
+            style={styles.poapButton}
+            onPress={() => {
+              Linking.openURL(
+                'https://kiosk.poap.xyz/#/event/SLNNKbl71INAWgtJh9nk',
+              ).catch(error => {
+                Sentry.captureException(error)
+                console.error(error)
+                handleHTTPError()
+              })
+            }}>
+            <View style={styles.poapSvg}>
+              <Poap />
+            </View>
+            <Text style={styles.poapText}>Get your trophy POAP!</Text>
+          </TouchableOpacity>
+        </View>
+        <TextInfo
+          wrapperStyle={styles.textInfoWrapper}
+          text={'Beta version 1.0'}
+        />
       </View>
     </View>
   )

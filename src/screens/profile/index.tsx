@@ -7,11 +7,13 @@ import {
   Image,
   TouchableWithoutFeedback,
   RefreshControl,
-  ActivityIndicator,
 } from 'react-native'
 import {NetworkStatus, useQuery} from '@apollo/client'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {observer} from 'mobx-react'
+import normalize from 'react-native-normalize'
 
+import PortfolioStore from '../../services/stores/portfolio.store'
 import {TUser, TWallet} from '../../types'
 import {
   client,
@@ -34,9 +36,9 @@ export const validateUserTokens = (quantity: number) => {
 }
 
 function ProfileScreen({navigation, route}: any) {
-  const [portfolio, setPortfolio] = React.useState<TUser>()
   const [activeWallet, setActiveWallet] = React.useState<TWallet>()
   const [activeWalletId, setActiveWalletId] = React.useState<string | null>('')
+  const {portfolio, setPortfolio} = PortfolioStore
 
   const {
     refetch: refetchUserData,
@@ -122,7 +124,13 @@ function ProfileScreen({navigation, route}: any) {
             <View style={styles.profileInfoWrapper}>
               <Image
                 style={styles.profileImage}
-                source={{uri: portfolio.avatarUrl}}
+                source={{
+                  uri: activeWallet
+                    ? `https://cdn.stamp.fyi/avatar/${
+                        activeWallet.address
+                      }?s=${normalize(80)}`
+                    : portfolio.avatarUrl,
+                }}
               />
               <View style={styles.profileInfoTextWrapper}>
                 <Text style={styles.profileName}>
@@ -203,4 +211,4 @@ function ProfileScreen({navigation, route}: any) {
   )
 }
 
-export default ProfileScreen
+export default observer(ProfileScreen)
