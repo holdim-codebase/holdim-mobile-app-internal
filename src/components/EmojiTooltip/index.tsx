@@ -1,7 +1,7 @@
 import React from 'react'
 import Tooltip from 'react-native-walkthrough-tooltip'
 import {TouchableWithoutFeedback} from 'react-native'
-import {purple} from '../../constants/css'
+import {purpleLight} from '../../constants/css'
 
 type TooltipProps = {
   children: JSX.Element
@@ -26,7 +26,7 @@ const EmojiTooltip = ({
       arrowSize={{width: 0, height: 0}}
       displayInsets={{top: 24, bottom: 24, left: 24, right: 20}}
       disableShadow
-      contentStyle={{backgroundColor: purple, borderRadius: 10}}>
+      contentStyle={{backgroundColor: purpleLight, borderRadius: 10}}>
       <TouchableWithoutFeedback onPress={() => setTooltipIsOpen(true)}>
         {children}
       </TouchableWithoutFeedback>

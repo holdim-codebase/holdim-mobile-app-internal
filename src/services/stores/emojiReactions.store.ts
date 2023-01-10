@@ -1,18 +1,50 @@
-import { observable, action, computed } from 'mobx'
-
-import { TEmojiReactions } from '../../types'
+import { observable, action, makeObservable } from 'mobx'
+import { TEmojiReactions, TProposal } from '../../types'
 
 class EmojiReactionsStore {
-  @observable emojis: TEmojiReactions[] = []
+  emojis: TEmojiReactions[] = []
 
-  @action 
+  constructor() {
+    makeObservable(this, {
+      emojis: observable,
+      setEmojis: action,
+    })
+}
+
   setEmojis = (emojis: TEmojiReactions[]) => {
     this.emojis = emojis
   }
 
-  @computed
   getEmojiById = (id: string) => {
     return this.emojis.find(emoji => emoji.id === id)
+  }
+
+  getFamousReactions = (reactions: TProposal['statisticData']['emojiCount'], pickedEmoji: string | null) => {
+    const emojis = [...reactions]
+    const sortedEmojis = emojis.sort((a,b) => b.count - a.count).filter(emoji => emoji.count)
+
+    if (sortedEmojis.length === 1) {
+      if (!!pickedEmoji) {
+        const pickedReactionAmongAll = emojis.find(reaction => reaction.emojiId === pickedEmoji)
+        if (sortedEmojis[0].emojiId !== pickedEmoji) {
+          if (pickedReactionAmongAll) {
+            sortedEmojis.push(pickedReactionAmongAll)
+          }
+        }
+      }
+    }
+
+    return sortedEmojis.length > 1
+      ? sortedEmojis.slice(0,2) 
+      : sortedEmojis
+  }
+
+  getReactionsCountByProposal = (reactions: TProposal['statisticData']['emojiCount'], pickedEmoji: string | null, wasInitialPicked: boolean) => {
+    const initialValue = wasInitialPicked 
+    ? !!pickedEmoji ? 0 : -1
+    : !!pickedEmoji ? 1 : 0
+
+    return reactions.reduce((accumulator, currentValue) => accumulator + currentValue.count, initialValue)
   }
 }
 

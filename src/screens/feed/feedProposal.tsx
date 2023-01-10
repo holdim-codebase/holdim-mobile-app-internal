@@ -34,7 +34,9 @@ import {purple} from '../../constants/css'
 const hapticOptions = {
   enableVibrateFallback: true,
   ignoreAndroidSystemSettings: false
-};
+}
+
+const emojiSize = normalize(20)
 
 type TProps = {
   openProposal: Function
@@ -68,6 +70,8 @@ const Proposal = (props: TProps) => {
     proposal.personalizedData.pickedEmojiId,
   )
   const [tooltipIsOpen, setTooltipIsOpen] = React.useState<boolean>(false)
+
+  const {emojis, getEmojiById, getFamousReactions, getReactionsCountByProposal} = EmojiReactionsStore
 
   const handleEmojiClick = (emojiId: string) => {
     changeProposalEmoji({
@@ -190,13 +194,12 @@ const Proposal = (props: TProps) => {
               />
             )}
           </View>
-          <View>
             <EmojiTooltip
               setTooltipIsOpen={setTooltipIsOpen}
               tooltipIsOpen={tooltipIsOpen}
               content={
                 <View style={styles.emojiReactionContentWrapper}>
-                  {EmojiReactionsStore.emojis.map(emoji => {
+                  {emojis.map(emoji => {
                     return (
                       <TouchableWithoutFeedback
                         onPress={() => handleEmojiClick(emoji.id)}
@@ -211,18 +214,29 @@ const Proposal = (props: TProps) => {
               }>
               <View style={styles.chosenEmojiReaction}>
                 {pickedEmojiId ? (
-                  <Text style={{fontSize: normalize(20)}}>
-                    {EmojiReactionsStore.getEmojiById(pickedEmojiId)
-                      ?.unicode || <FavoriteIcon width={normalize(20)} />}
-                  </Text>
+                  <View style={styles.pickedEmojiWrapper}>
+                    <View style={styles.pickedEmojiBackground}/>
+                    <Text style={styles.pickedEmoji}>
+                      {getEmojiById(pickedEmojiId)
+                        ?.unicode || <FavoriteIcon width={emojiSize} />}
+                    </Text>
+                  </View>
                 ) : (
-                  <FavoriteIcon width={normalize(20)} />
+                  <FavoriteIcon width={emojiSize} />
                 )}
+                  {getFamousReactions(proposal.statisticData.emojiCount, pickedEmojiId).map(reaction => (
+                      <Text style={styles.famousEmojis} key={reaction.emojiId}>
+                        {getEmojiById(reaction.emojiId)
+                            ?.unicode|| <FavoriteIcon width={emojiSize} />}
+                      </Text>
+                  ))}
+                  <Text style={styles.famousEmojisCount}>
+                    {numeral(getReactionsCountByProposal(proposal.statisticData.emojiCount, pickedEmojiId, !!proposal.personalizedData.pickedEmojiId)).format('0[.]0a')}
+                  </Text>
               </View>
             </EmojiTooltip>
           </View>
         </View>
-      </View>
     </TouchableWithoutFeedback>
   )
 }
