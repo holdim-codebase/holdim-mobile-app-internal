@@ -103,7 +103,9 @@ const Follow = ({daoId, userFollowed, welcomeScreen}: FollowProps) => {
           <CheckMarkSvg />
         </View>
       )}
-      <Text style={styles.followText}>Follow</Text>
+      <Text style={styles.followText}>
+        {userFollowed ? 'Following' : 'Follow'}
+      </Text>
     </TouchableOpacity>
   ) : (
     <TouchableOpacity
@@ -114,7 +116,7 @@ const Follow = ({daoId, userFollowed, welcomeScreen}: FollowProps) => {
           <CheckMarkSvg />
         </View>
       )}
-      <Text style={styles.followText}>Follow</Text>
+      <Text style={styles.followText}>{followed ? 'Following' : 'Follow'}</Text>
     </TouchableOpacity>
   )
 }

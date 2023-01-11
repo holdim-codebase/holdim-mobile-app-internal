@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   followedBackground: {
-    backgroundColor: '#756799',
+    backgroundColor: 'rgba(60, 53, 79, 1)',
     borderRadius: normalize(5),
     flexDirection: 'row',
   },
