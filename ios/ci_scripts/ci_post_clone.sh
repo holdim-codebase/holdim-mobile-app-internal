@@ -2,6 +2,8 @@
 
 # Disable automatic `brew cleanup` 
 export HOMEBREW_NO_INSTALL_CLEANUP=TRUE
+# Install Python from Homebrew
+brew install --build-from-source python@3.10
 # Instal CocoaPods from Homebrew
 brew install cocoapods
 # Instal NodeJS from Homebrew
