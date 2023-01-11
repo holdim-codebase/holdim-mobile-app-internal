@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
     color: white,
     maxWidth: normalize(175),
+    paddingRight: normalize(8),
   },
   daoUserDetail: {
     fontSize: normalize(16),
