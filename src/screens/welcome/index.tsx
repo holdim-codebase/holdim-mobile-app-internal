@@ -89,8 +89,8 @@ const WelcomeScreen = ({navigation}: any) => {
         <View style={styles.welcomeTextWrapper}>
           <Text style={styles.welcomeTitle}>Welcome to Holdim</Text>
           <Text style={styles.welcomeText}>
-            We wanted to make it easy, so you are automatically follow projects
-            you have tokens in your wallet{' '}
+            We wanted to make it easy, so you automatically follow projects you
+            have tokens in your wallet.{' '}
           </Text>
           <Text> </Text>
           <Text style={[styles.welcomeText, {fontStyle: 'italic'}]}>
