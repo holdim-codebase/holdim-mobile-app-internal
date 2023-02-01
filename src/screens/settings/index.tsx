@@ -5,10 +5,14 @@ import {Linking, Text, TouchableOpacity, View} from 'react-native'
 import {handleHTTPError} from '../../services/api'
 import {openLinkInAppBrowser} from '../../components/MarkdownText'
 import TextInfo from '../../components/TextInfo'
+
+// svg
 import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
 import Wallet from '../../assets/images/svg/Wallet.svg'
 import File from '../../assets/images/svg/File.svg'
 import Poap from '../../assets/images/svg/Poap.svg'
+import QuickReply from '../../assets/images/svg/QuickReply.svg'
+import ReportBug from '../../assets/images/svg/ReportBug.svg'
 
 import styles from './styles'
 
@@ -17,14 +21,24 @@ function SettingsScreen({navigation}: any) {
     {
       title: 'Wallet management',
       icon: <Wallet />,
-      screenName: 'Wallet management',
       onPress: () => navigation.navigate('WalletManagement'),
     },
     {
       title: 'Privacy policy',
       icon: <File />,
-      screenName: 'Privacy policy',
       onPress: () => openLinkInAppBrowser('https://holdim.to/privacy-policy'),
+    },
+    {
+      title: 'Report bug',
+      icon: <ReportBug />,
+      onPress: () =>
+        openLinkInAppBrowser('https://holdim.canny.io/feature-request/create'),
+    },
+    {
+      title: 'Request feature or share feedback',
+      icon: <QuickReply />,
+      onPress: () =>
+        openLinkInAppBrowser('https://holdim.canny.io/holdim-feedback/create'),
     },
   ]
 
