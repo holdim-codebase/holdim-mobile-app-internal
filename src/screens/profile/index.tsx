@@ -146,7 +146,7 @@ function ProfileScreen({navigation, route}: any) {
               </View>
             </View>
             <ScrollView style={styles.portfolioWrapper}>
-              <Text style={styles.portfolioTitle}>Followed</Text>
+              <Text style={styles.portfolioTitle}>Following</Text>
               <View style={styles.portfolioDaoListWrapper}>
                 {portfolio.followedDaos.map(followedDao => (
                   <TouchableWithoutFeedback
