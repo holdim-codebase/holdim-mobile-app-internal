@@ -22,6 +22,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 // styles
 import styles from './styles'
 import {purple} from '../../constants/css'
+import Smile from '../../assets/images/svg/SmileSearch.svg'
 
 function SearchScreen({navigation}: any) {
   const [daoList, setDaoList] = React.useState<TDAO[]>([])
@@ -84,9 +85,9 @@ function SearchScreen({navigation}: any) {
       <SearchBar
         style={styles.searchBar}
         textInputStyle={styles.searchBarText}
-        searchIconImageStyle={{tintColor: 'white'}}
+        searchIconImageStyle={{tintColor: '#A195C2'}}
         clearIconImageStyle={{tintColor: 'white'}}
-        placeholderTextColor="white"
+        placeholderTextColor="#8B81A6"
         placeholder="Search for DAO"
         onChangeText={(text: string) => setTextInSearchBar(text)}
         onClearPress={() => setTextInSearchBar('')}
@@ -134,8 +135,7 @@ function SearchScreen({navigation}: any) {
                         <Text style={styles.searchDaoName}>{dao.name}</Text>
                         {dao.tokens && dao.tokens.length ? (
                           <Text style={styles.searchDaoPrice}>
-                            {dao.tokens[0].symbol} |{' '}
-                            {+Number(dao.tokens[0].price).toFixed(2)} USD
+                            {dao.tokens[0].symbol} {' '}<Text style={styles.searchDaoPriceClr}>{+Number(dao.tokens[0].price).toFixed(2)} USD</Text>
                           </Text>
                         ) : null}
                       </View>
@@ -152,6 +152,7 @@ function SearchScreen({navigation}: any) {
             })
           ) : (
             <View style={styles.searchEmptyWrapper}>
+              <Smile />
               <Text style={styles.searchEmptyTitle}>Project not found</Text>
               <Text style={styles.searchEmptyText}>
                 We're sorry, but we couldn't find the project you mentioned. We
