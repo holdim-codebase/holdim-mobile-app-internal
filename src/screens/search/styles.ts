@@ -20,14 +20,16 @@ const styles = StyleSheet.create({
     paddingTop: normalize(16),
   },
   searchBar: {
-    backgroundColor: 'rgba(196, 196, 196, 0.2)',
+    backgroundColor: '#2C2443',
     fontColor: 'white',
     width: '100%',
-    borderRadius: normalize(10),
+    borderRadius: normalize(30),
+    paddingHorizontal: normalize(10),
   },
   searchBarText: {
     color: 'white',
-    fontSize: normalize(12),
+    fontSize: normalize(14),
+    lineHeight: normalize(18),
   },
   textInputStyle: {
     color: '#DDDDDD',
@@ -42,16 +44,16 @@ const styles = StyleSheet.create({
     alignContent: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderTopColor: '#2F2F2F',
-    borderTopWidth: 1,
+    borderBottomColor: '#3D2E67',
+    borderBottomWidth: 1,
   },
   searchDaoLogoTextWrapper: {
-    alignContent: 'center',
+    alignItems: 'center',
     flexDirection: 'row',
   },
   searchDaoLogo: {
-    width: normalize(32),
-    height: normalize(32),
+    width: normalize(30),
+    height: normalize(30),
     borderRadius: normalize(50),
   },
   searchDaoTextWrapper: {
@@ -60,27 +62,29 @@ const styles = StyleSheet.create({
   searchDaoName: {
     color: 'white',
     fontSize: normalize(16),
-    fontWeight: '400',
+    fontWeight: '500',
   },
   searchDaoPrice: {
     color: 'white',
     fontSize: normalize(12),
     fontWeight: '300',
   },
+  searchDaoPriceClr: {
+    color: '#8463DF'
+  },
   searchDaoFollowSvg: {
     paddingTop: normalize(7),
   },
   searchEmptyWrapper: {
-    paddingTop: normalize(133),
+    paddingTop: normalize(64),
     flexDirection: 'column',
-    alignContent: 'center',
     alignItems: 'center',
   },
   searchEmptyTitle: {
-    paddingBottom: normalize(16),
+    paddingVertical: normalize(16),
     fontWeight: '700',
     fontSize: normalize(18),
-    color: 'white',
+    color: '#BEAAF5',
     textAlign: 'center',
   },
   searchEmptyText: {
