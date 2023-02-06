@@ -136,7 +136,7 @@ function SearchScreen({navigation}: any) {
                         {dao.tokens && dao.tokens.length ? (
                           <Text style={styles.searchDaoPrice}>
                             {dao.tokens[0].symbol}{' '}
-                            <Text style={styles.searchDaoPriceUsd}>
+                            <Text style={styles.searchDaoPriceClr}>
                               {+Number(dao.tokens[0].price).toFixed(2)} USD
                             </Text>
                           </Text>

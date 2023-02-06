@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: normalize(17),
     lineHeight: normalize(20),
-    color: purpleLight,
+    color: '#BEAAF5',
     marginBottom: normalize(18),
     fontFamily: 'System',
   },
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
   },
   proposalVotingWrapper: {
-    backgroundColor: purpleDark,
+    backgroundColor: '#2C2443',
     width: '100%',
     padding: normalize(15),
     borderRadius: normalize(12),

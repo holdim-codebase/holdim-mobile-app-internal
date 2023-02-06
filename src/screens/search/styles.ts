@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     paddingTop: normalize(16),
   },
   searchBar: {
-    backgroundColor: purpleDark,
+    backgroundColor: '#2C2443',
     fontColor: 'white',
     width: '100%',
     borderRadius: normalize(30),
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     fontSize: normalize(12),
     fontWeight: '300',
   },
-  searchDaoPriceUsd: {
+  searchDaoPriceClr: {
     color: '#8463DF',
   },
   searchDaoFollowSvg: {
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     paddingVertical: normalize(16),
     fontWeight: '700',
     fontSize: normalize(18),
-    color: purpleLight,
+    color: '#BEAAF5',
     textAlign: 'center',
   },
   searchEmptyText: {

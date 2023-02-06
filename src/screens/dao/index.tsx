@@ -136,8 +136,8 @@ function DAOScreen({route, navigation}: any) {
 
           <View style={styles.daoInfoTextWrapperDetatil}>
             <View style={styles.daoInfoTextWrapperDetatilChild}>
-              <Text style={styles.daoUserDetailText}>Shares</Text>
-              <Text style={styles.daoUserDetailAmount}>
+              <Text style={styles.daoUserDetailClr}>Shares</Text>
+              <Text style={styles.daoUserDetail}>
                 {
                   +(
                     (dao.tokens[0].personalizedData.quantity /
@@ -150,8 +150,8 @@ function DAOScreen({route, navigation}: any) {
             </View>
 
             <View style={styles.daoInfoTextWrapperDetatilChild}>
-              <Text style={styles.daoUserDetailText}>In your wallet:</Text>
-              <Text style={styles.daoUserDetailAmount}>
+              <Text style={styles.daoUserDetailClr}>In your wallet:</Text>
+              <Text style={styles.daoUserDetail}>
                 {+Number(dao.tokens[0].personalizedData.quantity).toFixed(2)}{' '}
                 {dao.tokens[0].symbol}
               </Text>

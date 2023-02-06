@@ -37,6 +37,7 @@ import FeedIconFocused from './src/assets/images/svg/Home.purple.svg'
 import SearchIconFocused from './src/assets/images/svg/Search.purple.svg'
 import ProfileIconFocused from './src/assets/images/svg/Profile.purple.svg'
 import SettingsIcon from './src/assets/images/svg/Settings.svg'
+import normalize from 'react-native-normalize'
 
 import {black} from './src/constants/css'
 
@@ -65,7 +66,7 @@ const Tab = createBottomTabNavigator()
 
 const headerOptions = {
   headerStyle: {
-    backgroundColor: 'rgba(22, 22, 22, 1)',
+    backgroundColor: 'transparent',
   },
   headerTitleAlign: 'center',
   headerTintColor: 'white',

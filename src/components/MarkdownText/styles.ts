@@ -15,7 +15,7 @@ export const markDownStyles = StyleSheet.create({
     fontSize: normalize(14),
   },
   heading1: {
-    color: white,
+    color: 'white',
     fontWeight: '700',
   },
   heading2: {
@@ -23,7 +23,7 @@ export const markDownStyles = StyleSheet.create({
     fontWeight: '700',
   },
   heading3: {
-    color: white,
+    color: 'white',
     fontWeight: '700',
   },
   bullet_list: {paddingBottom: normalize(16)},

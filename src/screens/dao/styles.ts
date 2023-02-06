@@ -64,17 +64,22 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  daoUserDetailAmount: {
+
+  daoUserDetail: {
     fontSize: normalize(12),
     fontWeight: '500',
     fontFamily: 'System',
     color: white,
   },
-  daoUserDetailText: {
+  daoUserDetailClr: {
     fontWeight: '500',
     fontSize: normalize(12),
     lineHeight: normalize(16),
     color: '#A195C2',
+  },
+  daoUserAmount: {
+    color: 'white',
+    fontWeight: '700',
   },
   daoFollowSvg: {
     paddingBottom: normalize(40),

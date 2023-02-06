@@ -142,7 +142,7 @@ function ProfileScreen({navigation, route}: any) {
                 </Text>
                 <Text style={styles.profilePortfolioAmount}>
                   You follow:{' '}
-                  <Text style={styles.numberOfDaoText}>
+                  <Text style={styles.clr}>
                     {portfolio.followedDaos.length} DAOs
                   </Text>
                 </Text>
