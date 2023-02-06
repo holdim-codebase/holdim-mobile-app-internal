@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   profileImage: {
-    width: normalize(80),
-    height: normalize(80),
+    width: normalize(52),
+    height: normalize(52),
     borderRadius: 80,
   },
   profileInfoTextWrapper: {
@@ -32,17 +32,20 @@ const styles = StyleSheet.create({
     width: normalize(210),
   },
   profileName: {
-    fontSize: normalize(18),
+    fontSize: normalize(25),
     fontWeight: '700',
     fontFamily: 'System',
     color: 'white',
   },
   profilePortfolioAmount: {
-    fontSize: normalize(16),
-    lineHeight: normalize(26),
-    fontWeight: '300',
+    fontSize: normalize(14),
+    lineHeight: normalize(18),
+    fontWeight: '400',
     fontFamily: 'System',
     color: 'white',
+  },
+  clr:{
+    color: '#8463DF',
   },
   portfolioWrapper: {
     width: '100%',
@@ -51,22 +54,20 @@ const styles = StyleSheet.create({
     marginBottom: normalize(40),
   },
   portfolioTitle: {
-    fontSize: normalize(20),
+    fontSize: normalize(18),
     fontWeight: '700',
-    lineHeight: normalize(23),
-    color: 'white',
+    lineHeight: normalize(20),
+    color: '#BEAAF5',
     marginBottom: normalize(10),
     fontFamily: 'System',
   },
   portfolioDaoListWrapper: {
-    borderTopColor: 'rgba(193, 193, 193, 0.5)',
-    borderTopWidth: 0.5,
   },
   portfolioDaoWrapper: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderBottomColor: 'rgba(193, 193, 193, 0.5)',
+    borderBottomColor: '#3D2E67',
     borderBottomWidth: 0.5,
     paddingVertical: normalize(14),
   },
@@ -74,34 +75,35 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   assetImage: {
-    width: normalize(32),
-    height: normalize(32),
+    width: normalize(34),
+    height: normalize(34),
     borderRadius: normalize(50),
   },
   assetTextWrapper: {
     height: '100%',
     flexDirection: 'column',
-    paddingLeft: normalize(12),
+    paddingLeft: normalize(9),
   },
   assetTitle: {
     color: 'white',
     fontSize: normalize(16),
     lineHeight: normalize(20),
-    fontWeight: '700',
+    fontWeight: '500',
     fontFamily: 'System',
+    marginBottom: normalize(4)
   },
   assetShareAmount: {
-    color: 'white',
+    color: '#8463DF',
     fontSize: normalize(12),
     lineHeight: normalize(16),
-    fontWeight: '700',
+    fontWeight: '500',
     fontFamily: 'System',
   },
   assetShareText: {
     color: 'white',
     fontSize: normalize(12),
     lineHeight: normalize(16),
-    fontWeight: '300',
+    fontWeight: '500',
     fontFamily: 'System',
   },
   assetRight: {
@@ -122,9 +124,10 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     fontFamily: 'System',
     textAlign: 'right',
+    marginBottom: normalize(4)
   },
   assetDaoPrice: {
-    color: 'white',
+    color: '#8463DF',
     fontSize: normalize(12),
     lineHeight: normalize(16),
     fontWeight: '300',

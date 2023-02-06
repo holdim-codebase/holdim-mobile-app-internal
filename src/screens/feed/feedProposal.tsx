@@ -14,6 +14,7 @@ import {useMutation} from '@apollo/client'
 import {observer} from 'mobx-react'
 import normalize from 'react-native-normalize'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
+import Exlam from '../../assets/icons/exclamatory.svg'
 
 import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import {TPoll, TProposal} from '../../types'
@@ -30,6 +31,7 @@ import {openLinkInAppBrowser} from '../../components/MarkdownText'
 import styles from './styles'
 import {purple} from '../../constants/css'
 import {hapticOptions} from '../../constants/haptic'
+import AiGeneratedText from '../../components/AIGenerated.tsx'
 
 const emojiSize = normalize(20)
 
@@ -95,23 +97,38 @@ const Proposal = (props: TProps) => {
     <TouchableWithoutFeedback onPress={() => openProposal(proposal, poll)}>
       <View style={styles.proposalWrapper}>
         <View style={styles.proposalWrapperTop}>
-          <View style={styles.proposalImageWrapper}>
-            <TouchableWithoutFeedback
-              onPress={() => openDAODescription(proposal.dao.id)}>
-              <Image
-                source={{
-                  uri: convertURIForLogo(proposal.dao.logo),
-                }}
-                style={styles.proposalImage}
-              />
-            </TouchableWithoutFeedback>
-          </View>
           <View style={styles.proposalContentWrapper}>
             <View style={styles.proposalTopPart}>
-              <TouchableWithoutFeedback
-                onPress={() => openDAODescription(proposal.dao.id)}>
-                <Text style={styles.proposalTitle}>{proposal.dao.name}</Text>
-              </TouchableWithoutFeedback>
+              <View style={styles.proposalImageWrapper}>
+                <TouchableWithoutFeedback
+                  onPress={() => openDAODescription(proposal.dao.id)}>
+                  <Image
+                    source={{
+                      uri: convertURIForLogo(proposal.dao.logo),
+                    }}
+                    style={styles.proposalImage}
+                  />
+                </TouchableWithoutFeedback>
+
+                <View>
+                  <TouchableWithoutFeedback
+                    onPress={() => openDAODescription(proposal.dao.id)}>
+                    <Text style={styles.proposalTitle}>
+                      {proposal.dao.name}
+                    </Text>
+                  </TouchableWithoutFeedback>
+
+                  <Text style={styles.proposalEndTime}>
+                    {dateNow < new Date(proposal.endAt)
+                      ? 'Ends:'
+                      : 'Voting ended on'}{' '}
+                    {moment(new Date(proposal.endAt)).format(
+                      'MMM DD, YYYY, HH:MM A',
+                    )}
+                  </Text>
+                </View>
+              </View>
+
               {dateNow < new Date(proposal.endAt) && (
                 <Text style={styles.proposalActiveTitle}>ACTIVE</Text>
               )}
@@ -119,10 +136,9 @@ const Proposal = (props: TProps) => {
             <Text style={styles.proposalDescription}>
               {proposal.juniorDescription}
             </Text>
-            <Text style={styles.proposalEndTime}>
-              {dateNow < new Date(proposal.endAt) ? 'Ends:' : 'Voting ended on'}{' '}
-              {moment(new Date(proposal.endAt)).format('MMM DD, YYYY, HH:MM A')}
-            </Text>
+
+            <AiGeneratedText icon={<Exlam />} />
+
             <View style={styles.proposalVotingWrapper}>
               {loadingPoll ? (
                 <View style={styles.loadingWrapper}>
@@ -167,16 +183,17 @@ const Proposal = (props: TProps) => {
                   )
                 })
               ) : null}
-              {!loadingPoll && poll && poll.poll.quorum !== 0 && (
-                <View style={styles.proposalVotingItemTextWrapper}>
-                  <Text style={styles.proposalVotingItemText}>Quorum</Text>
-                  <Text style={styles.proposalVotingItemText}>
-                    {numeral(poll && poll.poll.scores_total).format('0[.]0a')}/
-                    {numeral(poll && poll.poll.quorum).format('0[.]0a')}
-                  </Text>
-                </View>
-              )}
             </View>
+
+            {!loadingPoll && poll && poll.poll.quorum !== 0 && (
+              <View style={styles.proposalVotingItemQuorum}>
+                <Text style={styles.proposalVotingItemText}>Quorum</Text>
+                <Text style={styles.proposalVotingItemText}>
+                  {numeral(poll && poll.poll.scores_total).format('0[.]0a')} /{' '}
+                  {numeral(poll && poll.poll.quorum).format('0[.]0a')}
+                </Text>
+              </View>
+            )}
           </View>
         </View>
         <View style={styles.proposalWrapperBottom}>
