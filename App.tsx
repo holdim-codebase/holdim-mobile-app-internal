@@ -39,6 +39,7 @@ import ProfileIconFocused from './src/assets/images/svg/Profile.purple.svg'
 import SettingsIcon from './src/assets/images/svg/Settings.svg'
 
 import {black} from './src/constants/css'
+import LaunchScreen from './src/screens/launch'
 
 Sentry.init({
   dsn: 'https://e64a26481fc64b0b895da8a145307e31@o1405388.ingest.sentry.io/6739145',
@@ -312,11 +313,6 @@ const RootStack = (RootStackProps: {isFirstLaunch: boolean}) => {
 }
 
 function App() {
-  // hide splash screen
-  React.useEffect(() => {
-    SplashScreen.hide()
-  }, [])
-
   // CLear data to test login
   // React.useEffect(() => {
   //   AsyncStorage.clear()
@@ -326,6 +322,14 @@ function App() {
   //       .then(() => console.log('User signed out!'))
   // }, [])
   const [isFirstLaunch, setIsFirstLaunch] = React.useState<boolean>(false)
+  const [showLaunchScreen, setShowLaunchScreen] = React.useState<boolean>(true)
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setShowLaunchScreen(false)
+    }, 2000)
+    SplashScreen.hide()
+  }, [])
 
   React.useEffect(() => {
     // check if the application has already been launched
@@ -350,13 +354,19 @@ function App() {
       <UserProvider>
         <GestureHandlerRootView style={{flex: 1}}>
           <SafeAreaProvider>
-            <StatusBar
-              barStyle="light-content"
-              backgroundColor="rgba(22, 22, 22, 1)"
-            />
-            <NavigationContainer theme={navTheme}>
-              <RootStack isFirstLaunch={isFirstLaunch} />
-            </NavigationContainer>
+            {showLaunchScreen ? (
+              <LaunchScreen />
+            ) : (
+              <>
+                <StatusBar
+                  barStyle="light-content"
+                  backgroundColor="rgba(22, 22, 22, 1)"
+                />
+                <NavigationContainer theme={navTheme}>
+                  <RootStack isFirstLaunch={isFirstLaunch} />
+                </NavigationContainer>
+              </>
+            )}
           </SafeAreaProvider>
         </GestureHandlerRootView>
       </UserProvider>
