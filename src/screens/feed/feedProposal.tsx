@@ -31,7 +31,7 @@ import {openLinkInAppBrowser} from '../../components/MarkdownText'
 import styles from './styles'
 import {purple} from '../../constants/css'
 import {hapticOptions} from '../../constants/haptic'
-import AiGeneratedText from '../../components/AIGenerated.tsx'
+import AiGeneratedText from '../../components/AIGenerated'
 
 const emojiSize = normalize(20)
 

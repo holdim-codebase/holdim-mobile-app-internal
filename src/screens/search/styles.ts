@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
+import {purpleDark, purpleLight} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -20,7 +21,7 @@ const styles = StyleSheet.create({
     paddingTop: normalize(16),
   },
   searchBar: {
-    backgroundColor: '#2C2443',
+    backgroundColor: purpleDark,
     fontColor: 'white',
     width: '100%',
     borderRadius: normalize(30),
@@ -69,8 +70,8 @@ const styles = StyleSheet.create({
     fontSize: normalize(12),
     fontWeight: '300',
   },
-  searchDaoPriceClr: {
-    color: '#8463DF'
+  searchDaoPriceUsd: {
+    color: '#8463DF',
   },
   searchDaoFollowSvg: {
     paddingTop: normalize(7),
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     paddingVertical: normalize(16),
     fontWeight: '700',
     fontSize: normalize(18),
-    color: '#BEAAF5',
+    color: purpleLight,
     textAlign: 'center',
   },
   searchEmptyText: {
