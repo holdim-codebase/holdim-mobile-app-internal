@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-import {purple} from '../../constants/css'
+import {purple, purpleLight} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     width: normalize(45),
     height: normalize(45),
     borderRadius: normalize(50),
-    marginRight: normalize(10)
+    marginRight: normalize(10),
   },
   proposalDaoTitle: {
     fontWeight: '700',
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: normalize(18),
     lineHeight: normalize(20),
-    color: '#BEAAF5',
+    color: purpleLight,
     fontFamily: 'System',
     marginBottom: normalize(18),
   },

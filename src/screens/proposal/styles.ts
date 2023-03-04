@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-import {purple} from '../../constants/css'
+import {purple, purpleLight, purpleDark} from '../../constants/css'
 
 const styles = StyleSheet.create({
   proposalWrapper: {
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: normalize(17),
     lineHeight: normalize(20),
-    color: '#BEAAF5',
+    color: purpleLight,
     marginBottom: normalize(18),
     fontFamily: 'System',
   },
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   conentProposalMeta: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   proposalMetaInfo: {
     fontWeight: '400',
@@ -139,25 +139,25 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
   },
   proposalVotingWrapper: {
-    backgroundColor: '#2C2443',
+    backgroundColor: purpleDark,
     width: '100%',
     padding: normalize(15),
     borderRadius: normalize(12),
     flexDirection: 'column',
     justifyContent: 'space-between',
     paddingBottom: normalize(0),
-    marginBottom: normalize(10)
+    marginBottom: normalize(10),
   },
   proposalVotingItemWrapper: {
     width: '100%',
     flexDirection: 'column',
-    marginBottom: normalize(15)
+    marginBottom: normalize(15),
   },
   proposalVotingItemTextWrapper: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: normalize(6)
+    marginBottom: normalize(6),
   },
   proposalVotingItemText: {
     color: 'white',

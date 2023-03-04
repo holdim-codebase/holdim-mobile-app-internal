@@ -1,5 +1,6 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
+import {purpleLight, purple} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapper: {
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
     color: 'white',
   },
-  clr:{
+  numberOfDaoText: {
     color: '#8463DF',
   },
   portfolioWrapper: {
@@ -57,12 +58,11 @@ const styles = StyleSheet.create({
     fontSize: normalize(18),
     fontWeight: '700',
     lineHeight: normalize(20),
-    color: '#BEAAF5',
+    color: purpleLight,
     marginBottom: normalize(10),
     fontFamily: 'System',
   },
-  portfolioDaoListWrapper: {
-  },
+  portfolioDaoListWrapper: {},
   portfolioDaoWrapper: {
     width: '100%',
     flexDirection: 'row',
@@ -90,10 +90,10 @@ const styles = StyleSheet.create({
     lineHeight: normalize(20),
     fontWeight: '500',
     fontFamily: 'System',
-    marginBottom: normalize(4)
+    marginBottom: normalize(4),
   },
   assetShareAmount: {
-    color: '#8463DF',
+    color: purple,
     fontSize: normalize(12),
     lineHeight: normalize(16),
     fontWeight: '500',
@@ -124,10 +124,10 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     fontFamily: 'System',
     textAlign: 'right',
-    marginBottom: normalize(4)
+    marginBottom: normalize(4),
   },
   assetDaoPrice: {
-    color: '#8463DF',
+    color: purple,
     fontSize: normalize(12),
     lineHeight: normalize(16),
     fontWeight: '300',
