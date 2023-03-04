@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: normalize(18),
     lineHeight: normalize(20),
-    color: '#BEAAF5',
+    color: purpleLight,
     fontFamily: 'System',
     marginBottom: normalize(18),
   },

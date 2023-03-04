@@ -137,7 +137,7 @@ const Proposal = (props: TProps) => {
               {proposal.juniorDescription}
             </Text>
 
-            <AiGeneratedText icon={<Exlam />} />
+            <AiGeneratedText />
 
             <View style={styles.proposalVotingWrapper}>
               {loadingPoll ? (

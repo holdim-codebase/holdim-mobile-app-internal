@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     marginBottom: normalize(12),
   },
   proposalVotingWrapper: {
-    backgroundColor: '#2C2443',
+    backgroundColor: purpleDark,
     width: '100%',
     padding: normalize(15),
     borderRadius: normalize(12),
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: normalize(6),
-    backgroundColor: '#2C2443',
+    backgroundColor: purpleDark,
     border: '1px solid #3D2E67',
     borderRadius: normalize(10),
     paddingHorizontal: normalize(16),
