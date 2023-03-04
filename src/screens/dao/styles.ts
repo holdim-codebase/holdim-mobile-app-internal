@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   daoImage: {
-    width: normalize(80),
-    height: normalize(80),
+    width: normalize(70),
+    height: normalize(70),
     borderRadius: normalize(50),
   },
   daoInfoTextWrapper: {
@@ -43,9 +43,10 @@ const styles = StyleSheet.create({
   daoNameFollowButtonWrapper: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: normalize(5),
   },
   daoName: {
-    fontSize: normalize(24),
+    fontSize: normalize(25),
     lineHeight: normalize(29),
     paddingBottom: normalize(4),
     fontWeight: '700',
@@ -54,14 +55,26 @@ const styles = StyleSheet.create({
     maxWidth: normalize(175),
     paddingRight: normalize(8),
   },
-  daoUserDetail: {
-    fontSize: normalize(16),
-    fontWeight: '300',
+  daoInfoTextWrapperDetatil: {
+    width: '100%',
+  },
+  daoInfoTextWrapperDetatilChild: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  daoUserDetailAmount: {
+    fontSize: normalize(12),
+    fontWeight: '500',
     fontFamily: 'System',
     color: white,
   },
-  daoUserAmount: {
-    fontWeight: '700',
+  daoUserDetailText: {
+    fontWeight: '500',
+    fontSize: normalize(12),
+    lineHeight: normalize(16),
+    color: '#A195C2',
   },
   daoFollowSvg: {
     paddingBottom: normalize(40),
@@ -74,8 +87,8 @@ const styles = StyleSheet.create({
     paddingBottom: normalize(20),
   },
   daoTabButton: {
-    borderRadius: normalize(7),
-    backgroundColor: '#161616',
+    borderRadius: normalize(10),
+    backgroundColor: 'transparent',
     width: '32%',
     flexDirection: 'row',
     height: normalize(28),
@@ -83,12 +96,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   daoTabButtonActive: {
-    backgroundColor: purple,
+    backgroundColor: '#47337D',
   },
   daoTabText: {
-    color: 'white',
+    color: '#A195C2',
     fontSize: normalize(12),
     fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  daoTabTextActive: {
+    color: 'white',
   },
   daoTitleDescription: {
     height: normalize(24),

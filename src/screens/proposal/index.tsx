@@ -21,6 +21,13 @@ import Link from '../../assets/images/svg/Link.svg'
 import styles from './styles'
 import {purple} from '../../constants/css'
 
+import Snapshot from '../../assets/icons/snapshot.svg'
+import Forum from '../../assets/icons/forum.svg'
+import Play from '../../assets/icons/play.svg'
+import Pause from '../../assets/icons/pause.svg'
+import Person from '../../assets/icons/person.svg'
+import GroupPerson from '../../assets/icons/groupperson.svg'
+
 export const shortenAddress = (address: string) => {
   if (address.length <= 12) return address
 
@@ -102,12 +109,13 @@ function ProposalScreen({route, navigation}: any) {
                       ? styles.proposalLinkButton
                       : styles.proposalLinkButtonAlone
                   }>
-                  <Text style={styles.proposalButtonText}>
+                  <View style={styles.proposalLinkSvg}>
+                    <Snapshot />
+                  </View>
+                  <Text style={styles.proposalButtonLink}>
                     Vote on Snapshot
                   </Text>
-                  <View style={styles.proposalLinkSvg}>
-                    <Link />
-                  </View>
+                  
                 </View>
               </TouchableWithoutFeedback>
             ) : null}
@@ -120,17 +128,23 @@ function ProposalScreen({route, navigation}: any) {
                       ? styles.proposalLinkButton
                       : styles.proposalLinkButtonAlone
                   }>
-                  <Text style={styles.proposalButtonText}>Go to forum</Text>
                   <View style={styles.proposalLinkSvg}>
-                    <Link />
+                    <Forum />
                   </View>
+                  <Text style={styles.proposalButtonLink}>Go to forum</Text>
+                  
                 </View>
               </TouchableWithoutFeedback>
             ) : null}
           </View>
           <View style={styles.proposalMetaWrapper}>
             <View style={styles.proposalMeta}>
-              <Text style={styles.proposalMetaTitle}>Starts:</Text>
+              <View style={styles.conentProposalMeta}>
+                <View style={styles.proposalLinkSvg}>
+                    <Play />
+                </View>
+                <Text style={styles.proposalMetaTitle}>Starts:</Text>
+              </View>
               <Text style={styles.proposalMetaInfo}>
                 {moment(new Date(proposal.startAt)).format(
                   'MMM DD, YYYY, HH:MM A',
@@ -138,7 +152,12 @@ function ProposalScreen({route, navigation}: any) {
               </Text>
             </View>
             <View style={styles.proposalMeta}>
-              <Text style={styles.proposalMetaTitle}>End:</Text>
+              <View style={styles.conentProposalMeta}>
+                <View style={styles.proposalLinkSvg}>
+                    <Pause />
+                </View>
+                <Text style={styles.proposalMetaTitle}>Ends:</Text>
+              </View>
               <Text style={styles.proposalMetaInfo}>
                 {moment(new Date(proposal.endAt)).format(
                   'MMM DD, YYYY, HH:MM A',
@@ -146,70 +165,83 @@ function ProposalScreen({route, navigation}: any) {
               </Text>
             </View>
             <View style={styles.proposalMeta}>
-              <Text style={styles.proposalMetaTitle}>Author:</Text>
+              <View style={styles.conentProposalMeta}>
+                <View style={styles.proposalLinkSvg}>
+                    <Person />
+                </View>
+                <Text style={styles.proposalMetaTitle}>Author:</Text>
+              </View>
               <Text style={styles.proposalMetaInfo}>
                 {shortenAddress(proposal.author)}
               </Text>
             </View>
             <View style={styles.proposalMeta}>
-              <Text style={styles.proposalMetaTitle}>Total voters:</Text>
+              <View style={styles.conentProposalMeta}>
+                <View style={styles.proposalLinkSvg}>
+                    <GroupPerson />
+                </View>
+                <Text style={styles.proposalMetaTitle}>Total voters:</Text>
+              </View>
               <Text style={styles.proposalMetaInfo}>
                 {poll && poll.poll.votes}
               </Text>
             </View>
           </View>
+
           <View style={styles.proposalVotingWrapper}>
-            {loadingpoll ? (
-              <View style={styles.loadingWrapper}>
-                <ActivityIndicator size="large" color={purple} />
-              </View>
-            ) : poll && poll.poll.choices && poll.poll.choices.length !== 0 ? (
-              poll.poll.choices.map((choiceTitle: string, i: number) => (
-                <View key={i} style={styles.proposalVotingItemWrapper}>
-                  <View style={styles.proposalVotingItemTextWrapper}>
-                    <Text style={styles.proposalVotingItemText}>
-                      {choiceTitle}
-                    </Text>
-                    <Text style={styles.proposalVotingItemText}>
-                      {numeral(poll.poll.scores[i]).format('0[.]0a')}{' '}
-                      {poll.poll.symbol}
-                      {'  '}
-                      {poll.poll.scores_total !== 0
-                        ? +(
-                            (poll.poll.scores[i] * 100) /
-                            poll.poll.scores_total
-                          ).toFixed(2)
-                        : 0}
-                      %
-                    </Text>
-                  </View>
-                  <View style={styles.proposalVotingItemBackgroundLine}>
-                    <View
-                      style={{
-                        ...styles.proposalVotingItemInnerLine,
-                        backgroundColor: purple,
-                        width: `${
-                          poll.poll.scores_total && poll.poll.scores_total !== 0
-                            ? (poll.poll.scores[i] * 100) /
-                              poll.poll.scores_total
-                            : null
-                        }%`,
-                      }}
-                    />
-                  </View>
+              {loadingpoll ? (
+                <View style={styles.loadingWrapper}>
+                  <ActivityIndicator size="large" color={purple} />
                 </View>
-              ))
-            ) : null}
-            {poll && poll.poll.quorum !== 0 && (
-              <View style={styles.proposalVotingItemTextWrapper}>
+              ) : poll &&
+                poll.poll.choices &&
+                poll.poll.choices.length !== 0 ? (
+                poll.poll.choices.map((choiceTitle: string, i: number) => {
+                  return (
+                    <View key={i} style={styles.proposalVotingItemWrapper}>
+                      <View style={styles.proposalVotingItemTextWrapper}>
+                        <Text style={styles.proposalVotingItemText}>
+                          {choiceTitle}
+                        </Text>
+                        <Text style={styles.proposalVotingItemText}>
+                          {numeral(poll.poll.scores[i]).format('0[.]0a')}{' '}
+                          {poll.poll.symbol}
+                          {'  '}
+                          {poll.poll.scores_total &&
+                            +(
+                              (poll.poll.scores[i] * 100) /
+                              poll.poll.scores_total
+                            ).toFixed()}
+                          %
+                        </Text>
+                      </View>
+                      <View style={styles.proposalVotingItemBackgroundLine}>
+                        <View
+                          style={{
+                            ...styles.proposalVotingItemInnerLine,
+                            backgroundColor: purple,
+                            width: `${
+                              (poll.poll.scores_total &&
+                                poll.poll.scores[i] * 100) /
+                              poll.poll.scores_total
+                            }%`,
+                          }}
+                        />
+                      </View>
+                    </View>
+                  )
+                })
+              ) : null}
+            </View>
+
+            {!loadingpoll && poll && poll.poll.quorum !== 0 && (
+              <View style={styles.proposalVotingItemQuorum}>
                 <Text style={styles.proposalVotingItemText}>Quorum</Text>
                 <Text style={styles.proposalVotingItemText}>
-                  {numeral(poll && poll.poll.scores_total).format('0[.]0a')}/
-                  {numeral(poll && poll.poll.quorum).format('0[.]0a')}
+                  {numeral(poll && poll.poll.scores_total).format('0[.]0a')} / {numeral(poll && poll.poll.quorum).format('0[.]0a')}
                 </Text>
               </View>
             )}
-          </View>
         </View>
       ) : (
         <Text style={{color: 'white'}}>No</Text>

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
-import {purpleLight, OS_IOS} from '../../constants/css'
+import {purpleLight, OS_IOS, purpleDark} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
+    marginBottom: normalize(15),
   },
   loadingSpinner: {
     paddingVertical: normalize(20),
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
   },
   proposalWrapper: {
     paddingHorizontal: normalize(16),
-    paddingVertical: normalize(24),
+    paddingVertical: normalize(16),
     flexDirection: 'column',
     justifyContent: 'space-between',
     width: '100%',
@@ -38,8 +39,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
   },
   proposalWrapperTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    width: '100%',
   },
   proposalWrapperBottom: {
     flexDirection: 'row',
@@ -50,18 +50,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   proposalImageWrapper: {
-    marginRight: normalize(8),
-    width: '15%',
+    flexDirection: 'row',
+    marginBottom: normalize(10),
   },
   proposalImage: {
     width: normalize(52),
     height: normalize(52),
     borderRadius: normalize(50),
+    marginRight: normalize(10),
   },
   proposalContentWrapper: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    width: '83%',
   },
   proposalTopPart: {
     flexDirection: 'row',
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     fontSize: normalize(20),
     fontWeight: '700',
     lineHeight: normalize(24),
-    marginBottom: normalize(12),
+    marginBottom: normalize(6),
     fontFamily: 'System',
     paddingTop: normalize(8),
   },
@@ -93,37 +93,54 @@ const styles = StyleSheet.create({
   },
   proposalDescription: {
     color: '#E2DFDF',
-    fontSize: normalize(16),
+    fontSize: normalize(14),
     fontWeight: '400',
-    lineHeight: normalize(19),
+    lineHeight: normalize(18),
     marginBottom: normalize(12),
     fontFamily: 'System',
   },
   proposalEndTime: {
-    color: '#E2DFDF',
+    color: '#8463DF',
     fontSize: normalize(12),
     fontWeight: '300',
     lineHeight: normalize(14),
     marginBottom: normalize(12),
   },
   proposalVotingWrapper: {
-    borderColor: '#2F2F2F',
+    backgroundColor: purpleDark,
     width: '100%',
     padding: normalize(15),
     borderRadius: normalize(12),
-    borderWidth: 0.5,
     flexDirection: 'column',
     justifyContent: 'space-between',
+    paddingBottom: normalize(0),
+    marginBottom: normalize(10),
   },
   proposalVotingItemWrapper: {
     width: '100%',
     flexDirection: 'column',
+    marginBottom: normalize(15),
   },
   proposalVotingItemTextWrapper: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: normalize(6),
   },
+
+  proposalVotingItemQuorum: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: normalize(6),
+    backgroundColor: purpleDark,
+    border: '1px solid #3D2E67',
+    borderRadius: normalize(10),
+    paddingHorizontal: normalize(16),
+    paddingVertical: normalize(10),
+  },
+
   proposalVotingItemText: {
     color: 'white',
     fontSize: normalize(12),
@@ -135,7 +152,7 @@ const styles = StyleSheet.create({
   proposalVotingItemBackgroundLine: {
     width: '100%',
     height: normalize(7),
-    backgroundColor: 'rgba(196, 196, 196, 0.5)',
+    backgroundColor: 'rgba(148, 119, 229, 0.42);',
     borderRadius: normalize(13),
     marginBottom: normalize(7),
     position: 'relative',
@@ -157,7 +174,7 @@ const styles = StyleSheet.create({
   emojiReactionItem: {
     marginHorizontal: normalize(4),
     fontSize: normalize(24),
-    color: 'black'
+    color: 'black',
   },
   chosenEmojiReaction: {
     height: normalize(23),
@@ -166,30 +183,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   pickedEmojiWrapper: {
-    borderRadius: normalize(20), 
+    borderRadius: normalize(20),
     marginHorizontal: normalize(2),
   },
   pickedEmojiBackground: {
-    position: 'absolute', 
+    position: 'absolute',
     backgroundColor: purpleLight,
     left: normalize(OS_IOS ? 2 : 2.5),
     top: normalize(OS_IOS ? 3 : 5),
-    width: normalize(20), 
+    width: normalize(20),
     height: normalize(20),
-    borderRadius: normalize(15)
+    borderRadius: normalize(15),
   },
   pickedEmoji: {
     fontSize: normalize(20),
-    color: 'black'
+    color: 'black',
   },
   famousEmojis: {
-    fontSize: normalize(20), 
+    fontSize: normalize(20),
     marginLeft: normalize(2),
-    color: 'black'
+    color: 'black',
   },
   famousEmojisCount: {
-    color: 'white', 
-    marginLeft: normalize(8)
+    color: 'white',
+    marginLeft: normalize(8),
   },
 })
 

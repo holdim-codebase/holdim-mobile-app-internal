@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-import {purple} from '../../constants/css'
+import {purple, purpleLight, purpleDark} from '../../constants/css'
 
 const styles = StyleSheet.create({
   proposalWrapper: {
@@ -37,17 +37,18 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
   },
   proposalTitle: {
-    fontWeight: '500',
-    fontSize: normalize(16),
-    lineHeight: normalize(19),
-    color: 'white',
+    width: '100%',
+    fontWeight: '700',
+    fontSize: normalize(17),
+    lineHeight: normalize(20),
+    color: purpleLight,
     marginBottom: normalize(18),
     fontFamily: 'System',
   },
   proposalDescription: {
     fontWeight: '400',
-    fontSize: normalize(16),
-    lineHeight: normalize(22),
+    fontSize: normalize(14),
+    lineHeight: normalize(18),
     color: '#E2E2E2',
     marginBottom: normalize(16),
     fontFamily: 'System',
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
   proposalButton: {
     width: '100%',
     backgroundColor: purple,
-    height: normalize(34),
+    height: normalize(52),
     borderRadius: normalize(5),
     alignItems: 'center',
     justifyContent: 'center',
@@ -69,9 +70,9 @@ const styles = StyleSheet.create({
   },
   proposalLinkButton: {
     width: '48%',
-    backgroundColor: 'rgba(196, 196, 196, 0.5)',
+    backgroundColor: '#756799',
     flexDirection: 'row',
-    height: normalize(34),
+    height: normalize(44),
     borderRadius: normalize(5),
     alignItems: 'center',
     justifyContent: 'center',
@@ -79,9 +80,9 @@ const styles = StyleSheet.create({
   },
   proposalLinkButtonAlone: {
     width: '100%',
-    backgroundColor: 'rgba(196, 196, 196, 0.5)',
+    backgroundColor: '#756799',
     flexDirection: 'row',
-    height: normalize(34),
+    height: normalize(44),
     borderRadius: normalize(5),
     alignItems: 'center',
     justifyContent: 'center',
@@ -90,31 +91,44 @@ const styles = StyleSheet.create({
   proposalButtonText: {
     color: 'white',
     fontWeight: '700',
-    fontSize: normalize(12),
-    lineHeight: normalize(14),
+    fontSize: normalize(18),
+    lineHeight: normalize(20),
+    fontFamily: 'System',
+  },
+  proposalButtonLink: {
+    color: 'white',
+    fontWeight: '700',
+    fontSize: normalize(14),
+    lineHeight: normalize(20),
     fontFamily: 'System',
   },
   proposalLinkSvg: {
-    paddingLeft: normalize(10),
+    paddingRight: normalize(10),
   },
   proposalMetaWrapper: {
     flexDirection: 'column',
-    borderBottomColor: '#2F2F2F',
-    borderBottomWidth: 0.5,
-    borderTopColor: '#2F2F2F',
-    borderTopWidth: 0.5,
-    paddingVertical: normalize(15),
+    marginBottom: normalize(10),
   },
   proposalMeta: {
     flexDirection: 'row',
-    marginVertical: normalize(5),
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: normalize(8),
+    paddingBottom: normalize(11),
+    paddingHorizontal: normalize(5),
+    borderBottomColor: '#3D2E67',
+    borderBottomWidth: 1,
   },
   proposalMetaTitle: {
-    fontWeight: '400',
+    fontWeight: '700',
     fontSize: normalize(14),
-    lineHeight: normalize(16),
-    color: '#B4B4B4',
+    lineHeight: normalize(20),
+    color: '#A195C2',
     fontFamily: 'System',
+  },
+  conentProposalMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   proposalMetaInfo: {
     fontWeight: '400',
@@ -125,23 +139,25 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
   },
   proposalVotingWrapper: {
-    borderColor: '#7D7D7D',
+    backgroundColor: purpleDark,
     width: '100%',
     padding: normalize(15),
     borderRadius: normalize(12),
-    borderWidth: 0.5,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    marginVertical: normalize(15),
+    paddingBottom: normalize(0),
+    marginBottom: normalize(10),
   },
   proposalVotingItemWrapper: {
     width: '100%',
     flexDirection: 'column',
+    marginBottom: normalize(15),
   },
   proposalVotingItemTextWrapper: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: normalize(6),
   },
   proposalVotingItemText: {
     color: 'white',
@@ -154,11 +170,24 @@ const styles = StyleSheet.create({
   proposalVotingItemBackgroundLine: {
     width: '100%',
     height: normalize(7),
-    backgroundColor: 'rgba(196, 196, 196, 0.5)',
+    backgroundColor: 'rgba(148, 119, 229, 0.42);',
     borderRadius: normalize(13),
     marginBottom: normalize(7),
     position: 'relative',
     zIndex: 1,
+  },
+
+  proposalVotingItemQuorum: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: normalize(15),
+    backgroundColor: '#2C2443',
+    border: '1px solid #3D2E67',
+    borderRadius: normalize(10),
+    paddingHorizontal: normalize(16),
+    paddingVertical: normalize(10),
   },
   proposalVotingItemInnerLine: {
     position: 'absolute',

@@ -128,7 +128,7 @@ function ProfileScreen({navigation, route}: any) {
                   uri: activeWallet
                     ? `https://cdn.stamp.fyi/avatar/${
                         activeWallet.address
-                      }?s=${normalize(80)}`
+                      }?s=${normalize(52)}`
                     : portfolio.avatarUrl,
                 }}
               />
@@ -141,7 +141,10 @@ function ProfileScreen({navigation, route}: any) {
                     : null}
                 </Text>
                 <Text style={styles.profilePortfolioAmount}>
-                  You follow: {portfolio.followedDaos.length} DAOs
+                  You follow:{' '}
+                  <Text style={styles.numberOfDaoText}>
+                    {portfolio.followedDaos.length} DAOs
+                  </Text>
                 </Text>
               </View>
             </View>

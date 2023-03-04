@@ -13,7 +13,7 @@ import numeral from 'numeral'
 import {useMutation} from '@apollo/client'
 import {observer} from 'mobx-react'
 import normalize from 'react-native-normalize'
-import ReactNativeHapticFeedback from "react-native-haptic-feedback"
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
 import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import {TPoll, TProposal} from '../../types'
@@ -29,11 +29,11 @@ import {openLinkInAppBrowser} from '../../components/MarkdownText'
 
 import styles from './styles'
 import {purple} from '../../constants/css'
-
+import AiGeneratedText from '../../components/AIGenerated'
 
 const hapticOptions = {
   enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false
+  ignoreAndroidSystemSettings: false,
 }
 
 const emojiSize = normalize(20)
@@ -71,7 +71,12 @@ const Proposal = (props: TProps) => {
   )
   const [tooltipIsOpen, setTooltipIsOpen] = React.useState<boolean>(false)
 
-  const {emojis, getEmojiById, getFamousReactions, getReactionsCountByProposal} = EmojiReactionsStore
+  const {
+    emojis,
+    getEmojiById,
+    getFamousReactions,
+    getReactionsCountByProposal,
+  } = EmojiReactionsStore
 
   const handleEmojiClick = (emojiId: string) => {
     changeProposalEmoji({
@@ -81,7 +86,7 @@ const Proposal = (props: TProps) => {
       },
     })
     setPickedEmojiId(pickedEmojiId === emojiId ? null : emojiId)
-    ReactNativeHapticFeedback.trigger("rigid", hapticOptions)
+    ReactNativeHapticFeedback.trigger('rigid', hapticOptions)
     setTooltipIsOpen(false)
   }
 
@@ -95,23 +100,38 @@ const Proposal = (props: TProps) => {
     <TouchableWithoutFeedback onPress={() => openProposal(proposal, poll)}>
       <View style={styles.proposalWrapper}>
         <View style={styles.proposalWrapperTop}>
-          <View style={styles.proposalImageWrapper}>
-            <TouchableWithoutFeedback
-              onPress={() => openDAODescription(proposal.dao.id)}>
-              <Image
-                source={{
-                  uri: convertURIForLogo(proposal.dao.logo),
-                }}
-                style={styles.proposalImage}
-              />
-            </TouchableWithoutFeedback>
-          </View>
           <View style={styles.proposalContentWrapper}>
             <View style={styles.proposalTopPart}>
-              <TouchableWithoutFeedback
-                onPress={() => openDAODescription(proposal.dao.id)}>
-                <Text style={styles.proposalTitle}>{proposal.dao.name}</Text>
-              </TouchableWithoutFeedback>
+              <View style={styles.proposalImageWrapper}>
+                <TouchableWithoutFeedback
+                  onPress={() => openDAODescription(proposal.dao.id)}>
+                  <Image
+                    source={{
+                      uri: convertURIForLogo(proposal.dao.logo),
+                    }}
+                    style={styles.proposalImage}
+                  />
+                </TouchableWithoutFeedback>
+
+                <View>
+                  <TouchableWithoutFeedback
+                    onPress={() => openDAODescription(proposal.dao.id)}>
+                    <Text style={styles.proposalTitle}>
+                      {proposal.dao.name}
+                    </Text>
+                  </TouchableWithoutFeedback>
+
+                  <Text style={styles.proposalEndTime}>
+                    {dateNow < new Date(proposal.endAt)
+                      ? 'Ends:'
+                      : 'Voting ended on'}{' '}
+                    {moment(new Date(proposal.endAt)).format(
+                      'MMM DD, YYYY, HH:MM A',
+                    )}
+                  </Text>
+                </View>
+              </View>
+
               {dateNow < new Date(proposal.endAt) && (
                 <Text style={styles.proposalActiveTitle}>ACTIVE</Text>
               )}
@@ -119,10 +139,9 @@ const Proposal = (props: TProps) => {
             <Text style={styles.proposalDescription}>
               {proposal.juniorDescription}
             </Text>
-            <Text style={styles.proposalEndTime}>
-              {dateNow < new Date(proposal.endAt) ? 'Ends:' : 'Voting ended on'}{' '}
-              {moment(new Date(proposal.endAt)).format('MMM DD, YYYY, HH:MM A')}
-            </Text>
+
+            <AiGeneratedText />
+
             <View style={styles.proposalVotingWrapper}>
               {loadingPoll ? (
                 <View style={styles.loadingWrapper}>
@@ -167,16 +186,17 @@ const Proposal = (props: TProps) => {
                   )
                 })
               ) : null}
-              {!loadingPoll && poll && poll.poll.quorum !== 0 && (
-                <View style={styles.proposalVotingItemTextWrapper}>
-                  <Text style={styles.proposalVotingItemText}>Quorum</Text>
-                  <Text style={styles.proposalVotingItemText}>
-                    {numeral(poll && poll.poll.scores_total).format('0[.]0a')}/
-                    {numeral(poll && poll.poll.quorum).format('0[.]0a')}
-                  </Text>
-                </View>
-              )}
             </View>
+
+            {!loadingPoll && poll && poll.poll.quorum !== 0 && (
+              <View style={styles.proposalVotingItemQuorum}>
+                <Text style={styles.proposalVotingItemText}>Quorum</Text>
+                <Text style={styles.proposalVotingItemText}>
+                  {numeral(poll && poll.poll.scores_total).format('0[.]0a')} /{' '}
+                  {numeral(poll && poll.poll.quorum).format('0[.]0a')}
+                </Text>
+              </View>
+            )}
           </View>
         </View>
         <View style={styles.proposalWrapperBottom}>
@@ -194,49 +214,60 @@ const Proposal = (props: TProps) => {
               />
             )}
           </View>
-            <EmojiTooltip
-              setTooltipIsOpen={setTooltipIsOpen}
-              tooltipIsOpen={tooltipIsOpen}
-              content={
-                <View style={styles.emojiReactionContentWrapper}>
-                  {emojis.map(emoji => {
-                    return (
-                      <TouchableWithoutFeedback
-                        onPress={() => handleEmojiClick(emoji.id)}
-                        key={emoji.id}>
-                        <Text style={styles.emojiReactionItem}>
-                          {emoji.unicode}
-                        </Text>
-                      </TouchableWithoutFeedback>
-                    )
-                  })}
-                </View>
-              }>
-              <View style={styles.chosenEmojiReaction}>
-                {pickedEmojiId ? (
-                  <View style={styles.pickedEmojiWrapper}>
-                    <View style={styles.pickedEmojiBackground}/>
-                    <Text style={styles.pickedEmoji}>
-                      {getEmojiById(pickedEmojiId)
-                        ?.unicode || <FavoriteIcon width={emojiSize} />}
-                    </Text>
-                  </View>
-                ) : (
-                  <FavoriteIcon width={emojiSize} />
-                )}
-                  {getFamousReactions(proposal.statisticData.emojiCount, pickedEmojiId).map(reaction => (
-                      <Text style={styles.famousEmojis} key={reaction.emojiId}>
-                        {getEmojiById(reaction.emojiId)
-                            ?.unicode|| <FavoriteIcon width={emojiSize} />}
+          <EmojiTooltip
+            setTooltipIsOpen={setTooltipIsOpen}
+            tooltipIsOpen={tooltipIsOpen}
+            content={
+              <View style={styles.emojiReactionContentWrapper}>
+                {emojis.map(emoji => {
+                  return (
+                    <TouchableWithoutFeedback
+                      onPress={() => handleEmojiClick(emoji.id)}
+                      key={emoji.id}>
+                      <Text style={styles.emojiReactionItem}>
+                        {emoji.unicode}
                       </Text>
-                  ))}
-                  <Text style={styles.famousEmojisCount}>
-                    {numeral(getReactionsCountByProposal(proposal.statisticData.emojiCount, pickedEmojiId, !!proposal.personalizedData.pickedEmojiId)).format('0[.]0a')}
-                  </Text>
+                    </TouchableWithoutFeedback>
+                  )
+                })}
               </View>
-            </EmojiTooltip>
-          </View>
+            }>
+            <View style={styles.chosenEmojiReaction}>
+              {pickedEmojiId ? (
+                <View style={styles.pickedEmojiWrapper}>
+                  <View style={styles.pickedEmojiBackground} />
+                  <Text style={styles.pickedEmoji}>
+                    {getEmojiById(pickedEmojiId)?.unicode || (
+                      <FavoriteIcon width={emojiSize} />
+                    )}
+                  </Text>
+                </View>
+              ) : (
+                <FavoriteIcon width={emojiSize} />
+              )}
+              {getFamousReactions(
+                proposal.statisticData.emojiCount,
+                pickedEmojiId,
+              ).map(reaction => (
+                <Text style={styles.famousEmojis} key={reaction.emojiId}>
+                  {getEmojiById(reaction.emojiId)?.unicode || (
+                    <FavoriteIcon width={emojiSize} />
+                  )}
+                </Text>
+              ))}
+              <Text style={styles.famousEmojisCount}>
+                {numeral(
+                  getReactionsCountByProposal(
+                    proposal.statisticData.emojiCount,
+                    pickedEmojiId,
+                    !!proposal.personalizedData.pickedEmojiId,
+                  ),
+                ).format('0[.]0a')}
+              </Text>
+            </View>
+          </EmojiTooltip>
         </View>
+      </View>
     </TouchableWithoutFeedback>
   )
 }

@@ -12,14 +12,14 @@ export const markDownStyles = StyleSheet.create({
     fontFamily: 'System',
   },
   text: {
-    fontSize: normalize(16),
+    fontSize: normalize(14),
   },
   heading1: {
     color: white,
     fontWeight: '700',
   },
   heading2: {
-    color: white,
+    color: '#C4C8C9',
     fontWeight: '700',
   },
   heading3: {
