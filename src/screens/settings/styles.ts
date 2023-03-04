@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   },
   textInfoWrapper: {
     marginHorizontal: normalize(16.5),
+    marginTop: '80%',
   },
 })
 
