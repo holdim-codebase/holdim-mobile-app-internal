@@ -135,7 +135,10 @@ function SearchScreen({navigation}: any) {
                         <Text style={styles.searchDaoName}>{dao.name}</Text>
                         {dao.tokens && dao.tokens.length ? (
                           <Text style={styles.searchDaoPrice}>
-                            {dao.tokens[0].symbol} {' '}<Text style={styles.searchDaoPriceClr}>{+Number(dao.tokens[0].price).toFixed(2)} USD</Text>
+                            {dao.tokens[0].symbol}{' '}
+                            <Text style={styles.searchDaoPriceUsd}>
+                              {+Number(dao.tokens[0].price).toFixed(2)} USD
+                            </Text>
                           </Text>
                         ) : null}
                       </View>

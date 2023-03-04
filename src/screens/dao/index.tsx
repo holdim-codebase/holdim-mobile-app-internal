@@ -133,11 +133,11 @@ function DAOScreen({route, navigation}: any) {
               />
             </View>
           </View>
-          
+
           <View style={styles.daoInfoTextWrapperDetatil}>
             <View style={styles.daoInfoTextWrapperDetatilChild}>
-              <Text style={styles.daoUserDetailClr}>Shares</Text>
-              <Text style={styles.daoUserDetail}>
+              <Text style={styles.daoUserDetailText}>Shares</Text>
+              <Text style={styles.daoUserDetailAmount}>
                 {
                   +(
                     (dao.tokens[0].personalizedData.quantity /
@@ -150,18 +150,13 @@ function DAOScreen({route, navigation}: any) {
             </View>
 
             <View style={styles.daoInfoTextWrapperDetatilChild}>
-              <Text style={styles.daoUserDetailClr}>
-                In your wallet:
+              <Text style={styles.daoUserDetailText}>In your wallet:</Text>
+              <Text style={styles.daoUserDetailAmount}>
+                {+Number(dao.tokens[0].personalizedData.quantity).toFixed(2)}{' '}
+                {dao.tokens[0].symbol}
               </Text>
-              <Text style={styles.daoUserDetail}>
-                  {+Number(dao.tokens[0].personalizedData.quantity).toFixed(2)}{' '}
-                  {dao.tokens[0].symbol}
-                </Text>
             </View>
-            
           </View>
-          
-          
         </View>
       </View>
 
@@ -172,11 +167,13 @@ function DAOScreen({route, navigation}: any) {
               styles.daoTabButton,
               activeTab === proposalsTab && styles.daoTabButtonActive,
             ]}>
-            <Text 
-            style={[
-              styles.daoTabText,
-              activeTab === proposalsTab && styles.daoTabTextActive,
-            ]}>Proposals</Text>
+            <Text
+              style={[
+                styles.daoTabText,
+                activeTab === proposalsTab && styles.daoTabTextActive,
+              ]}>
+              Proposals
+            </Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => setActiveTab(overviewTab)}>
@@ -185,10 +182,13 @@ function DAOScreen({route, navigation}: any) {
               styles.daoTabButton,
               activeTab === overviewTab && styles.daoTabButtonActive,
             ]}>
-            <Text style={[
-              styles.daoTabText,
-              activeTab === overviewTab && styles.daoTabTextActive,
-            ]}>Overview</Text>
+            <Text
+              style={[
+                styles.daoTabText,
+                activeTab === overviewTab && styles.daoTabTextActive,
+              ]}>
+              Overview
+            </Text>
           </View>
         </TouchableWithoutFeedback>
         <TouchableWithoutFeedback onPress={() => setActiveTab(tokenTab)}>
@@ -197,10 +197,13 @@ function DAOScreen({route, navigation}: any) {
               styles.daoTabButton,
               activeTab === tokenTab && styles.daoTabButtonActive,
             ]}>
-            <Text style={[
-              styles.daoTabText,
-              activeTab === tokenTab && styles.daoTabTextActive,
-            ]}>Token</Text>
+            <Text
+              style={[
+                styles.daoTabText,
+                activeTab === tokenTab && styles.daoTabTextActive,
+              ]}>
+              Token
+            </Text>
           </View>
         </TouchableWithoutFeedback>
       </View>
