@@ -2,7 +2,14 @@ import * as React from 'react'
 import * as Sentry from '@sentry/react-native'
 import {useMutation, useQuery} from '@apollo/client/react/hooks'
 import auth from '@react-native-firebase/auth'
-import {Image, Pressable, Text, TouchableOpacity, View} from 'react-native'
+import {
+  Image,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+  ImageBackground,
+} from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import {ScrollView} from 'react-native-gesture-handler'
@@ -214,6 +221,10 @@ function WalletManagementScreen({navigation}: any) {
                   setActiveWalletId(wallet.id)
                   AsyncStorage.setItem('wallet-id', wallet.id)
                 }}>
+                <ImageBackground
+                  source={require('../../assets/images/logoBack.png')}
+                  style={styles.activeWalletImage}
+                />
                 <View style={styles.walletTopSectionWrapper}>
                   <View style={styles.walletImageAddressSection}>
                     <Image

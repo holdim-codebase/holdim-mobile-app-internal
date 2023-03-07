@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     height: '72%',
   },
   walletWrapper: {
+    position: 'relative',
     borderWidth: 1,
     borderRadius: normalize(10),
     borderColor: purpleLight,
@@ -56,6 +57,15 @@ const styles = StyleSheet.create({
     borderColor: purple,
     padding: normalize(10),
     marginBottom: normalize(10),
+    backgroundColor: '#5B449A',
+  },
+  activeWalletImage: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    width: normalize(132),
+    height: normalize(96),
+    resizeMode: 'cover',
   },
   walletTopSectionWrapper: {
     flexDirection: 'row',
