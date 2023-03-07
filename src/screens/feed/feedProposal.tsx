@@ -141,9 +141,7 @@ const Proposal = (props: TProps) => {
             <Text style={styles.proposalDescription}>
               {proposal.juniorDescription}
             </Text>
-
             <AiGeneratedText handleClick={() => setIsMoadlAi(true)} />
-
             <View style={styles.proposalVotingWrapper}>
               {loadingPoll ? (
                 <View style={styles.loadingWrapper}>
@@ -216,7 +214,6 @@ const Proposal = (props: TProps) => {
               />
             )}
           </View>
-
           <EmojiTooltip
             setTooltipIsOpen={setTooltipIsOpen}
             tooltipIsOpen={tooltipIsOpen}
