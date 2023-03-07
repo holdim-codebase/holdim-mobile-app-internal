@@ -24,6 +24,8 @@ import Proposal from './feedProposal'
 
 import styles from './styles'
 import {purple} from '../../constants/css'
+import CustomModal from '../../components/CustomModal'
+import {wasteBasket} from '../../constants/emojis'
 
 export const convertURIForLogo = (logoURI: string) => {
   return logoURI.startsWith('ipfs://')
@@ -35,6 +37,7 @@ function FeedScreen({navigation, route}: any) {
   const [refreshing, setRefreshing] = React.useState(false)
   const [proposals, setProposals] = React.useState<TProposal[]>([])
   const [polls, setPolls] = React.useState<TPoll[]>([])
+  const [isMoadlAi, setIsMoadlAi] = React.useState<boolean>(false)
 
   // states for pagination
   const [endCursor, setEndCursor] = React.useState<string>('')
@@ -229,6 +232,7 @@ function FeedScreen({navigation, route}: any) {
               openProposal={openProposal}
               openDAODescription={openDAODescription}
               convertURIForLogo={convertURIForLogo}
+              setIsMoadlAi={setIsMoadlAi}
               key={item.id}
             />
           )
@@ -239,6 +243,20 @@ function FeedScreen({navigation, route}: any) {
           style={styles.loadingSpinner}
           size="small"
           color="rgba(132, 99, 223, 1)"
+        />
+      )}
+      {isMoadlAi && (
+        <CustomModal
+          title={'DYOR'}
+          description={`Do your own research. The AI generated texts do not mean a financial or other advice. The text simplified by AI can have inaccuracies. Always read the full proposal before voting on the subject.`}
+          btnOkText={'Got it'}
+          btnCancelText={'Got it'}
+          emoji={wasteBasket}
+          modalVisible={isMoadlAi}
+          setModalVisible={m => setIsMoadlAi(m)}
+          doAction={() => {
+            setIsMoadlAi(false)
+          }}
         />
       )}
     </ScrollView>

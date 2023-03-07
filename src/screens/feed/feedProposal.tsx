@@ -45,6 +45,7 @@ type TProps = {
   openDAODescription: Function
   convertURIForLogo: Function
   loadingPoll: boolean
+  setIsMoadlAi: (newValue: boolean) => void
 }
 
 const Proposal = (props: TProps) => {
@@ -64,6 +65,7 @@ const Proposal = (props: TProps) => {
     openDAODescription,
     convertURIForLogo,
     loadingPoll,
+    setIsMoadlAi,
   } = props
   const dateNow = new Date()
   const [pickedEmojiId, setPickedEmojiId] = React.useState<string | null>(
@@ -140,7 +142,7 @@ const Proposal = (props: TProps) => {
               {proposal.juniorDescription}
             </Text>
 
-            <AiGeneratedText />
+            <AiGeneratedText handleClick={() => setIsMoadlAi(true)} />
 
             <View style={styles.proposalVotingWrapper}>
               {loadingPoll ? (
@@ -214,6 +216,7 @@ const Proposal = (props: TProps) => {
               />
             )}
           </View>
+
           <EmojiTooltip
             setTooltipIsOpen={setTooltipIsOpen}
             tooltipIsOpen={tooltipIsOpen}
