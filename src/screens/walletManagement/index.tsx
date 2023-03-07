@@ -221,10 +221,12 @@ function WalletManagementScreen({navigation}: any) {
                   setActiveWalletId(wallet.id)
                   AsyncStorage.setItem('wallet-id', wallet.id)
                 }}>
-                <ImageBackground
-                  source={require('../../assets/images/logoBack.png')}
-                  style={styles.activeWalletImage}
-                />
+                {activeWalletId === wallet.id && (
+                  <ImageBackground
+                    source={require('../../assets/images/logoBack.png')}
+                    style={styles.activeWalletImage}
+                  />
+                )}
                 <View style={styles.walletTopSectionWrapper}>
                   <View style={styles.walletImageAddressSection}>
                     <Image
