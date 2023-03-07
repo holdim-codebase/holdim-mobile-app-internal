@@ -39,7 +39,7 @@ import ProfileIconFocused from './src/assets/images/svg/Profile.purple.svg'
 import SettingsIcon from './src/assets/images/svg/Settings.svg'
 import normalize from 'react-native-normalize'
 
-import {black} from './src/constants/css'
+import {black, purpleDark} from './src/constants/css'
 
 Sentry.init({
   dsn: 'https://e64a26481fc64b0b895da8a145307e31@o1405388.ingest.sentry.io/6739145',
@@ -166,8 +166,8 @@ const MainScreen = () => {
       screenOptions={() => ({
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: 'rgba(22, 22, 22, 1)',
-          borderTopColor: 'rgba(22, 22, 22, 1)',
+          backgroundColor: '#12092C',
+          borderTopColor: '#12092C',
         },
       })}>
       <Tab.Screen
