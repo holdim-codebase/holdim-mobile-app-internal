@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-import {purple, statusBarHeight} from '../../constants/css'
+import {purple, purpleLight, statusBarHeight} from '../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {
@@ -55,13 +55,12 @@ const styles = StyleSheet.create({
     lineHeight: normalize(19),
   },
   welcomeProjectsListWrapper: {
-    borderTopColor: 'rgba(193, 193, 193, 0.5)',
-    borderTopWidth: 0.5,
     paddingBottom: normalize(17),
     marginTop: normalize(2),
   },
   welcomeProjectsListTitle: {
-    color: 'white',
+    color: purpleLight,
+    marginBottom: normalize(16),
     fontSize: normalize(16),
     fontWeight: '700',
     lineHeight: normalize(24),
