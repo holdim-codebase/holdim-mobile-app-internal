@@ -53,13 +53,11 @@ const styles = StyleSheet.create({
   },
   customModalButton: {
     borderRadius: normalize(5),
-    paddingVertical: normalize(10),
+    paddingVertical: normalize(12),
     width: '48%',
   },
   customModalButtonCancel: {
-    borderColor: purple,
-    borderWidth: 2,
-    borderStyle: 'solid',
+    backgroundColor: '#756799',
   },
   customModalButtonOk: {
     backgroundColor: purple,
