@@ -18,6 +18,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 // styles
 import styles from './styles'
 import {purple} from '../../constants/css'
+import TextInfo from '../../components/TextInfo'
 
 const WelcomeScreen = ({navigation}: any) => {
   const [followedDaoList, setFollowedDaoList] = React.useState<TDAO[]>([])
@@ -87,7 +88,7 @@ const WelcomeScreen = ({navigation}: any) => {
       </View>
       <ScrollView style={styles.welcomeContentWrapper}>
         <View style={styles.welcomeTextWrapper}>
-          <Text style={styles.welcomeTitle}>Welcome to Holdim</Text>
+          <Text style={styles.welcomeTitle}>Welcome to Holdim 🔮</Text>
           <Text style={styles.welcomeText}>
             We wanted to make it easy, so you automatically follow projects you
             have tokens in your wallet.{' '}
@@ -103,7 +104,7 @@ const WelcomeScreen = ({navigation}: any) => {
             size="large"
             color="rgba(132, 99, 223, 1)"
           />
-        ) : followedDaoList.length !== 0 ? (
+        ) : (
           <View>
             <Text style={styles.welcomeProjectsListTitle}>
               Projects you are following
@@ -115,7 +116,7 @@ const WelcomeScreen = ({navigation}: any) => {
                   size="small"
                   color="rgba(132, 99, 223, 1)"
                 />
-              ) : (
+              ) : followedDaoList.length !== 0 ? (
                 followedDaoList.map((followedDao, index) => {
                   return (
                     <View key={index} style={styles.welcomeProjectWrapper}>
@@ -152,10 +153,12 @@ const WelcomeScreen = ({navigation}: any) => {
                     </View>
                   )
                 })
+              ) : (
+                <TextInfo text="Unfortunately, we did not find any projects in your wallet. Please select at least one project below to continue." />
               )}
             </View>
           </View>
-        ) : null}
+        )}
         {notFollowedDaoList.length !== 0 ? (
           <View>
             <Text style={styles.welcomeProjectsListTitle}>
