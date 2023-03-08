@@ -70,30 +70,10 @@ function SettingsScreen({navigation}: any) {
           </TouchableOpacity>
         ))}
       </View>
-      <View style={{height: '60%', justifyContent: 'space-between'}}>
-        <View style={styles.poapWrapper}>
-          <TouchableOpacity
-            style={styles.poapButton}
-            onPress={() => {
-              Linking.openURL(
-                'https://kiosk.poap.xyz/#/event/SLNNKbl71INAWgtJh9nk',
-              ).catch(error => {
-                Sentry.captureException(error)
-                console.error(error)
-                handleHTTPError()
-              })
-            }}>
-            <View style={styles.poapSvg}>
-              <Poap />
-            </View>
-            <Text style={styles.poapText}>Get your trophy POAP!</Text>
-          </TouchableOpacity>
-        </View>
-        <TextInfo
-          wrapperStyle={styles.textInfoWrapper}
-          text={'Beta version 1.0'}
-        />
-      </View>
+      <TextInfo
+        wrapperStyle={styles.textInfoWrapper}
+        text={'Beta version 1.0'}
+      />
     </View>
   )
 }
