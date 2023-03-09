@@ -1,13 +1,13 @@
-import React, {FC} from 'react'
+import React from 'react'
 import {View, Text, TouchableWithoutFeedback} from 'react-native'
 import {styles} from './styles'
 import Exlam from '../../assets/icons/exclamatory.svg'
 
-interface AiGeneratedTextProps {
+type AiGeneratedTextProps = {
   handleClick: () => void
 }
 
-const AiGeneratedText: FC<AiGeneratedTextProps> = ({handleClick}) => {
+const AiGeneratedText = ({handleClick}: AiGeneratedTextProps) => {
   return (
     <TouchableWithoutFeedback onPress={handleClick}>
       <View style={styles.aiExlam}>
