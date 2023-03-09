@@ -32,6 +32,8 @@ import styles from './styles'
 import {purple} from '../../constants/css'
 import {hapticOptions} from '../../constants/haptic'
 import AiGeneratedText from '../../components/AIGenerated'
+import CustomModal from '../../components/CustomModal'
+import {wasteBasket} from '../../constants/emojis'
 
 const emojiSize = normalize(20)
 
@@ -42,7 +44,6 @@ type TProps = {
   openDAODescription: Function
   convertURIForLogo: Function
   loadingPoll: boolean
-  setIsMoadlAi: (newValue: boolean) => void
 }
 
 const Proposal = (props: TProps) => {
@@ -62,13 +63,13 @@ const Proposal = (props: TProps) => {
     openDAODescription,
     convertURIForLogo,
     loadingPoll,
-    setIsMoadlAi,
   } = props
   const dateNow = new Date()
   const [pickedEmojiId, setPickedEmojiId] = React.useState<string | null>(
     proposal.personalizedData.pickedEmojiId,
   )
   const [tooltipIsOpen, setTooltipIsOpen] = React.useState<boolean>(false)
+  const [isMoadlAi, setIsMoadlAi] = React.useState<boolean>(false)
 
   const {
     emojis,
@@ -98,6 +99,20 @@ const Proposal = (props: TProps) => {
   return (
     <TouchableWithoutFeedback onPress={() => openProposal(proposal, poll)}>
       <View style={styles.proposalWrapper}>
+        {isMoadlAi && (
+          <CustomModal
+            title={'DYOR'}
+            description={`Do your own research. The AI generated texts do not mean a financial or other advice. The text simplified by AI can have inaccuracies. Always read the full proposal before voting on the subject.`}
+            btnOkText={'Got it'}
+            btnCancelText={'Got it'}
+            emoji={wasteBasket}
+            modalVisible={isMoadlAi}
+            setModalVisible={m => setIsMoadlAi(m)}
+            doAction={() => {
+              setIsMoadlAi(false)
+            }}
+          />
+        )}
         <View style={styles.proposalWrapperTop}>
           <View style={styles.proposalContentWrapper}>
             <View style={styles.proposalTopPart}>

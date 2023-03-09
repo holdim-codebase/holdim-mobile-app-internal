@@ -8,8 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     marginBottom: normalize(10),
-    paddingTop: normalize(10),
-    paddingBottom: normalize(10),
+    paddingVertical: normalize(5),
   },
   aiExlamText: {
     fontFamily: 'Noto Sans',
