@@ -51,6 +51,12 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'space-between',
   },
+  customModalButtonOnly: {
+    borderRadius: normalize(5),
+    paddingVertical: normalize(10),
+    width: '100%',
+    backgroundColor: purple,
+  },
   customModalButton: {
     borderRadius: normalize(5),
     paddingVertical: normalize(10),

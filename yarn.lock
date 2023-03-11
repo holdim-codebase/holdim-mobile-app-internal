@@ -6693,6 +6693,7 @@ react-freeze@^1.0.0:
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
+
 react-is@^17.0.1, react-is@^17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
@@ -6710,7 +6711,22 @@ react-native-asset@^2.0.1:
     sha1-file "^1.0.4"
     xcode "^2.0.0"
 
+react-is@^17.0.1, react-is@^17.0.2:
+  version "17.0.2"
+  resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
+  integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-asset@^2.0.1:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-asset/-/react-native-asset-2.1.0.tgz#11d07ff7316f16baf5ae79e87efa7fc5d9916e8e"
+  integrity sha512-Z1605leJo7EJkHMUKk8bCJRQ16xugXuYD4fjzIhKYOihDk7kiNED/266G+hnlse9fUFVQvtFX233/wt112RZTw==
+  dependencies:
+    fs-extra "^7.0.1"
+    lodash "4.17.21"
+    npmlog "^4.1.2"
+    plist "^3.0.1"
+    sha1-file "^1.0.4"
+    xcode "^2.0.0"
 
 react-native-dynamic-search-bar@^2.0.2:
   version "2.0.2"
