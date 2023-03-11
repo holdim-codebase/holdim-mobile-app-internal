@@ -22,11 +22,11 @@ import {
   GET_USER_INFO,
   handleHTTPError,
 } from '../../services/api'
-import {convertURIForLogo} from '../feed'
 import {shortenAddress} from '../proposal'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import styles from './styles'
 import {purple} from '../../constants/css'
+import {convertUriToLogo} from '../../utils/convertUriToLogo'
 
 export const validateUserTokens = (quantity: number) => {
   if (quantity >= 0.01 || quantity === 0) {
@@ -156,7 +156,7 @@ function ProfileScreen({navigation, route}: any) {
                       <View style={styles.assetLeft}>
                         <Image
                           style={styles.assetImage}
-                          source={{uri: convertURIForLogo(followedDao.logo)}}
+                          source={{uri: convertUriToLogo(followedDao.logo)}}
                         />
                         <View style={styles.assetTextWrapper}>
                           <Text style={styles.assetTitle}>

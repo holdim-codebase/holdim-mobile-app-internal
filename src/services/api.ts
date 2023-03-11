@@ -259,8 +259,9 @@ export const GET_DAO_LIST = gql`
     $after: String
     $onlyMain: Boolean
     $search: String
+    $ids: [ID!]
   ) {
-    daosV2(first: $first, after: $after, search: $search) {
+    daosV2(first: $first, after: $after, search: $search, ids: $ids) {
       pageInfo {
         endCursor
         hasNextPage

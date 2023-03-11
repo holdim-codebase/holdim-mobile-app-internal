@@ -3,7 +3,7 @@ import {Text, View, ScrollView, Image, TouchableOpacity} from 'react-native'
 
 import MarkdownText from '../../components/MarkdownText'
 import {TProposal} from '../../types'
-import {convertURIForLogo} from '../feed'
+import {convertUriToLogo} from '../../utils/convertUriToLogo'
 import styles from './styles'
 
 function FullProposalScreen({route, navigation}: any) {
@@ -29,7 +29,7 @@ function FullProposalScreen({route, navigation}: any) {
             <View style={styles.proposalTopSectionWrapper}>
               <Image
                 style={styles.proposalIcon}
-                source={{uri: convertURIForLogo(proposal.dao.logo)}}
+                source={{uri: convertUriToLogo(proposal.dao.logo)}}
               />
               <Text style={styles.proposalDaoTitle}>{proposal.dao.name}</Text>
             </View>

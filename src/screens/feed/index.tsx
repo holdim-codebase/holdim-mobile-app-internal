@@ -24,15 +24,14 @@ import Proposal from './feedProposal'
 
 import styles from './styles'
 import {purple} from '../../constants/css'
-
-export const convertURIForLogo = (logoURI: string) => {
-  return logoURI.startsWith('ipfs://')
-    ? logoURI.replace('ipfs://', 'https://ipfs.io/ipfs/')
-    : logoURI
-}
+import {convertUriToLogo} from '../../utils/convertUriToLogo'
+import NewDaoNotificationModal from '../notification/NewDaoNotification'
 
 function FeedScreen({navigation, route}: any) {
   const [refreshing, setRefreshing] = React.useState(false)
+  // TODO: add setShowNewDaoNotificationModal(true) to show modal
+  const [showNewDaoNotificationModal, setShowNewDaoNotificationModal] =
+    React.useState(false)
   const [proposals, setProposals] = React.useState<TProposal[]>([])
   const [polls, setPolls] = React.useState<TPoll[]>([])
 
@@ -228,7 +227,7 @@ function FeedScreen({navigation, route}: any) {
               loadingPoll={loadingPoll}
               openProposal={openProposal}
               openDAODescription={openDAODescription}
-              convertURIForLogo={convertURIForLogo}
+              convertURIToLogo={convertUriToLogo}
               key={item.id}
             />
           )
@@ -239,6 +238,14 @@ function FeedScreen({navigation, route}: any) {
           style={styles.loadingSpinner}
           size="small"
           color="rgba(132, 99, 223, 1)"
+        />
+      )}
+      {showNewDaoNotificationModal && (
+        // TODO: send daoIds from notification
+        <NewDaoNotificationModal
+          isModalVisible={showNewDaoNotificationModal}
+          setModalVisible={e => setShowNewDaoNotificationModal(false)}
+          daoIds={['31', '30', '27', '26']}
         />
       )}
     </ScrollView>

@@ -15,11 +15,11 @@ import * as Sentry from '@sentry/react-native'
 
 import {TPoll, TProposal} from '../../types'
 import {GET_POLL, handleHTTPError} from '../../services/api'
-import {convertURIForLogo} from '../feed'
 import {openLinkInAppBrowser} from '../../components/MarkdownText'
 import Link from '../../assets/images/svg/Link.svg'
 import styles from './styles'
 import {purple} from '../../constants/css'
+import {convertUriToLogo} from '../../utils/convertUriToLogo'
 
 export const shortenAddress = (address: string) => {
   if (address.length <= 12) return address
@@ -77,7 +77,7 @@ function ProposalScreen({route, navigation}: any) {
             <View style={styles.proposalTopSectionWrapper}>
               <Image
                 style={styles.proposalIcon}
-                source={{uri: convertURIForLogo(proposal.dao.logo)}}
+                source={{uri: convertUriToLogo(proposal.dao.logo)}}
               />
               <Text style={styles.proposalDaoTitle}>{proposal.dao.name}</Text>
             </View>

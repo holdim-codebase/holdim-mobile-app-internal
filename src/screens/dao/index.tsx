@@ -17,7 +17,6 @@ import {
   GET_PROPOSALS,
   handleHTTPError,
 } from '../../services/api'
-import {convertURIForLogo} from '../feed'
 
 //components
 import MarkdownText from '../../components/MarkdownText'
@@ -27,6 +26,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 //styles
 import styles from './styles'
 import {candle, hammerAndWrench, postalHorn} from '../../constants/emojis'
+import {convertUriToLogo} from '../../utils/convertUriToLogo'
 
 const overviewTab = 'Overview'
 const tokenTab = 'Token'
@@ -118,7 +118,7 @@ function DAOScreen({route, navigation}: any) {
         <View>
           <Image
             style={styles.daoImage}
-            source={{uri: convertURIForLogo(dao.logo)}}
+            source={{uri: convertUriToLogo(dao.logo)}}
           />
         </View>
         <View style={styles.daoInfoTextWrapper}>

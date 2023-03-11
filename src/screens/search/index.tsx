@@ -13,7 +13,6 @@ import * as Sentry from '@sentry/react-native'
 
 import {TDAO} from '../../types'
 import {GET_DAO_LIST, handleHTTPError} from '../../services/api'
-import {convertURIForLogo} from '../feed'
 
 // components
 import Follow from '../../components/Follow'
@@ -22,6 +21,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 // styles
 import styles from './styles'
 import {purple} from '../../constants/css'
+import {convertUriToLogo} from '../../utils/convertUriToLogo'
 
 function SearchScreen({navigation}: any) {
   const [daoList, setDaoList] = React.useState<TDAO[]>([])
@@ -128,7 +128,7 @@ function SearchScreen({navigation}: any) {
                     <View style={styles.searchDaoLogoTextWrapper}>
                       <Image
                         style={styles.searchDaoLogo}
-                        source={{uri: convertURIForLogo(dao.logo)}}
+                        source={{uri: convertUriToLogo(dao.logo)}}
                       />
                       <View style={styles.searchDaoTextWrapper}>
                         <Text style={styles.searchDaoName}>{dao.name}</Text>
