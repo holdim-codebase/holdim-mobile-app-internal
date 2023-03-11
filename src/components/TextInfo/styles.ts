@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
   body: {
     backgroundColor: 'rgba(148, 119, 229, 0.42)',
     paddingHorizontal: normalize(18),
-    paddingVertical: normalize(8),
+    paddingVertical: normalize(15),
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: normalize(10),
