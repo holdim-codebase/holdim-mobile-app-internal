@@ -48,10 +48,7 @@ const CustomModal = ({
             <Text style={styles.customModalDescription}>{description}</Text>
             {btnOkText ? (
               <TouchableOpacity
-                style={[
-                  styles.customModalButton,
-                  styles.customModalButtonCancel,
-                ]}
+                style={[styles.customModalButtonOnly]}
                 onPress={() => setModalVisible(!modalVisible)}>
                 <Text style={styles.customModalButtonText}>
                   {btnCancelText}
