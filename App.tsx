@@ -166,8 +166,8 @@ const MainScreen = () => {
       screenOptions={() => ({
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: 'rgba(22, 22, 22, 1)',
-          borderTopColor: 'rgba(22, 22, 22, 1)',
+          backgroundColor: '#12092C',
+          borderTopColor: '#12092C',
         },
       })}>
       <Tab.Screen
