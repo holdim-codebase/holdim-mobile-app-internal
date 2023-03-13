@@ -42,7 +42,8 @@ function FeedScreen({navigation, route}: any) {
   const [endCursor, setEndCursor] = React.useState<string>('')
   const [hasNextPage, setHasNextPage] = React.useState<boolean>(false)
   const [fetchMoreLoading, setFetchMoreLoading] = React.useState<boolean>(false)
-  const [isNitificPopup, setIsNitificPopup] = React.useState<boolean>(false)
+  const [showNotificationModal, setShowNotificationModal] =
+    React.useState<boolean>(false)
   const {userHasFollowedDaos, setPortfolio} = PortfolioStore
 
   const scrollRef = React.useRef(null)
@@ -167,7 +168,7 @@ function FeedScreen({navigation, route}: any) {
   }, [])
 
   React.useEffect(() => {
-    setIsNitificPopup(true)
+    setShowNotificationModal(true)
   }, [])
 
   useScrollToTop(scrollRef)
@@ -217,8 +218,8 @@ function FeedScreen({navigation, route}: any) {
         emoji={wasteBasket}
         btnCancelText={'Not now'}
         btnActionText={'Yes, Turn on'}
-        modalVisible={isNitificPopup}
-        setModalVisible={m => setIsNitificPopup(m)}
+        modalVisible={showNotificationModal}
+        setModalVisible={m => setShowNotificationModal(m)}
         doAction={() => {
           true
         }}
