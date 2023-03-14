@@ -24,7 +24,7 @@ import Proposal from './feedProposal'
 
 import styles from './styles'
 import {purple} from '../../constants/css'
-import {wasteBasket} from '../../constants/emojis'
+import {notification} from '../../constants/emojis'
 import CustomModal from '../../components/CustomModal'
 
 export const convertURIForLogo = (logoURI: string) => {
@@ -215,7 +215,7 @@ function FeedScreen({navigation, route}: any) {
         description={
           'Would you like to turn on notifications? This will help you stay up to date with what is happening and not miss important voting and much more.'
         }
-        emoji={wasteBasket}
+        emoji={notification}
         btnCancelText={'Not now'}
         btnActionText={'Yes, Turn on'}
         modalVisible={showNotificationModal}
