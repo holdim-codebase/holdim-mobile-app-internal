@@ -3,6 +3,7 @@ export const wasteBasket = '\u{1F5D1}'
 export const key = '\u{1F511}'
 export const fire = '\u{1F525}'
 export const done = '\u{2705}'
+export const notification = '\u{1F4E8}'
 
 // Reactions
 export const thumbsUp = '\u{1F44D}'
