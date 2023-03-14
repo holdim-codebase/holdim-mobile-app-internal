@@ -33,7 +33,7 @@ import {purple} from '../../constants/css'
 import {hapticOptions} from '../../constants/haptic'
 import AiGeneratedText from '../../components/AIGenerated'
 import CustomModal from '../../components/CustomModal'
-import {wasteBasket} from '../../constants/emojis'
+import {flashlight} from '../../constants/emojis'
 
 const emojiSize = normalize(20)
 
@@ -105,7 +105,7 @@ const Proposal = (props: TProps) => {
             description={`Do your own research. The AI generated texts do not mean a financial or other advice. The text simplified by AI can have inaccuracies. Always read the full proposal before voting on the subject.`}
             btnOkText={'Got it'}
             btnCancelText={'Got it'}
-            emoji={wasteBasket}
+            emoji={flashlight}
             modalVisible={isMoadlAi}
             setModalVisible={m => setIsMoadlAi(m)}
             doAction={() => {
