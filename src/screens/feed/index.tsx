@@ -20,7 +20,7 @@ import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import PortfolioStore from '../../services/stores/portfolio.store'
 import LoadingSpinner from '../../components/LoadingSpinner'
 import TextInfo from '../../components/TextInfo'
-import Proposal from './feedProposal'
+import Proposal from '../../components/Proposal/Proposal'
 
 import styles from './styles'
 import {purple} from '../../constants/css'

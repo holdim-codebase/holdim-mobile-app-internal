@@ -3,32 +3,6 @@ import normalize from 'react-native-normalize'
 import {purpleLight, OS_IOS, purpleDark} from '../../constants/css'
 
 const styles = StyleSheet.create({
-  loadingWrapperFullScreen: {
-    width: '100%',
-    height: '100%',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingTop: '80%',
-    backgroundColor: 'black',
-  },
-  loadingWrapper: {
-    width: '100%',
-    height: '100%',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
-    marginBottom: normalize(15),
-  },
-  loadingSpinner: {
-    paddingVertical: normalize(20),
-  },
-  feedWrapper: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-  },
   proposalWrapper: {
     paddingVertical: normalize(16),
     flexDirection: 'column',
@@ -46,13 +20,15 @@ const styles = StyleSheet.create({
   proposalWrapperTop: {
     width: '100%',
   },
-  proposalWrapperBottom: {
+  proposalContentWrapper: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  proposalTopPart: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingTop: normalize(16),
-  },
-  proposalActionsWrapper: {
-    flexDirection: 'row',
+    alignItems: 'center',
+    alignContent: 'center',
   },
   proposalImageWrapper: {
     flexDirection: 'row',
@@ -64,16 +40,6 @@ const styles = StyleSheet.create({
     borderRadius: normalize(50),
     marginRight: normalize(10),
   },
-  proposalContentWrapper: {
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  proposalTopPart: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    alignContent: 'center',
-  },
   proposalTitle: {
     color: 'white',
     fontSize: normalize(20),
@@ -82,6 +48,13 @@ const styles = StyleSheet.create({
     marginBottom: normalize(6),
     fontFamily: 'System',
     paddingTop: normalize(8),
+  },
+  proposalEndTime: {
+    color: '#8463DF',
+    fontSize: normalize(12),
+    fontWeight: '300',
+    lineHeight: normalize(14),
+    marginBottom: normalize(12),
   },
   proposalActiveTitle: {
     color: '#A8D102',
@@ -104,13 +77,6 @@ const styles = StyleSheet.create({
     marginBottom: normalize(12),
     fontFamily: 'System',
   },
-  proposalEndTime: {
-    color: '#8463DF',
-    fontSize: normalize(12),
-    fontWeight: '300',
-    lineHeight: normalize(14),
-    marginBottom: normalize(12),
-  },
   proposalVotingWrapper: {
     backgroundColor: purpleDark,
     width: '100%',
@@ -120,6 +86,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: normalize(0),
     marginBottom: normalize(10),
+  },
+  loadingWrapper: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'black',
+    marginBottom: normalize(15),
   },
   proposalVotingItemWrapper: {
     width: '100%',
@@ -132,7 +107,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: normalize(6),
   },
-
   proposalVotingItemText: {
     color: 'white',
     fontSize: normalize(12),
@@ -160,38 +134,66 @@ const styles = StyleSheet.create({
     zIndex: 2,
     backgroundColor: 'red',
   },
-  emojiReactionsWrapper: {
+  proposalVotingItemQuorum: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: normalize(6),
+    backgroundColor: purpleDark,
+    border: '1px solid #3D2E67',
+    borderRadius: normalize(10),
+    paddingHorizontal: normalize(16),
+    paddingVertical: normalize(10),
+  },
+  proposalWrapperBottom: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: normalize(16),
+  },
+  proposalActionsWrapper: {
+    flexDirection: 'row',
+  },
+  emojiReactionContentWrapper: {
+    flexDirection: 'row',
+  },
+  emojiReactionItem: {
+    marginHorizontal: normalize(4),
+    fontSize: normalize(24),
+    color: 'black',
+  },
+  chosenEmojiReaction: {
     height: normalize(23),
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
   },
-  pickedEmojiWrapperWidth: {
-    width: normalize(52),
-  },
-  notPickedEmojiWrapperWidth: {
-    width: normalize(36),
-    paddingLeft: normalize(4),
-  },
-  emojiWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: normalize(32),
-    borderRadius: normalize(50),
-    marginRight: normalize(4),
-    flexDirection: 'row',
+  pickedEmojiWrapper: {
+    borderRadius: normalize(20),
+    marginHorizontal: normalize(2),
   },
   pickedEmojiBackground: {
-    backgroundColor: 'rgba(132, 99, 223, 0.7)',
+    position: 'absolute',
+    backgroundColor: purpleLight,
+    left: normalize(OS_IOS ? 2 : 2.5),
+    top: normalize(OS_IOS ? 3 : 5),
+    width: normalize(20),
+    height: normalize(20),
+    borderRadius: normalize(15),
   },
-  notPickedEmojiBackground: {
-    backgroundColor: 'rgba(44, 36, 67, 0.6)',
+
+  pickedEmoji: {
+    fontSize: normalize(20),
+    color: 'black',
   },
-  emojiCount: {
+  famousEmojis: {
+    fontSize: normalize(20),
+    marginLeft: normalize(2),
+    color: 'black',
+  },
+  famousEmojisCount: {
     color: 'white',
-    fontSize: normalize(14),
-    fontWeight: '300',
-    lineHeight: normalize(20),
+    marginLeft: normalize(8),
   },
 })
 
