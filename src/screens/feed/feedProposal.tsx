@@ -39,9 +39,10 @@ type TProps = {
   openProposal: Function
   proposal: TProposal
   poll: TPoll
-  openDAODescription: Function
+  openDAODescription?: Function
   convertURIForLogo: Function
   loadingPoll: boolean
+  isNotFeed?: boolean
 }
 
 const Proposal = (props: TProps) => {
@@ -61,6 +62,7 @@ const Proposal = (props: TProps) => {
     openDAODescription,
     convertURIForLogo,
     loadingPoll,
+    isNotFeed,
   } = props
   const dateNow = new Date()
   const [pickedEmojiId, setPickedEmojiId] = React.useState<string | null>(
@@ -89,7 +91,13 @@ const Proposal = (props: TProps) => {
 
   return (
     <TouchableWithoutFeedback onPress={() => openProposal(proposal, poll)}>
-      <View style={styles.proposalWrapper}>
+      <View
+        style={[
+          styles.proposalWrapper,
+          isNotFeed
+            ? styles.proposalWrapperNotFeed
+            : styles.proposalWrapperFeed,
+        ]}>
         {isMoadlAi && (
           <CustomModal
             title={'DYOR'}
