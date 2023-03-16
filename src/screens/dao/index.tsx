@@ -11,9 +11,10 @@ import {useLazyQuery, useQuery} from '@apollo/client'
 import moment from 'moment'
 import * as Sentry from '@sentry/react-native'
 
-import {TDAO, TProposal} from '../../types'
+import {TDAO, TPoll, TProposal} from '../../types'
 import {
   GET_DAO_DETAIL,
+  GET_POLL,
   GET_PROPOSALS,
   handleHTTPError,
 } from '../../services/api'
@@ -27,6 +28,8 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 //styles
 import styles from './styles'
 import {candle, hammerAndWrench, postalHorn} from '../../constants/emojis'
+import Proposal from '../feed/feedProposal'
+import portfolioStore from '../../services/stores/portfolio.store'
 
 const overviewTab = 'Overview'
 const tokenTab = 'Token'
@@ -36,6 +39,8 @@ function DAOScreen({route, navigation}: any) {
   const [dao, setDao] = React.useState<TDAO>()
   const [proposals, setProposals] = React.useState<TProposal[]>([])
   const [activeTab, setActiveTab] = React.useState<string>(proposalsTab)
+  const [polls, setPolls] = React.useState<TPoll[]>([])
+  const {userHasFollowedDaos, setPortfolio} = portfolioStore
 
   // states for pagination
   const [endCursor, setEndCursor] = React.useState<string>('')
@@ -77,6 +82,18 @@ function DAOScreen({route, navigation}: any) {
       setEndCursor(res.proposalsV2.pageInfo.endCursor)
       setHasNextPage(res.proposalsV2.pageInfo.hasNextPage)
       setFetchMoreLoading(false)
+    },
+    onError: error => {
+      Sentry.captureException(error)
+      console.error(error)
+      handleHTTPError()
+    },
+  })
+
+  const {loading: loadingPoll, fetchMore: fetchMorePoll} = useQuery(GET_POLL, {
+    variables: {first: 8, after: '', onlyFollowedDaos: userHasFollowedDaos},
+    onCompleted: res => {
+      setPolls(res.proposalsV2.edges.map((edge: {node: any}) => edge.node))
     },
     onError: error => {
       Sentry.captureException(error)
@@ -256,43 +273,19 @@ function DAOScreen({route, navigation}: any) {
             scrollEventThrottle={400}>
             <View style={styles.daoProposalsWrapper}>
               {proposals.map((proposal, i) => {
+                const poll = polls[i]
+
                 return (
-                  <TouchableWithoutFeedback
-                    key={i}
-                    onPress={() => openProposal(proposal)}>
-                    <View style={styles.daoProposal}>
-                      <View style={styles.daoProposalTopPart}>
-                        {new Date(proposal.endAt) < new Date() ? (
-                          <Text
-                            style={[
-                              styles.daoProposalStatus,
-                              styles.daoProposalStatusPassed,
-                            ]}>
-                            Passed
-                          </Text>
-                        ) : (
-                          <Text
-                            style={[
-                              styles.daoProposalStatus,
-                              styles.daoProposalStatusActive,
-                            ]}>
-                            Active
-                          </Text>
-                        )}
-                        {new Date(proposal.endAt) > new Date() ? (
-                          <Text style={styles.daoProposalEndAt}>
-                            <Text>till</Text>{' '}
-                            {moment(new Date(proposal.endAt)).format(
-                              'MMM DD, YYYY, HH:MM A',
-                            )}
-                          </Text>
-                        ) : null}
-                      </View>
-                      <Text style={styles.daoProposalTitle}>
-                        {proposal.title}
-                      </Text>
-                    </View>
-                  </TouchableWithoutFeedback>
+                  <Proposal
+                    poll={poll}
+                    proposal={proposal}
+                    convertURIForLogo={convertURIForLogo}
+                    key={proposal.id}
+                    openDAODescription={() => {}}
+                    openProposal={openProposal}
+                    loadingPoll={loadingPoll}
+                    isNotFeed={activeTab === proposalsTab}
+                  />
                 )
               })}
             </View>

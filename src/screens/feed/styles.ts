@@ -30,13 +30,18 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   proposalWrapper: {
-    paddingHorizontal: normalize(16),
     paddingVertical: normalize(16),
     flexDirection: 'column',
     justifyContent: 'space-between',
     width: '100%',
     borderBottomColor: 'rgba(193, 193, 193, 0.5)',
     borderBottomWidth: 0.5,
+  },
+  proposalWrapperFeed: {
+    paddingHorizontal: normalize(16),
+  },
+  proposalWrapperNotFeed: {
+    paddingHorizontal: normalize(0),
   },
   proposalWrapperTop: {
     width: '100%',
