@@ -42,12 +42,17 @@ const styles = StyleSheet.create({
   },
   proposalTitle: {
     color: 'white',
-    fontSize: normalize(20),
+    maxWidth: normalize(285),
+    fontSize: normalize(17),
     fontWeight: '700',
     lineHeight: normalize(24),
     marginBottom: normalize(6),
     fontFamily: 'System',
     paddingTop: normalize(8),
+  },
+  proposalTitleTextColor: {
+    color: '#BEAAF5',
+    marginBottom: normalize(8),
   },
   proposalEndTime: {
     color: '#8463DF',
@@ -58,16 +63,28 @@ const styles = StyleSheet.create({
   },
   proposalActiveTitle: {
     color: '#A8D102',
+    maxHeight: normalize(30),
     fontSize: normalize(12),
     fontWeight: '700',
     lineHeight: normalize(20),
     marginBottom: normalize(12),
     paddingHorizontal: normalize(9),
     paddingVertical: normalize(5),
+    marginTop: normalize(5),
     fontFamily: 'System',
     borderRadius: 8,
     backgroundColor: 'rgba(168, 209, 2, 0.08)',
     overflow: 'hidden',
+  },
+
+  proposalActiveColor: {
+    color: '#A8D102',
+    backgroundColor: 'rgba(168, 209, 2, 0.08)',
+  },
+
+  proposalInactiveColor: {
+    color: 'rgba(156, 0, 0, .5);',
+    backgroundColor: 'rgba(156, 0, 0, .2);',
   },
   proposalDescription: {
     color: '#E2DFDF',
@@ -124,6 +141,15 @@ const styles = StyleSheet.create({
     position: 'relative',
     zIndex: 1,
   },
+  // proposalTitle: {
+  //   width: '100%',
+  //   fontWeight: '700',
+  //   fontSize: normalize(17),
+  //   lineHeight: normalize(20),
+  //   color: purpleLight,
+  //   marginBottom: normalize(18),
+  //   fontFamily: 'System',
+  // },
   proposalVotingItemInnerLine: {
     position: 'absolute',
     top: 0,

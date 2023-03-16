@@ -42,7 +42,7 @@ type TProps = {
   openProposal: Function
   proposal: TProposal
   poll: TPoll
-  openDAODescription?: Function
+  openDAODescription: Function
   convertURIForLogo: Function
   loadingPoll: boolean
   isNotFeed?: boolean
@@ -119,23 +119,36 @@ const Proposal = (props: TProps) => {
           <View style={styles.proposalContentWrapper}>
             <View style={styles.proposalTopPart}>
               <View style={styles.proposalImageWrapper}>
-                <TouchableWithoutFeedback
-                  onPress={() => openDAODescription(proposal.dao.id)}>
-                  <Image
-                    source={{
-                      uri: convertURIForLogo(proposal.dao.logo),
-                    }}
-                    style={styles.proposalImage}
-                  />
-                </TouchableWithoutFeedback>
-
-                <View>
+                {!isNotFeed && (
                   <TouchableWithoutFeedback
                     onPress={() => openDAODescription(proposal.dao.id)}>
-                    <Text style={styles.proposalTitle}>
-                      {proposal.dao.name}
-                    </Text>
+                    <Image
+                      source={{
+                        uri: convertURIForLogo(proposal.dao.logo),
+                      }}
+                      style={styles.proposalImage}
+                    />
                   </TouchableWithoutFeedback>
+                )}
+                <View>
+                  {!isNotFeed && (
+                    <TouchableWithoutFeedback
+                      onPress={() => openDAODescription(proposal.dao.id)}>
+                      <Text style={styles.proposalTitle}>
+                        {proposal.dao.name}
+                      </Text>
+                    </TouchableWithoutFeedback>
+                  )}
+
+                  {isNotFeed && (
+                    <Text
+                      style={[
+                        styles.proposalTitle,
+                        styles.proposalTitleTextColor,
+                      ]}>
+                      {proposal.title}
+                    </Text>
+                  )}
 
                   <Text style={styles.proposalEndTime}>
                     {dateNow < new Date(proposal.endAt)
@@ -148,10 +161,25 @@ const Proposal = (props: TProps) => {
                 </View>
               </View>
 
-              {dateNow < new Date(proposal.endAt) && (
-                <Text style={styles.proposalActiveTitle}>ACTIVE</Text>
+              {dateNow < new Date(proposal.endAt) ? (
+                <Text
+                  style={[
+                    styles.proposalActiveTitle,
+                    styles.proposalActiveColor,
+                  ]}>
+                  ACTIVE
+                </Text>
+              ) : (
+                <Text
+                  style={[
+                    styles.proposalActiveTitle,
+                    styles.proposalInactiveColor,
+                  ]}>
+                  INACTIVE
+                </Text>
               )}
             </View>
+
             <Text style={styles.proposalDescription}>
               {proposal.juniorDescription}
             </Text>
