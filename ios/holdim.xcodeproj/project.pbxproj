@@ -191,10 +191,6 @@
 				EFC6FC3747880B8C6370141A /* [CP] Embed Pods Frameworks */,
 				6186C234E8858287623BBA9E /* [CP-User] [RNFB] Core Configuration */,
 			);
-			buildRules = (
-			);
-			dependencies = (
-			);
 			name = holdim;
 			productName = holdim;
 			productReference = 13B07F961A680F5B00A75B9A /* holdim.app */;
