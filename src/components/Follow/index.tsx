@@ -2,6 +2,7 @@ import React from 'react'
 import {useMutation} from '@apollo/client'
 import {Text, TouchableOpacity, View} from 'react-native'
 import * as Sentry from '@sentry/react-native'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
 import {
   FOLLOW_DAO,
@@ -11,6 +12,7 @@ import {
   UNFOLLOW_DAO,
   handleHTTPError,
 } from '../../services/api'
+import {hapticOptions} from '../../constants/haptic'
 import styles from './styles'
 import CheckMarkSvg from './../../assets/images/svg/CheckMark.svg'
 
@@ -82,6 +84,7 @@ const Follow = ({daoId, userFollowed, welcomeScreen}: FollowProps) => {
         },
       })
     } else {
+      ReactNativeHapticFeedback.trigger('rigid', hapticOptions)
       setFollowed(true)
       await followDao({
         variables: {
