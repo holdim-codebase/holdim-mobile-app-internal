@@ -376,7 +376,7 @@ PODS:
     - FirebaseCoreExtension (= 9.5.0)
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.7.0):
+  - RNGestureHandler (2.9.0):
     - React-Core
   - RNInAppBrowser (3.7.0):
     - React-Core
@@ -603,7 +603,7 @@ SPEC CHECKSUMS:
   RNFBApp: a6fca2cd8f392b5efc1f2ab7bd4b3b64a6039abf
   RNFBAuth: e121a1a5b6e6df0348f62da9bf96e5b58fdffa01
   RNFBMessaging: eca46a70527dd469e684250b22d5c927bc4a5ed9
-  RNGestureHandler: 7673697e7c0e9391adefae4faa087442bc04af33
+  RNGestureHandler: 071d7a9ad81e8b83fe7663b303d132406a7d8f39
   RNInAppBrowser: e36d6935517101ccba0e875bac8ad7b0cb655364
   RNReactNativeHapticFeedback: 1e3efeca9628ff9876ee7cdd9edec1b336913f8c
   RNScreens: 40a2cb40a02a609938137a1e0acfbf8fc9eebf19
