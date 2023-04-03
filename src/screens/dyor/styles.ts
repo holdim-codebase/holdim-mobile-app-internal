@@ -1,7 +1,6 @@
-import {Platform, StyleSheet} from 'react-native'
+import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
-
-import {black, purple, white} from '../../constants/css'
+import {purple} from '../../constants/css'
 
 const styles = StyleSheet.create({
   dyorWrapper: {
@@ -14,7 +13,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   dyorDescriptionEmoji: {
-    fontSize: normalize(80),
+    marginBottom: normalize(5),
+    fontSize: normalize(60),
     color: 'white',
   },
   dyorDescriptionTitle: {
@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     lineHeight: normalize(20),
     textAlign: 'center',
     paddingTop: normalize(16),
+    marginBottom: normalize(15),
   },
   dyorText: {
     maxWidth: normalize(300),
@@ -32,16 +33,31 @@ const styles = StyleSheet.create({
     fontSize: normalize(14),
     lineHeight: normalize(18),
     textAlign: 'center',
-    paddingTop: normalize(16),
-    paddingBottom: normalize(30),
+  },
+  dyorCheckedText: {
+    textAlign: 'left',
   },
   dyorFooter: {
     width: '100%',
     height: '20%',
+    justifyContent: 'flex-end',
+    paddingBottom: normalize(40),
   },
 
-  dyorCheckedWrapper: {
-    flexDirection: 'row',
+  dyorFooterBtn: {
+    height: normalize(52),
+    borderRadius: 5,
+    backgroundColor: purple,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dyorFooterBtnDisabled: {
+    opacity: 0.5,
+  },
+  dyorFooterBtnTitle: {
+    fontFamily: 'Ubuntu-Bold',
+    fontSize: normalize(18),
+    color: 'white',
   },
 })
 

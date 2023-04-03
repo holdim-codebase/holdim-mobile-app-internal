@@ -1,14 +1,15 @@
 import React from 'react'
 import {SafeAreaView, Text, View} from 'react-native'
-import {CheckBox} from 'react-native-elements'
 import {flashlight} from '../../constants/emojis'
 import styles from './styles'
+import Checkbox from '../../components/Checkbox'
+import {TouchableOpacity} from 'react-native'
 
 const Dyor = () => {
   const [checkedDyor, setCheckedDyor] = React.useState(false)
 
-  const onCheck = () => {
-    setCheckedDyor(!checkedDyor)
+  const onCheck = (checked: boolean) => {
+    setCheckedDyor(!checked)
   }
 
   return (
@@ -24,13 +25,20 @@ const Dyor = () => {
           </Text>
         </View>
         <View style={styles.dyorFooter}>
-          <View style={styles.dyorCheckedWrapper}>
-            <CheckBox checked={checkedDyor} onPress={onCheck} />
-            <Text style={styles.dyorText}>
-              Confirm that you have read the above information and take note of
-              it.
-            </Text>
-          </View>
+          <Checkbox
+            text="Confirm that you have read the above information and take note of it."
+            onCheck={onCheck}
+            checked={checkedDyor}
+          />
+          <TouchableOpacity
+            onPress={() => ''}
+            style={[
+              styles.dyorFooterBtn,
+              !checkedDyor && styles.dyorFooterBtnDisabled,
+            ]}
+            disabled={!checkedDyor ? true : false}>
+            <Text style={styles.dyorFooterBtnTitle}>Confirm</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
