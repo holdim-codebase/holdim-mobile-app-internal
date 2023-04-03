@@ -24,6 +24,8 @@ import Proposal from './feedProposal'
 
 import styles from './styles'
 import {purple} from '../../constants/css'
+import {notification} from '../../constants/emojis'
+import CustomModal from '../../components/CustomModal'
 
 export const convertURIForLogo = (logoURI: string) => {
   return logoURI.startsWith('ipfs://')
@@ -40,6 +42,8 @@ function FeedScreen({navigation, route}: any) {
   const [endCursor, setEndCursor] = React.useState<string>('')
   const [hasNextPage, setHasNextPage] = React.useState<boolean>(false)
   const [fetchMoreLoading, setFetchMoreLoading] = React.useState<boolean>(false)
+  const [showNotificationModal, setShowNotificationModal] =
+    React.useState<boolean>(false)
   const {userHasFollowedDaos, setPortfolio} = PortfolioStore
 
   const scrollRef = React.useRef(null)
@@ -163,6 +167,10 @@ function FeedScreen({navigation, route}: any) {
       : null
   }, [])
 
+  React.useEffect(() => {
+    setShowNotificationModal(true)
+  }, [])
+
   useScrollToTop(scrollRef)
 
   return (
@@ -202,6 +210,20 @@ function FeedScreen({navigation, route}: any) {
         }
       }}
       scrollEventThrottle={400}>
+      <CustomModal
+        title={'Notifications'}
+        description={
+          'Would you like to turn on notifications? This will help you stay up to date with what is happening and not miss important voting and much more.'
+        }
+        emoji={notification}
+        btnCancelText={'Not now'}
+        btnActionText={'Yes, Turn on'}
+        modalVisible={showNotificationModal}
+        setModalVisible={m => setShowNotificationModal(m)}
+        doAction={() => {
+          true
+        }}
+      />
       {!userHasFollowedDaos && !loadingUserInfo && (
         <TextInfo
           text="Currently you are not following any DAO. Customise your feed by liking the projects you want to see in your feed."
