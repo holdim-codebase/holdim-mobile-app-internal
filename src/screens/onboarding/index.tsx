@@ -13,6 +13,7 @@ import normalize from 'react-native-normalize'
 import Arrow from '../../assets/images/svg/ArrowBack.svg'
 import {TSlide} from '../../types'
 import styles from './styles'
+import Dyor from '../dyor'
 
 const {width} = Dimensions.get('window')
 

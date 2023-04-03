@@ -36,6 +36,7 @@
     "react-native-asset": "^2.0.1",
     "react-native-dynamic-search-bar": "^2.0.2",
     "react-native-gesture-handler": "^2.9.0",
+    "react-native-elements": "^3.4.3",
     "react-native-haptic-feedback": "^1.14.0",
     "react-native-inappbrowser-reborn": "^3.7.0",
     "react-native-link": "^4.1.0",
