@@ -47,13 +47,12 @@ const styles = StyleSheet.create({
     fontFamily: 'NotoSans-Regular',
     backgroundColor: '#2C2443',
     borderRadius: 7,
-    height: normalize(64),
     marginVertical: normalize(10),
     marginBottom: normalize(5),
     color: white,
     paddingHorizontal: OS_IOS ? normalize(16) : normalize(13),
     paddingBottom: OS_IOS ? normalize(16) : 0,
-    paddingTop: OS_IOS ? normalize(10) : 0,
+    paddingTop: OS_IOS ? normalize(12) : 0,
     marginTop: normalize(10),
   },
   loginTextInput: {
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
   },
   loginTextInputClearBtn: {
     paddingLeft: normalize(10),
-    paddingTop: OS_IOS ? normalize(5) : normalize(14),
+    paddingVertical: OS_IOS ? normalize(5) : normalize(10),
     backgroundColor: '#2C2443',
   },
   loginBtnGoWrapper: {
