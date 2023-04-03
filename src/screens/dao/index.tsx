@@ -73,22 +73,23 @@ function DAOScreen({route, navigation}: any) {
     },
   })
 
-  const [getDaoProposals, {fetchMore}] = useLazyQuery(GET_PROPOSALS, {
-    fetchPolicy: 'cache-and-network',
-    onCompleted: res => {
-      filterProposals(
-        res.proposalsV2.edges.map((edge: {node: any}) => edge.node),
-      )
-      setEndCursor(res.proposalsV2.pageInfo.endCursor)
-      setHasNextPage(res.proposalsV2.pageInfo.hasNextPage)
-      setFetchMoreLoading(false)
-    },
-    onError: error => {
-      Sentry.captureException(error)
-      console.error(error)
-      handleHTTPError()
-    },
-  })
+  const [getDaoProposals, {loading: loadingProposals, fetchMore}] =
+    useLazyQuery(GET_PROPOSALS, {
+      fetchPolicy: 'cache-and-network',
+      onCompleted: res => {
+        filterProposals(
+          res.proposalsV2.edges.map((edge: {node: any}) => edge.node),
+        )
+        setEndCursor(res.proposalsV2.pageInfo.endCursor)
+        setHasNextPage(res.proposalsV2.pageInfo.hasNextPage)
+        setFetchMoreLoading(false)
+      },
+      onError: error => {
+        Sentry.captureException(error)
+        console.error(error)
+        handleHTTPError()
+      },
+    })
 
   const {loading: loadingPoll, fetchMore: fetchMorePoll} = useQuery(GET_POLL, {
     variables: {first: 8, after: '', onlyFollowedDaos: userHasFollowedDaos},
@@ -258,7 +259,13 @@ function DAOScreen({route, navigation}: any) {
         )
       ) : null}
       {activeTab === proposalsTab ? (
-        proposals.length !== 0 ? (
+        loadingProposals ? (
+          <LoadingSpinner
+            style={styles.loadingWrapperFullScreen}
+            size="small"
+            color="rgba(132, 99, 223, 1)"
+          />
+        ) : proposals.length !== 0 ? (
           <ScrollView
             onScroll={({nativeEvent}) => {
               if (isCloseToBottom(nativeEvent)) {
