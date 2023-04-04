@@ -7,26 +7,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import {ScrollView} from 'react-native-gesture-handler'
 
-import {TWallet} from '../../types'
+import {TWallet} from '../../../../types'
 import {
   client,
   DELETE_WALLET,
   GET_USER_WALLETS,
   handleHTTPError,
-} from '../../services/api'
-import {shortenAddress} from '../proposal'
-import {UserContext} from '../../../App'
-import {done, wasteBasket} from '../../constants/emojis'
+} from '../../../../services/api'
+import {shortenAddress} from '../../../proposal'
+import {UserContext} from '../../../../../App'
+import {done, wasteBasket} from '../../../../constants/emojis'
 
 // components
-import CustomModal from '../../components/CustomModal'
-import AddWalletModal from '../../components/AddWalletModal'
-import LoadingSpinner from '../../components/LoadingSpinner'
-
-import DeleteSvg from '../../assets/images/svg/Delete.svg'
-import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
+import ArrowBack from '../../../../assets/images/svg/ArrowBackV2.svg'
+import DeleteSvg from '../../../../assets/images/svg/Delete.svg'
 import styles from './styles'
-import {purple} from '../../constants/css'
+import {purple} from '../../../../constants/css'
+import LoadingSpinner from '../../../../components/LoadingSpinner'
+import CustomModal from '../../../../components/CustomModal'
+import AddWalletModal from '../../../../components/AddWalletModal'
 
 // TODO move to store
 function WalletManagementScreen({navigation}: any) {
