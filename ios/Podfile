@@ -41,7 +41,12 @@ target 'holdim' do
 end
 
 def apply_pods_holdim_frameworks_fix(installer)
-  file_path = '/Volumes/workspace/repository/ios/Pods/Target Support Files/Pods-holdim/Pods-holdim-frameworks.sh'
+  file_path_local = 'Pods/Target Support Files/Pods-holdim/Pods-holdim-frameworks.sh'
+  file_path_ci = '/Volumes/workspace/repository/ios/Pods/Target Support Files/Pods-holdim/Pods-holdim-frameworks.sh'
+
+  file_path = File.exist?(file_path_local) ? file_path_local : File.exist?(file_path_ci) ? file_path_ci : nil
+
+  return if file_path.nil?
 
   text = File.read(file_path)
   fixed_text = text.gsub('source="$(readlink "${source}")"', 'source="$(readlink -f "${source}")"')
