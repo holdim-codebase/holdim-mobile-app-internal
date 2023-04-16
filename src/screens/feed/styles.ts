@@ -168,45 +168,38 @@ const styles = StyleSheet.create({
     zIndex: 2,
     backgroundColor: 'red',
   },
-  emojiReactionContentWrapper: {
-    flexDirection: 'row',
-  },
-  emojiReactionItem: {
-    marginHorizontal: normalize(4),
-    fontSize: normalize(24),
-    color: 'black',
-  },
-  chosenEmojiReaction: {
+  emojiReactionsWrapper: {
     height: normalize(23),
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
   },
-  pickedEmojiWrapper: {
-    borderRadius: normalize(20),
-    marginHorizontal: normalize(2),
+  pickedEmojiWrapperWidth: {
+    width: normalize(52),
+  },
+  notPickedEmojiWrapperWidth: {
+    width: normalize(36),
+    paddingLeft: normalize(4),
+  },
+  emojiWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: normalize(32),
+    borderRadius: normalize(50),
+    marginRight: normalize(4),
+    flexDirection: 'row',
   },
   pickedEmojiBackground: {
-    position: 'absolute',
-    backgroundColor: purpleLight,
-    left: normalize(OS_IOS ? 2 : 2.5),
-    top: normalize(OS_IOS ? 3 : 5),
-    width: normalize(20),
-    height: normalize(20),
-    borderRadius: normalize(15),
+    backgroundColor: 'rgba(132, 99, 223, 0.7)',
   },
-  pickedEmoji: {
-    fontSize: normalize(20),
-    color: 'black',
+  notPickedEmojiBackground: {
+    backgroundColor: 'rgba(44, 36, 67, 0.6)',
   },
-  famousEmojis: {
-    fontSize: normalize(20),
-    marginLeft: normalize(2),
-    color: 'black',
-  },
-  famousEmojisCount: {
+  emojiCount: {
     color: 'white',
-    marginLeft: normalize(8),
+    fontSize: normalize(14),
+    fontWeight: '300',
+    lineHeight: normalize(20),
   },
 })
 
