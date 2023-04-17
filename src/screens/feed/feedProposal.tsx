@@ -30,11 +30,7 @@ import {openLinkInAppBrowser} from '../../components/MarkdownText'
 import styles from './styles'
 import {purple} from '../../constants/css'
 import {convertUriToLogo} from '../../utils/convertUriToLogo'
-
-const hapticOptions = {
-  enableVibrateFallback: true,
-  ignoreAndroidSystemSettings: false,
-}
+import {hapticOptions} from '../../constants/haptic'
 
 const emojiSize = normalize(20)
 
