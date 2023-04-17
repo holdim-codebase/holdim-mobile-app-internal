@@ -47,7 +47,7 @@ function WalletManagementScreen({navigation}: any) {
   let prevOpenedSwipeableRow: any
   let openedSwipeableRow: any
 
-  const {loading: laodingWallets, refetch: refetchUserWallets} = useQuery(
+  const {loading: loadingWallets, refetch: refetchUserWallets} = useQuery(
     GET_USER_WALLETS,
     {
       onCompleted: res => {
@@ -177,7 +177,7 @@ function WalletManagementScreen({navigation}: any) {
       <ScrollView
         style={styles.walletManagementContentWrapper}
         onTouchEnd={() => closePrevOpenedSwipeable()}>
-        {laodingWallets ? (
+        {loadingWallets ? (
           <LoadingSpinner
             style={styles.loadingWrapperFullScreen}
             size="large"
@@ -272,7 +272,7 @@ function WalletManagementScreen({navigation}: any) {
           ))
         ) : null}
       </ScrollView>
-      {laodingWallets ? null : (
+      {loadingWallets ? null : (
         <View style={styles.addWalletBtnWrapper}>
           <TouchableOpacity
             style={styles.addWalletBtn}
