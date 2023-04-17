@@ -1,7 +1,12 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
 
-import {OS_IOS, purple, purpleLight, statusBarHeight} from '../../constants/css'
+import {
+  OS_IOS,
+  purple,
+  purpleLight,
+  statusBarHeight,
+} from '../../../../constants/css'
 
 const styles = StyleSheet.create({
   loadingWrapperFullScreen: {

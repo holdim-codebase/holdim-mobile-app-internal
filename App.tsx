@@ -21,7 +21,8 @@ import FullProposalScreen from './src/screens/fullProposal'
 import OnboardingScreen from './src/screens/onboarding'
 import LoginScreen from './src/screens/login'
 import WelcomeScreen from './src/screens/welcome'
-import WalletManagementScreen from './src/screens/walletManagement'
+import NotificationsManagementScreen from './src/screens/settings/screens/notificationsManagement'
+import WalletManagementScreen from './src/screens/settings/screens/walletManagement'
 import StateScreen from './src/screens/stateScreen'
 import SettingsScreen from './src/screens/settings'
 import PrivacyPolicyScreen from './src/screens/privacyPolicy'
@@ -261,6 +262,13 @@ const RootStack = (RootStackProps: {isFirstLaunch: boolean}) => {
           }}
         />
         <Stack.Screen
+          name="NotificationsManagement"
+          component={NotificationsManagementScreen}
+          options={{
+            headerTitle: 'Notifications',
+          }}
+        />
+        <Stack.Screen
           name="Privacy policy"
           component={PrivacyPolicyScreen}
           options={{
@@ -285,6 +293,13 @@ const RootStack = (RootStackProps: {isFirstLaunch: boolean}) => {
           component={WalletManagementScreen}
           options={{
             headerTitle: 'Wallet management',
+          }}
+        />
+        <Stack.Screen
+          name="NotificationsManagement"
+          component={NotificationsManagementScreen}
+          options={{
+            headerTitle: 'Notifications',
           }}
         />
         <Stack.Screen
