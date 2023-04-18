@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {ScrollView, RefreshControl, NativeScrollEvent} from 'react-native'
+import {ScrollView, RefreshControl, NativeScrollEvent, Platform} from 'react-native'
 import {useQuery} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
 import messaging from '@react-native-firebase/messaging'
@@ -43,12 +43,18 @@ function FeedScreen({navigation, route}: any) {
   const {userHasFollowedDaos, setPortfolio} = PortfolioStore
 
   React.useEffect(() => {
+    messaging().getInitialNotification().then(remoteMessage => {
+      if (remoteMessage && remoteMessage.data && remoteMessage.data.topic === NotificationTopic.newDaos) {
+        setNewDaos(remoteMessage.data.daos.split(','))
+        setShowNewDaoNotificationModal(true)
+      }
+    })
     messaging().onNotificationOpenedApp(async remoteMessage => {
       if (remoteMessage.data && remoteMessage.data.topic === NotificationTopic.newDaos) {
         setNewDaos(remoteMessage.data.daos.split(','))
         setShowNewDaoNotificationModal(true)
-    }
-  })
+      }
+    })
   }, [])
 
   const scrollRef = React.useRef(null)

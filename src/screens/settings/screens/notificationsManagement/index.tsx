@@ -9,8 +9,8 @@ import House from '../../../../assets/images/svg/NewHouse.svg'
 import {black, purple, purple3, white} from '../../../../constants/css'
 import styles from './styles'
 import { setAsyncStorage, getAsyncStorage, StorageKeys } from '../../../../services/asyncStorage'
-import { NotificationTopic } from '../../../../services/firebase'
-
+import { NotificationTopic, setUserSubscribedToDaoNotification, setUserUnsubscribedFromDaoNotification } from '../../../../services/firebase'
+import portfolioStore from '../../../../services/stores/portfolio.store'
 
 
 
@@ -70,20 +70,33 @@ function NotificationsManagementScreen({navigation}: any) {
       })
     }
   }
-
-  const manageFollowedDaoSubscription = (subscribe: boolean) => {
-    if (subscribe) {
-      messaging().subscribeToTopic(NotificationTopic.followedSummary).then(() => {
-        setAsyncStorage(StorageKeys.FOLLOWED_SUMMARY_TOPIC, 'true')
-        setIsFollowedDaoEnabled(true)
-      })
-    } else {
-      messaging().unsubscribeFromTopic(NotificationTopic.followedSummary).then(() => {
-        setAsyncStorage(StorageKeys.FOLLOWED_SUMMARY_TOPIC, 'false')
-        setIsFollowedDaoEnabled(false)
-      })
+  const manageFollowedDaoSubscription = async (subscribe: boolean, remainingAttempts = 3) => {
+    if (remainingAttempts <= 0) {
+      console.error('Failed to manage followed DAO subscription after multiple attempts');
+      return;
     }
-  }
+  
+    try {
+      if (portfolioStore.portfolio && portfolioStore.portfolio.id) {
+        const userId = portfolioStore.portfolio.id;
+        if (subscribe) {
+          await setUserSubscribedToDaoNotification(userId);
+          await messaging().subscribeToTopic(NotificationTopic.followedSummary);
+          await setAsyncStorage(StorageKeys.FOLLOWED_SUMMARY_TOPIC, 'true');
+          setIsFollowedDaoEnabled(true);
+        } else {
+          await setUserUnsubscribedFromDaoNotification(userId);
+          await messaging().unsubscribeFromTopic(NotificationTopic.followedSummary);
+          await setAsyncStorage(StorageKeys.FOLLOWED_SUMMARY_TOPIC, 'false');
+          setIsFollowedDaoEnabled(false);
+        }
+      }
+    } catch (error) {
+      console.error('Error while managing followed DAO subscription:', error);
+      // Call the function again with one less remaining attempt
+      await manageFollowedDaoSubscription(subscribe, remainingAttempts - 1);
+    }
+  };
 
   return (
     <View style={styles.notificationsManagementWrapper}>

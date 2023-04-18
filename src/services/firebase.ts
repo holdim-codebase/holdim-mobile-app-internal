@@ -18,25 +18,18 @@ export const requestUserNotificationPermission = async (userId?: string) => {
     if (userId) {
       const deviceToken = await messaging().getToken()
       console.log('device token:', deviceToken)
-      await setUserSubscribedToDaoNotification(userId, deviceToken)
     }
     console.log('Authorization status:', authStatus)
-    messaging().setBackgroundMessageHandler(async remoteMessage => {
-      console.log('Message handled in the background!', remoteMessage.data)
-    })
-    messaging().onMessage(async remoteMessage => {
-      console.log('on message!', remoteMessage)
-    })
-
   }
 }
 
-const setUserSubscribedToDaoNotification = async (userId: string, deviceToken: string) => {
+export const setUserSubscribedToDaoNotification = async (userId: string) => {
   try {
-    // Save device token to Firestore, associating it with the user ID
-    console.log({userId}, {deviceToken})
+    const deviceToken = await messaging().getToken()
+    
+    // save device token to Firestore, associating it with the user id
     await firestore()
-      .collection('notificationDaoFollowed')
+      .collection('followedDaoTopicDevices')
       .doc(userId)
       .set({
         deviceToken,
@@ -46,4 +39,18 @@ const setUserSubscribedToDaoNotification = async (userId: string, deviceToken: s
     console.error('Error saving device token with user ID:', error);
   }
 };
+
+export const setUserUnsubscribedFromDaoNotification = async (userId: string) => {
+  try {
+
+    // delete device token from Firestore, associating it with the user id
+    await firestore()
+      .collection('followedDaoTopicDevices')
+      .doc(userId)
+      .delete();
+    
+  } catch (error) {
+    console.error('Error saving device token with user ID:', error);
+  }
+}
 
