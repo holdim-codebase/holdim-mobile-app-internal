@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: normalize(20),
   },
   checkboxText: {
     maxWidth: normalize(250),
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     height: normalize(18),
     borderWidth: 2,
     borderColor: '#ccc',
-    marginRight: 10,
+    marginRight: normalize(10),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
     borderColor: purpleLight,
     transform: [{rotate: '45deg'}],
-    marginBottom: 2,
+    marginBottom: normalize(2),
   },
 })
 
