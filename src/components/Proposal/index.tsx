@@ -20,17 +20,19 @@ import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import {TPoll, TProposal} from '../../types'
 import {CHANGE_PROPOSAL_EMOJI, handleHTTPError} from '../../services/api'
 
-import ActionIcon from '../../components/ActionIcon'
+import ActionIcon from '../ActionIcon'
+import EmojiTooltip from '../EmojiTooltip'
 
 import ShareIcon from '../../assets/icons/share.svg'
 import SnapshotIcon from '../../assets/icons/snapshot.svg'
-import {openLinkInAppBrowser} from '../../components/MarkdownText'
+import FavoriteIcon from '../../assets/icons/favorite_border.svg'
+import {openLinkInAppBrowser} from '../MarkdownText'
 
 import styles from './styles'
 import {purple} from '../../constants/css'
-import {hapticOptions} from '../../constants/haptic'
-import AiGeneratedText from '../../components/AIGenerated'
-import CustomModal from '../../components/CustomModal'
+import AiGeneratedText from '../AIGenerated'
+import CustomModal from '../CustomModal'
+import {wasteBasket} from '../../constants/emojis'
 import {flashlight} from '../../constants/emojis'
 
 const emojiSize = normalize(20)
@@ -172,7 +174,7 @@ const Proposal = (props: TProps) => {
                     styles.proposalActiveTitle,
                     styles.proposalInactiveColor,
                   ]}>
-                  INACTIVE
+                  ENDED
                 </Text>
               )}
             </View>

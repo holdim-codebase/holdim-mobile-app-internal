@@ -28,7 +28,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 //styles
 import styles from './styles'
 import {candle, hammerAndWrench, postalHorn} from '../../constants/emojis'
-import Proposal from '../../components/Proposal/Proposal'
+import Proposal from '../../components/Proposal'
 import portfolioStore from '../../services/stores/portfolio.store'
 
 const overviewTab = 'Overview'

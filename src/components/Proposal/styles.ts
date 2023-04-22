@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native'
 import normalize from 'react-native-normalize'
-import {purpleLight, OS_IOS, purpleDark} from '../../constants/css'
+import {purpleLight, OS_IOS, purpleDark, purple} from '../../constants/css'
 
 const styles = StyleSheet.create({
   proposalWrapper: {
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
   },
 
   proposalInactiveColor: {
-    color: 'rgba(156, 0, 0, .5);',
-    backgroundColor: 'rgba(156, 0, 0, .2);',
+    color: purple,
+    backgroundColor: 'rgba(132, 99, 223, 0.15)',
   },
   proposalDescription: {
     color: '#E2DFDF',
