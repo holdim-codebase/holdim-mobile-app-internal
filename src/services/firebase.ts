@@ -1,5 +1,7 @@
 import messaging from '@react-native-firebase/messaging'
-import firestore from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore'
+import { Platform, PermissionsAndroid } from 'react-native'
+import { PERMISSIONS, request } from 'react-native-permissions';
 
 
 export enum NotificationTopic {
@@ -9,24 +11,31 @@ export enum NotificationTopic {
 
 // Notifications
 export const requestUserNotificationPermission = async (userId?: string) => {
-  const authStatus = await messaging().requestPermission()
-  const enabled =
-    authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-    authStatus === messaging.AuthorizationStatus.PROVISIONAL
+  let enabled = false
+  if (Platform.OS === 'ios') {
+    const authStatus = await messaging().requestPermission()
+
+    enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL
+  } else {
+    request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS).then((result) => {
+      enabled = result === 'granted'
+    })    
+  }
   if (enabled) {
     await messaging().registerDeviceForRemoteMessages()
     if (userId) {
       const deviceToken = await messaging().getToken()
       console.log('device token:', deviceToken)
     }
-    console.log('Authorization status:', authStatus)
   }
 }
 
 export const setUserSubscribedToDaoNotification = async (userId: string) => {
   try {
     const deviceToken = await messaging().getToken()
-    
+
     // save device token to Firestore, associating it with the user id
     await firestore()
       .collection('followedDaoTopicDevices')
@@ -34,7 +43,7 @@ export const setUserSubscribedToDaoNotification = async (userId: string) => {
       .set({
         deviceToken,
       });
-    
+
   } catch (error) {
     console.error('Error saving device token with user ID:', error);
   }
@@ -48,7 +57,7 @@ export const setUserUnsubscribedFromDaoNotification = async (userId: string) => 
       .collection('followedDaoTopicDevices')
       .doc(userId)
       .delete();
-    
+
   } catch (error) {
     console.error('Error saving device token with user ID:', error);
   }
