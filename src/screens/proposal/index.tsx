@@ -10,16 +10,23 @@ import {
 } from 'react-native'
 import moment from 'moment'
 import numeral from 'numeral'
-import {useLazyQuery} from '@apollo/client'
+import {useLazyQuery, useMutation} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
+import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
 
 import {TPoll, TProposal} from '../../types'
-import {GET_POLL, handleHTTPError} from '../../services/api'
+import {
+  CHANGE_PROPOSAL_EMOJI,
+  GET_POLL,
+  handleHTTPError,
+} from '../../services/api'
+import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import {convertURIForLogo} from '../feed'
 import {openLinkInAppBrowser} from '../../components/MarkdownText'
-import Link from '../../assets/images/svg/Link.svg'
+
 import styles from './styles'
 import {purple} from '../../constants/css'
+import {hapticOptions} from '../../constants/haptic'
 
 import Snapshot from '../../assets/icons/snapshot.svg'
 import Forum from '../../assets/icons/forum.svg'
@@ -42,6 +49,32 @@ function ProposalScreen({route, navigation}: any) {
   const [poll, setPoll] = React.useState<TPoll>(
     route.params.poll ? route.params.poll : null,
   )
+
+  const {getEmojiById, getReactionCountByProposal} = EmojiReactionsStore
+
+  const [pickedEmojiId, setPickedEmojiId] = React.useState<string | null>(
+    proposal.personalizedData.pickedEmojiId,
+  )
+
+  const [changeProposalEmoji] = useMutation(CHANGE_PROPOSAL_EMOJI, {
+    onError: error => {
+      setPickedEmojiId(null)
+      Sentry.captureException(error)
+      console.error(error)
+      handleHTTPError()
+    },
+  })
+
+  const handleEmojiClick = (emojiId: string) => {
+    changeProposalEmoji({
+      variables: {
+        proposalId: proposal.id,
+        emojiId: emojiId,
+      },
+    })
+    setPickedEmojiId(pickedEmojiId === emojiId ? null : emojiId)
+    ReactNativeHapticFeedback.trigger('rigid', hapticOptions)
+  }
 
   const [getPoll, {loading: loadingpoll}] = useLazyQuery(GET_POLL, {
     fetchPolicy: 'no-cache',
@@ -90,10 +123,42 @@ function ProposalScreen({route, navigation}: any) {
             </View>
           </TouchableOpacity>
           <Text style={styles.proposalTitle}>{proposal.title}</Text>
-          <Text style={styles.proposalDescription}>TL:DR (AI translated)</Text>
           <Text style={styles.proposalDescription}>
             {proposal.middleDescription}
           </Text>
+          <View style={styles.emojiReactionsWrapper}>
+            {proposal.statisticData.emojiCount.map(reaction => {
+              const emojiCount = getReactionCountByProposal(
+                reaction,
+                pickedEmojiId,
+                proposal.personalizedData.pickedEmojiId,
+              )
+              return (
+                <TouchableWithoutFeedback
+                  onPress={() => handleEmojiClick(reaction.emojiId)}
+                  key={reaction.emojiId}>
+                  <View
+                    style={[
+                      styles.emojiWrapper,
+                      emojiCount !== 0
+                        ? styles.pickedEmojiWrapperWidth
+                        : styles.notPickedEmojiWrapperWidth,
+                      pickedEmojiId === reaction.emojiId
+                        ? styles.pickedEmojiBackground
+                        : styles.notPickedEmojiBackground,
+                    ]}
+                    key={reaction.emojiId}>
+                    <Text>{getEmojiById(reaction.emojiId)?.unicode} </Text>
+                    {emojiCount !== 0 ? (
+                      <Text style={styles.emojiCount}>
+                        {numeral(emojiCount).format('0[.]0a')}
+                      </Text>
+                    ) : null}
+                  </View>
+                </TouchableWithoutFeedback>
+              )
+            })}
+          </View>
           <TouchableOpacity onPress={() => openFullProposal(proposal)}>
             <View style={styles.proposalButton}>
               <Text style={styles.proposalButtonText}>Read full version</Text>
@@ -115,7 +180,6 @@ function ProposalScreen({route, navigation}: any) {
                   <Text style={styles.proposalButtonLink}>
                     Vote on Snapshot
                   </Text>
-                  
                 </View>
               </TouchableWithoutFeedback>
             ) : null}
@@ -132,7 +196,6 @@ function ProposalScreen({route, navigation}: any) {
                     <Forum />
                   </View>
                   <Text style={styles.proposalButtonLink}>Go to forum</Text>
-                  
                 </View>
               </TouchableWithoutFeedback>
             ) : null}
@@ -141,9 +204,9 @@ function ProposalScreen({route, navigation}: any) {
             <View style={styles.proposalMeta}>
               <View style={styles.conentProposalMeta}>
                 <View style={styles.proposalLinkSvg}>
-                    <Play />
+                  <Play />
                 </View>
-                <Text style={styles.proposalMetaTitle}>Starts:</Text>
+                <Text style={styles.proposalMetaTitle}>Starts</Text>
               </View>
               <Text style={styles.proposalMetaInfo}>
                 {moment(new Date(proposal.startAt)).format(
@@ -154,9 +217,9 @@ function ProposalScreen({route, navigation}: any) {
             <View style={styles.proposalMeta}>
               <View style={styles.conentProposalMeta}>
                 <View style={styles.proposalLinkSvg}>
-                    <Pause />
+                  <Pause />
                 </View>
-                <Text style={styles.proposalMetaTitle}>Ends:</Text>
+                <Text style={styles.proposalMetaTitle}>Ends</Text>
               </View>
               <Text style={styles.proposalMetaInfo}>
                 {moment(new Date(proposal.endAt)).format(
@@ -167,9 +230,9 @@ function ProposalScreen({route, navigation}: any) {
             <View style={styles.proposalMeta}>
               <View style={styles.conentProposalMeta}>
                 <View style={styles.proposalLinkSvg}>
-                    <Person />
+                  <Person />
                 </View>
-                <Text style={styles.proposalMetaTitle}>Author:</Text>
+                <Text style={styles.proposalMetaTitle}>Author</Text>
               </View>
               <Text style={styles.proposalMetaInfo}>
                 {shortenAddress(proposal.author)}
@@ -178,70 +241,67 @@ function ProposalScreen({route, navigation}: any) {
             <View style={styles.proposalMeta}>
               <View style={styles.conentProposalMeta}>
                 <View style={styles.proposalLinkSvg}>
-                    <GroupPerson />
+                  <GroupPerson />
                 </View>
-                <Text style={styles.proposalMetaTitle}>Total voters:</Text>
+                <Text style={styles.proposalMetaTitle}>Total voters</Text>
               </View>
               <Text style={styles.proposalMetaInfo}>
                 {poll && poll.poll.votes}
               </Text>
             </View>
           </View>
-
           <View style={styles.proposalVotingWrapper}>
-              {loadingpoll ? (
-                <View style={styles.loadingWrapper}>
-                  <ActivityIndicator size="large" color={purple} />
-                </View>
-              ) : poll &&
-                poll.poll.choices &&
-                poll.poll.choices.length !== 0 ? (
-                poll.poll.choices.map((choiceTitle: string, i: number) => {
-                  return (
-                    <View key={i} style={styles.proposalVotingItemWrapper}>
-                      <View style={styles.proposalVotingItemTextWrapper}>
-                        <Text style={styles.proposalVotingItemText}>
-                          {choiceTitle}
-                        </Text>
-                        <Text style={styles.proposalVotingItemText}>
-                          {numeral(poll.poll.scores[i]).format('0[.]0a')}{' '}
-                          {poll.poll.symbol}
-                          {'  '}
-                          {poll.poll.scores_total &&
-                            +(
-                              (poll.poll.scores[i] * 100) /
-                              poll.poll.scores_total
-                            ).toFixed()}
-                          %
-                        </Text>
-                      </View>
-                      <View style={styles.proposalVotingItemBackgroundLine}>
-                        <View
-                          style={{
-                            ...styles.proposalVotingItemInnerLine,
-                            backgroundColor: purple,
-                            width: `${
-                              (poll.poll.scores_total &&
-                                poll.poll.scores[i] * 100) /
-                              poll.poll.scores_total
-                            }%`,
-                          }}
-                        />
-                      </View>
-                    </View>
-                  )
-                })
-              ) : null}
-            </View>
-
-            {!loadingpoll && poll && poll.poll.quorum !== 0 && (
-              <View style={styles.proposalVotingItemQuorum}>
-                <Text style={styles.proposalVotingItemText}>Quorum</Text>
-                <Text style={styles.proposalVotingItemText}>
-                  {numeral(poll && poll.poll.scores_total).format('0[.]0a')} / {numeral(poll && poll.poll.quorum).format('0[.]0a')}
-                </Text>
+            {loadingpoll ? (
+              <View style={styles.loadingWrapper}>
+                <ActivityIndicator size="large" color={purple} />
               </View>
-            )}
+            ) : poll && poll.poll.choices && poll.poll.choices.length !== 0 ? (
+              poll.poll.choices.map((choiceTitle: string, i: number) => {
+                return (
+                  <View key={i} style={styles.proposalVotingItemWrapper}>
+                    <View style={styles.proposalVotingItemTextWrapper}>
+                      <Text style={styles.proposalVotingItemText}>
+                        {choiceTitle}
+                      </Text>
+                      <Text style={styles.proposalVotingItemText}>
+                        {numeral(poll.poll.scores[i]).format('0[.]0a')}{' '}
+                        {poll.poll.symbol}
+                        {'  '}
+                        {poll.poll.scores_total &&
+                          +(
+                            (poll.poll.scores[i] * 100) /
+                            poll.poll.scores_total
+                          ).toFixed()}
+                        %
+                      </Text>
+                    </View>
+                    <View style={styles.proposalVotingItemBackgroundLine}>
+                      <View
+                        style={{
+                          ...styles.proposalVotingItemInnerLine,
+                          backgroundColor: purple,
+                          width: `${
+                            (poll.poll.scores_total &&
+                              poll.poll.scores[i] * 100) /
+                            poll.poll.scores_total
+                          }%`,
+                        }}
+                      />
+                    </View>
+                  </View>
+                )
+              })
+            ) : null}
+          </View>
+          {!loadingpoll && poll && poll.poll.quorum !== 0 && (
+            <View style={styles.proposalVotingItemQuorum}>
+              <Text style={styles.proposalVotingItemText}>Quorum</Text>
+              <Text style={styles.proposalVotingItemText}>
+                {numeral(poll && poll.poll.scores_total).format('0[.]0a')} /{' '}
+                {numeral(poll && poll.poll.quorum).format('0[.]0a')}
+              </Text>
+            </View>
+          )}
         </View>
       ) : (
         <Text style={{color: 'white'}}>No</Text>

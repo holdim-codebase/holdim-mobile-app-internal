@@ -105,12 +105,11 @@ const styles = StyleSheet.create({
   loginDescriptionTitle: {
     fontFamily: 'NotoSans-Regular',
     color: white,
-    paddingTop: normalize(28),
     fontSize: normalize(14),
     marginBottom: normalize(30),
     marginTop: normalize(5),
   },
-  walletTitile: {
+  walletTitle: {
     fontFamily: 'Ubuntu-Bold',
     fontStyle: 'normal',
     fontSize: normalize(14),

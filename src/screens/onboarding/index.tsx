@@ -10,7 +10,7 @@ import {
 } from 'react-native'
 import normalize from 'react-native-normalize'
 
-import Arrow from '../../assets/images/svg/ArrowBack.svg'
+import ArrowPurple from '../../assets/images/svg/ArrowPurple.svg'
 import {TSlide} from '../../types'
 import styles from './styles'
 import Dyor from '../dyor'
@@ -65,7 +65,7 @@ const OnboardingScreen = ({navigation}: any) => {
               <TouchableOpacity
                 style={styles.btnPrevious}
                 onPress={onPreviousSlide}>
-                <Arrow />
+                <ArrowPurple />
               </TouchableOpacity>
             </View>
           </>
