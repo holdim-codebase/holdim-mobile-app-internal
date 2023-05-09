@@ -61,16 +61,15 @@ const styles = StyleSheet.create({
     lineHeight: normalize(14),
     marginBottom: normalize(12),
   },
-  proposalActiveTitle: {
+  proposalFlag: {
     color: '#A8D102',
     maxHeight: normalize(30),
     fontSize: normalize(12),
     fontWeight: '700',
     lineHeight: normalize(20),
-    marginBottom: normalize(12),
+    marginBottom: normalize(35),
     paddingHorizontal: normalize(9),
     paddingVertical: normalize(5),
-    marginTop: normalize(5),
     fontFamily: 'System',
     borderRadius: 8,
     backgroundColor: 'rgba(168, 209, 2, 0.08)',
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(168, 209, 2, 0.08)',
   },
 
-  proposalInactiveColor: {
+  proposalEndedColor: {
     color: purple,
     backgroundColor: 'rgba(132, 99, 223, 0.15)',
   },

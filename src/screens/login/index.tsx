@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as Sentry from '@sentry/react-native'
 import {
   ActivityIndicator,
+  Keyboard,
   Text,
   TextInput,
   TouchableOpacity,
@@ -13,7 +14,6 @@ import auth from '@react-native-firebase/auth'
 import {useMutation} from '@apollo/client'
 
 import {UserContext} from '../../../App'
-import {useKeyboardVisible} from '../../customHooks/useKeyboardVisible'
 import {client, handleHTTPError, REGISTER_USER} from '../../services/api'
 import Close from '../../assets/images/svg/Close.svg'
 import styles from './styles'
@@ -30,6 +30,27 @@ const LoginScreen = ({navigation}: any) => {
   const [loadingScreen, setLoadingScreen] = React.useState<boolean>(false)
   const [isTextInputFocused, setIsTextInputFocused] =
     React.useState<boolean>(false)
+
+  const [isKeyboardVisible, setKeyboardVisible] = React.useState(false)
+  React.useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true)
+      },
+    )
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false)
+      },
+    )
+
+    return () => {
+      keyboardDidHideListener.remove()
+      keyboardDidShowListener.remove()
+    }
+  }, [])
 
   const {setWalletId} = React.useContext(UserContext)
 
@@ -121,12 +142,10 @@ const LoginScreen = ({navigation}: any) => {
             </View>
             <View
               style={[
-                useKeyboardVisible() &&
+                isKeyboardVisible &&
                   styles.inputTextAndButtonWrapperKeyboardVisible,
               ]}>
-              <Text style={styles.walletTitile}>
-                WALLET ADDRESS OR ENS NAME
-              </Text>
+              <Text style={styles.walletTitle}>WALLET ADDRESS OR ENS NAME</Text>
               <View
                 style={[
                   styles.loginTextInputWrapper,

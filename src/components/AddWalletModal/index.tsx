@@ -2,6 +2,7 @@ import React from 'react'
 import * as Sentry from '@sentry/react-native'
 import {BlurView} from '@react-native-community/blur'
 import {
+  Keyboard,
   Modal,
   Platform,
   Text,
@@ -17,7 +18,6 @@ import {ADD_WALLET, GET_USER_WALLETS, handleHTTPError} from '../../services/api'
 // svg
 import Close from '../../assets/images/svg/Close.svg'
 
-import {useKeyboardVisible} from '../../customHooks/useKeyboardVisible'
 import {fire, key} from '../../constants/emojis'
 
 // styles
@@ -41,6 +41,27 @@ const AddWalletModal = ({
     React.useState<string>()
   const [incorrectWalletAddress, setIncorrectWalletAddress] =
     React.useState<boolean>(false)
+
+  const [isKeyboardVisible, setKeyboardVisible] = React.useState(false)
+  React.useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      () => {
+        setKeyboardVisible(true)
+      },
+    )
+    const keyboardDidHideListener = Keyboard.addListener(
+      'keyboardDidHide',
+      () => {
+        setKeyboardVisible(false)
+      },
+    )
+
+    return () => {
+      keyboardDidHideListener.remove()
+      keyboardDidShowListener.remove()
+    }
+  }, [])
 
   const [addWallet] = useMutation(ADD_WALLET, {
     variables: {
@@ -97,7 +118,7 @@ const AddWalletModal = ({
       <BlurView
         style={[
           styles.addWalletModalWrapper,
-          useKeyboardVisible() && styles.addWalletModalWrapperKeyboardVisible,
+          isKeyboardVisible && styles.addWalletModalWrapperKeyboardVisible,
           Platform.OS === 'ios' && styles.addWalletModalWrapperIOS,
         ]}
         overlayColor={'rgba(44, 36, 67, 0.6)'}>

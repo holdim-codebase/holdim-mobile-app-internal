@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     fontFamily: 'System',
   },
   proposalLinkSvg: {
-    paddingRight: normalize(10),
+    paddingRight: normalize(4),
   },
   proposalMetaWrapper: {
     flexDirection: 'column',
@@ -198,6 +198,38 @@ const styles = StyleSheet.create({
     marginBottom: normalize(7),
     zIndex: 2,
     backgroundColor: 'red',
+  },
+  emojiReactionsWrapper: {
+    height: normalize(23),
+    flexDirection: 'row',
+    marginBottom: normalize(20),
+  },
+  pickedEmojiWrapperWidth: {
+    width: normalize(52),
+  },
+  notPickedEmojiWrapperWidth: {
+    width: normalize(36),
+    paddingLeft: normalize(4),
+  },
+  emojiWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: normalize(32),
+    borderRadius: normalize(50),
+    marginRight: normalize(4),
+    flexDirection: 'row',
+  },
+  pickedEmojiBackground: {
+    backgroundColor: 'rgba(132, 99, 223, 0.7)',
+  },
+  notPickedEmojiBackground: {
+    backgroundColor: 'rgba(44, 36, 67, 0.6)',
+  },
+  emojiCount: {
+    color: 'white',
+    fontSize: normalize(14),
+    fontWeight: '300',
+    lineHeight: normalize(20),
   },
 })
 

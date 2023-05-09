@@ -162,13 +162,14 @@ function FeedScreen({navigation, route}: any) {
   // IOS
   // Request user permission for notification
   React.useEffect(() => {
-    messaging.AuthorizationStatus.NOT_DETERMINED === -1
-      ? requestUserNotificationPermission()
-      : null
-  }, [])
-
-  React.useEffect(() => {
-    setShowNotificationModal(true)
+    if (
+      !messaging.AuthorizationStatus.AUTHORIZED ||
+      !messaging.AuthorizationStatus.PROVISIONAL
+    ) {
+      setShowNotificationModal(true)
+    } else {
+      setShowNotificationModal(false)
+    }
   }, [])
 
   useScrollToTop(scrollRef)
@@ -221,7 +222,7 @@ function FeedScreen({navigation, route}: any) {
         modalVisible={showNotificationModal}
         setModalVisible={m => setShowNotificationModal(m)}
         doAction={() => {
-          true
+          requestUserNotificationPermission()
         }}
       />
       {!userHasFollowedDaos && !loadingUserInfo && (

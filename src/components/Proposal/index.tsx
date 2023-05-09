@@ -14,26 +14,23 @@ import {useMutation} from '@apollo/client'
 import {observer} from 'mobx-react'
 import normalize from 'react-native-normalize'
 import ReactNativeHapticFeedback from 'react-native-haptic-feedback'
-import Exlam from '../../assets/icons/exclamatory.svg'
 
 import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import {TPoll, TProposal} from '../../types'
 import {CHANGE_PROPOSAL_EMOJI, handleHTTPError} from '../../services/api'
 
 import ActionIcon from '../ActionIcon'
-import EmojiTooltip from '../EmojiTooltip'
 
 import ShareIcon from '../../assets/icons/share.svg'
 import SnapshotIcon from '../../assets/icons/snapshot.svg'
-import FavoriteIcon from '../../assets/icons/favorite_border.svg'
 import {openLinkInAppBrowser} from '../MarkdownText'
 
 import styles from './styles'
 import {purple} from '../../constants/css'
 import AiGeneratedText from '../AIGenerated'
 import CustomModal from '../CustomModal'
-import {wasteBasket} from '../../constants/emojis'
 import {flashlight} from '../../constants/emojis'
+import {hapticOptions} from '../../constants/haptic'
 
 const emojiSize = normalize(20)
 
@@ -150,9 +147,7 @@ const Proposal = (props: TProps) => {
                   )}
 
                   <Text style={styles.proposalEndTime}>
-                    {dateNow < new Date(proposal.endAt)
-                      ? 'Ends:'
-                      : 'Voting ended on'}{' '}
+                    {dateNow < new Date(proposal.endAt) ? 'Ends:' : 'Ended on'}{' '}
                     {moment(new Date(proposal.endAt)).format(
                       'MMM DD, YYYY, HH:MM A',
                     )}
@@ -161,19 +156,11 @@ const Proposal = (props: TProps) => {
               </View>
 
               {dateNow < new Date(proposal.endAt) ? (
-                <Text
-                  style={[
-                    styles.proposalActiveTitle,
-                    styles.proposalActiveColor,
-                  ]}>
+                <Text style={[styles.proposalFlag, styles.proposalActiveColor]}>
                   ACTIVE
                 </Text>
               ) : (
-                <Text
-                  style={[
-                    styles.proposalActiveTitle,
-                    styles.proposalInactiveColor,
-                  ]}>
+                <Text style={[styles.proposalFlag, styles.proposalEndedColor]}>
                   ENDED
                 </Text>
               )}
