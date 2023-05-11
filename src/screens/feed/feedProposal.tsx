@@ -29,6 +29,7 @@ import {openLinkInAppBrowser} from '../../components/MarkdownText'
 
 import styles from './styles'
 import {purple} from '../../constants/css'
+import {convertUriToLogo} from '../../utils/convertUriToLogo'
 import {hapticOptions} from '../../constants/haptic'
 
 const emojiSize = normalize(20)
@@ -38,7 +39,7 @@ type TProps = {
   proposal: TProposal
   poll: TPoll
   openDAODescription: Function
-  convertURIForLogo: Function
+  convertURIToLogo: Function
   loadingPoll: boolean
 }
 
@@ -57,7 +58,7 @@ const Proposal = (props: TProps) => {
     proposal,
     poll,
     openDAODescription,
-    convertURIForLogo,
+    convertURIToLogo,
     loadingPoll,
   } = props
   const dateNow = new Date()
@@ -100,7 +101,7 @@ const Proposal = (props: TProps) => {
               onPress={() => openDAODescription(proposal.dao.id)}>
               <Image
                 source={{
-                  uri: convertURIForLogo(proposal.dao.logo),
+                  uri: convertUriToLogo(proposal.dao.logo),
                 }}
                 style={styles.proposalImage}
               />

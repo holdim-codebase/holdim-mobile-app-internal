@@ -9,7 +9,6 @@ import {
   handleHTTPError,
 } from '../../services/api'
 import {TDAO} from '../../types'
-import {convertURIForLogo} from '../feed'
 
 // components
 import Follow from '../../components/Follow'
@@ -18,6 +17,7 @@ import LoadingSpinner from '../../components/LoadingSpinner'
 // styles
 import styles from './styles'
 import {purple} from '../../constants/css'
+import {convertUriToLogo} from '../../utils/convertUriToLogo'
 
 const WelcomeScreen = ({navigation}: any) => {
   const [followedDaoList, setFollowedDaoList] = React.useState<TDAO[]>([])
@@ -122,7 +122,7 @@ const WelcomeScreen = ({navigation}: any) => {
                       <View style={styles.welcomeDaoLogoTextWrapper}>
                         <Image
                           style={styles.welcomeDaoImage}
-                          source={{uri: convertURIForLogo(followedDao.logo)}}
+                          source={{uri: convertUriToLogo(followedDao.logo)}}
                         />
                         <View style={styles.welcomeDaoTextWrapper}>
                           <Text style={styles.welcomeDaoTitle}>
@@ -175,7 +175,7 @@ const WelcomeScreen = ({navigation}: any) => {
                       <View style={styles.welcomeDaoLogoTextWrapper}>
                         <Image
                           style={styles.welcomeDaoImage}
-                          source={{uri: convertURIForLogo(notFollowedDao.logo)}}
+                          source={{uri: convertUriToLogo(notFollowedDao.logo)}}
                         />
                         <View style={styles.welcomeDaoTextWrapper}>
                           <Text style={styles.welcomeDaoTitle}>

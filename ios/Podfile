@@ -34,8 +34,28 @@ target 'holdim' do
   # you should disable the next line. [DONE]
   # use_flipper!()
 
-  post_install do |installer|
-    react_native_post_install(installer)
-    __apply_Xcode_12_5_M1_post_install_workaround(installer)
-  end
+  # post_install do |installer|
+  #   react_native_post_install(installer)
+  #   __apply_Xcode_12_5_M1_post_install_workaround(installer)
+  # end
+end
+
+def apply_pods_holdim_frameworks_fix(installer)
+  file_path_local = 'Pods/Target Support Files/Pods-holdim/Pods-holdim-frameworks.sh'
+  file_path_ci = '/Volumes/workspace/repository/ios/Pods/Target Support Files/Pods-holdim/Pods-holdim-frameworks.sh'
+
+  file_path = File.exist?(file_path_local) ? file_path_local : File.exist?(file_path_ci) ? file_path_ci : nil
+
+  return if file_path.nil?
+
+  text = File.read(file_path)
+  fixed_text = text.gsub('source="$(readlink "${source}")"', 'source="$(readlink -f "${source}")"')
+
+  File.open(file_path, "w") { |file| file.puts fixed_text }
+end
+
+post_install do |installer|
+  react_native_post_install(installer)
+  __apply_Xcode_12_5_M1_post_install_workaround(installer)
+  apply_pods_holdim_frameworks_fix(installer)
 end

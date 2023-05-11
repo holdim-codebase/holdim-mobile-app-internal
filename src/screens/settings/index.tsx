@@ -10,7 +10,7 @@ import TextInfo from '../../components/TextInfo'
 import ArrowBack from '../../assets/images/svg/ArrowBackV2.svg'
 import Wallet from '../../assets/images/svg/Wallet.svg'
 import File from '../../assets/images/svg/File.svg'
-import Poap from '../../assets/images/svg/Poap.svg'
+import Bell from '../../assets/images/svg/Bell.svg'
 import QuickReply from '../../assets/images/svg/QuickReply.svg'
 import ReportBug from '../../assets/images/svg/ReportBug.svg'
 
@@ -22,6 +22,11 @@ function SettingsScreen({navigation}: any) {
       title: 'Wallet management',
       icon: <Wallet />,
       onPress: () => navigation.navigate('WalletManagement'),
+    },
+    {
+      title: 'Notifications',
+      icon: <Bell />,
+      onPress: () => navigation.navigate('NotificationsManagement'),
     },
     {
       title: 'Privacy policy',

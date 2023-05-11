@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {ScrollView, RefreshControl, NativeScrollEvent} from 'react-native'
+import {ScrollView, RefreshControl, NativeScrollEvent, Platform} from 'react-native'
 import {useQuery} from '@apollo/client'
 import * as Sentry from '@sentry/react-native'
 import messaging from '@react-native-firebase/messaging'
@@ -15,7 +15,7 @@ import {
   GET_EMOJIS,
   GET_USER_INFO,
 } from '../../services/api'
-import {requestUserNotificationPermission} from '../../services/firebase'
+import {requestUserNotificationPermission, NotificationTopic} from '../../services/firebase'
 import EmojiReactionsStore from '../../services/stores/emojiReactions.store'
 import PortfolioStore from '../../services/stores/portfolio.store'
 import LoadingSpinner from '../../components/LoadingSpinner'
@@ -24,15 +24,15 @@ import Proposal from './feedProposal'
 
 import styles from './styles'
 import {purple} from '../../constants/css'
-
-export const convertURIForLogo = (logoURI: string) => {
-  return logoURI.startsWith('ipfs://')
-    ? logoURI.replace('ipfs://', 'https://ipfs.io/ipfs/')
-    : logoURI
-}
+import {convertUriToLogo} from '../../utils/convertUriToLogo'
+import NewDaoNotificationModal from '../notification/NewDaoNotification'
 
 function FeedScreen({navigation, route}: any) {
   const [refreshing, setRefreshing] = React.useState(false)
+  // TODO: add setShowNewDaoNotificationModal(true) to show modal
+  const [showNewDaoNotificationModal, setShowNewDaoNotificationModal] =
+    React.useState(false)
+  const [newDaos, setNewDaos] = React.useState<string[]>([])
   const [proposals, setProposals] = React.useState<TProposal[]>([])
   const [polls, setPolls] = React.useState<TPoll[]>([])
 
@@ -42,6 +42,21 @@ function FeedScreen({navigation, route}: any) {
   const [fetchMoreLoading, setFetchMoreLoading] = React.useState<boolean>(false)
   const {userHasFollowedDaos, setPortfolio} = PortfolioStore
 
+  React.useEffect(() => {
+    messaging().getInitialNotification().then(remoteMessage => {
+      if (remoteMessage && remoteMessage.data && remoteMessage.data.topic === NotificationTopic.newDaos) {
+        setNewDaos(remoteMessage.data.daos.split(','))
+        setShowNewDaoNotificationModal(true)
+      }
+    })
+    messaging().onNotificationOpenedApp(async remoteMessage => {
+      if (remoteMessage.data && remoteMessage.data.topic === NotificationTopic.newDaos) {
+        setNewDaos(remoteMessage.data.daos.split(','))
+        setShowNewDaoNotificationModal(true)
+      }
+    })
+  }, [])
+
   const scrollRef = React.useRef(null)
 
   const {loading: loadingUserInfo} = useQuery(GET_USER_INFO, {
@@ -50,6 +65,9 @@ function FeedScreen({navigation, route}: any) {
     notifyOnNetworkStatusChange: true,
     onCompleted: res => {
       setPortfolio(res.me)
+      messaging.AuthorizationStatus.NOT_DETERMINED === -1
+        ? requestUserNotificationPermission(res.me.id)
+        : null
     },
     onError: error => {
       Sentry.captureException(error)
@@ -155,14 +173,6 @@ function FeedScreen({navigation, route}: any) {
     return contentOffset.y >= contentSize.height - paddingToBottom
   }
 
-  // IOS
-  // Request user permission for notification
-  React.useEffect(() => {
-    messaging.AuthorizationStatus.NOT_DETERMINED === -1
-      ? requestUserNotificationPermission()
-      : null
-  }, [])
-
   useScrollToTop(scrollRef)
 
   return (
@@ -228,7 +238,7 @@ function FeedScreen({navigation, route}: any) {
               loadingPoll={loadingPoll}
               openProposal={openProposal}
               openDAODescription={openDAODescription}
-              convertURIForLogo={convertURIForLogo}
+              convertURIToLogo={convertUriToLogo}
               key={item.id}
             />
           )
@@ -239,6 +249,14 @@ function FeedScreen({navigation, route}: any) {
           style={styles.loadingSpinner}
           size="small"
           color="rgba(132, 99, 223, 1)"
+        />
+      )}
+      {showNewDaoNotificationModal && (
+        // TODO: send daoIds from notification
+        <NewDaoNotificationModal
+          isModalVisible={showNewDaoNotificationModal}
+          setModalVisible={e => setShowNewDaoNotificationModal(false)}
+          daoIds={newDaos}
         />
       )}
     </ScrollView>
